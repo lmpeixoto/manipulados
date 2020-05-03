@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orcamento</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Orçamento</h1>
+        <hr />
+        <%- include('includes/navigation.ejs') %>
+        <hr />
+        <form action="#">
+            <label for="nome-manipulado">Nome</label>
+            <input type="text" placeholder="Introduza o nome do manipulado" required>
+            <label for="forma-farmaceutica">Forma farmacêutica</label>
+            <select name="forma-farmaceutica" id="select-forma-farmaceutica" required>
+            </select>
+            <label for="quantidade">Quantidade</label>
+            <input type="number" required>
+            <div class="materias-primas-container">
+                <p>Adicione as matérias-primas</p>
+            </div>
+
+        </form>
+    </div>
+<script src="js/orcamento.js"></script>
+</body>
+
+</html>
