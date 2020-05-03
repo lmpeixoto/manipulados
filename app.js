@@ -14,6 +14,8 @@ app.get('/', controllers.getIndex);
 
 app.get('/formasFarmaceuticas', controllers.getFormasFarmaceuticas);
 
+app.get('/fatores', controllers.getFatores);
+
 app.get('/orcamento', controllers.getOrcamento);
 
 app.listen(port, () => console.log(`App listening at http://localhost:${port}`));

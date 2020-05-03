@@ -1,4 +1,5 @@
 const formasFarmaceuticas = require('./model/formas-farmaceuticas.json');
+const fatores = require('./model/unidades.json');
 
 
 exports.getIndex = (req, res, next) => {
@@ -11,4 +12,8 @@ exports.getOrcamento = (req, res, next) => {
 
 exports.getFormasFarmaceuticas = (req, res, next) => {
     res.send(formasFarmaceuticas);
+};
+
+exports.getFatores = (req, res, next) => {
+    res.send(fatores);
 };

@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orcamento</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -23,6 +26,30 @@
             <input type="number" required>
             <div class="materias-primas-container">
                 <p>Adicione as matérias-primas</p>
+                <div class="mat-prima-create">
+                    <label for="nome-mat-prim">Nome</label>
+                    <input type="text" placeholder="Nome" id="nome-mat-prim">
+                    <label for="preco-mat-prim">Preço</label>
+                    <input type="number" placeholder="Preço" id="preco-mat-prim">
+                    <label for="qtd-mat-prim">Quantidade</label>
+                    <input type="number" placeholder="Quantidade" id="qtd-mat-prim">
+                    <label for="select-fator">Fator</label>
+                    <select id="select-fator"></select>
+                    <button type="button" id="add-mat-prima-button"><span class="glyphicon glyphicon-plus"></span>Adicionar</button>
+                </div>
+                <hr />
+                <div class="mat-primas-summary">
+                    <ul id="mat-primas-summary-list"></ul>
+                </div>
+                <hr />
+                <div class="calculos-preco">
+                    <p>Forma farmacêutica</p>
+                    <p>Matérias-primas</p>
+                    <p>Materiais de embalagem</p>
+                    <p>IVA</p>
+                    <p>Total</p>
+                </div>
+                <hr />
             </div>
 
         </form>
