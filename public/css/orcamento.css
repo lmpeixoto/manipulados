@@ -1,0 +1,17 @@
+.form-main {
+    display: flex;
+    flex-direction: column;
+    margin: 3rem 0;
+}
+
+.mat-prima-create {
+    display: flex;
+    flex-direction: column;
+    margin: 3rem 0;
+}
+
+.mat-emb-create {
+    display: flex;
+    flex-direction: column;
+    margin: 3rem 0;
+}

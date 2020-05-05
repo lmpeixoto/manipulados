@@ -34,50 +34,121 @@ const UICtrl = (function () {
         fatorSelect.add(option);
       }
     },
+
+    addListItem: (item, element) => {
+      let html = `<li class="mat-prima-element" id="mat-prima-${item.id}">${item.nome} - ${item.qtd} - ${item.fator} - ${item.preco}€ <button type="button" class="rem-mat-prima-button"><span class="glyphicon glyphicon-minus"></span>Remover</button>`;
+      const matPrimasSummaryList = document.getElementById("mat-primas-summary-list");
+      matPrimasSummaryList.innerHTML += html;
+      matPrimasSummaryList.addEventListener("click", MatPrimaCtrl.removeMatPrima);
+    },
+
+    deleteListItem: (index, element) => {
+      const itemID = `${element}${index}`;
+      const item = document.querySelector(itemID);
+      item.remove();
+    }
+
   };
 })();
 
-const ItemCtrl = (function () {
+const MatPrimaCtrl = (function () {
 
-  const MateriaPrima = function (nome, preco, qtd, fator) {
+  const MateriaPrima = function (id, nome, preco, qtd, fator) {
+    this.id = id;
     this.nome = nome;
     this.preco = preco;
     this.qtd = qtd;
     this.fator = fator;
   };
 
-  const materiasPrimas = [];
+  let materiasPrimas = [];
 
   return {
 
     addMatPrima: () => {
-      nome = document.getElementById("nome-mat-prim").value;
-      preco = document.getElementById("preco-mat-prim").value;
-      qtd = document.getElementById("qtd-mat-prim").value;
-      fator = document.getElementById("select-fator").value;
-
-      matPrima = new MateriaPrima(nome, preco, qtd, fator);
+      if (materiasPrimas.length === 0) {
+        id = 0;
+      } else {
+        id = materiasPrimas.length;
+      }
+      let nome = document.getElementById("nome-mat-prim").value;
+      let preco = document.getElementById("preco-mat-prim").value;
+      let qtd = document.getElementById("qtd-mat-prim").value;
+      let fator = document.getElementById("select-fator").value;
+      let matPrima = new MateriaPrima(id, nome, preco, qtd, fator);
       materiasPrimas.push(matPrima);
-      index = materiasPrimas.indexOf(matPrima);
-      console.log(matPrima);
-      let html = `<li>${matPrima.nome} <button type="button" class="rem-mat-prima-button" id="mat-prima-element-${index}><span class="glyphicon glyphicon-minus"></span>Remover</button>`;
-      const matPrimasSummaryList = document.getElementById("mat-primas-summary-list");
-      matPrimasSummaryList.innerHTML = html;
-      const removeMatPrimaButton = document.querySelector(".rem-mat-prima-button");
-      removeMatPrimaButton.addEventListener("click", ItemCtrl.removeMatPrima);
+      UICtrl.addListItem(matPrima);
     },
 
-    removeMatPrima: () => {
+    removeMatPrima: (e) => {
+      let elementToRemove = e.target.parentNode;
+      console.log(elementToRemove);
+      let indexToRemove = elementToRemove.id.split('-')[2];
+      let elementIdBase = "#mat - prima -"
+      let matPrimaToRemove = materiasPrimas.find(o => o.id === indexToRemove);
+      if (matPrimaToRemove) {
+        materiasPrimas.elementToRemove(matPrimaToRemove)
+      };
 
-    },
+      UICtrl.deleteListItem(indexToRemove, elementIdBase)
+    }
+
+
   };
+
 })();
 
-const AppCtrl = (function (UICtrl, ItemCtrl) {
+
+const MatEmbCtrl = (function () {
+
+  const MaterialEmbalagem = function (id, nome, preco) {
+
+    this.id = id;
+    this.nome = nome;
+    this.preco = preco;
+
+  };
+
+  let materiaisEmbalagem = [];
+
+  return {
+
+    addMatEmb: () => {
+      if (materiaisEmbalagem.length === 0) {
+        id = 0;
+      } else {
+        id = materiaisEmbalagem.length;
+      }
+      let nome = document.getElementById("nome-mat-emb").value;
+      let preco = document.getElementById("preco-mat-emb").value;
+      let qtd = document.getElementById("qtd-mat-emb").value;
+
+      let matEmb = new MaterialEmbalagem(id, nome, preco, qtd);
+      materiaisEmbalagem.push(matEmb);
+      UICtrl.addListItem(matEmb);
+    },
+
+    removeMatEmb: (e) => {
+      let elementToRemove = e.target.parentNode;
+      console.log(elementToRemove);
+      let indexToRemove = elementToRemove.id.split('-')[2];
+      let matEmbToRemove = materiaisEmbalagem.find(o => o.id === indexToRemove);
+      if (matEmbToRemove) {
+        materiaisEmbalagem.elementToRemove(matEmbToRemove)
+      };
+      UICtrl.deleteListItem(indexToRemove)
+    }
+
+  }
+
+})()
+
+const AppCtrl = (function (UICtrl, MatPrimaCtrl) {
 
   const loadEventListeners = function () {
     const addMatPrimaButton = document.getElementById("add-mat-prima-button");
-    addMatPrimaButton.addEventListener("click", ItemCtrl.addMatPrima);
+    addMatPrimaButton.addEventListener("click", MatPrimaCtrl.addMatPrima);
+
   };
 
   const fetchData = function () {
@@ -89,10 +160,11 @@ const AppCtrl = (function (UICtrl, ItemCtrl) {
 
   return {
     init: function () {
-      fetchData();
       loadEventListeners();
+      fetchData();
+
     },
   };
-})(UICtrl, ItemCtrl);
+})(UICtrl, MatPrimaCtrl);
 
 AppCtrl.init();
