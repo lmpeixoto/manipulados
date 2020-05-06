@@ -35,15 +35,28 @@ const UICtrl = (function () {
       }
     },
 
-    addListItem: (item, element) => {
+    addMatPrimaItem: (item) => {
       let html = `<li class="mat-prima-element" id="mat-prima-${item.id}">${item.nome} - ${item.qtd} - ${item.fator} - ${item.preco}€ <button type="button" class="rem-mat-prima-button"><span class="glyphicon glyphicon-minus"></span>Remover</button>`;
       const matPrimasSummaryList = document.getElementById("mat-primas-summary-list");
       matPrimasSummaryList.innerHTML += html;
       matPrimasSummaryList.addEventListener("click", MatPrimaCtrl.removeMatPrima);
     },
 
-    deleteListItem: (index, element) => {
-      const itemID = `${element}${index}`;
+    deleteMatPrimaItem: (index) => {
+      const itemID = `#mat-prima-${index}`;
+      const item = document.querySelector(itemID);
+      item.remove();
+    },
+
+    addMatEmbItem: (item) => {
+      let html = `<li class="mat-emb-element" id="mat-emb-${item.id}">${item.nome} - ${item.qtd} - ${item.preco}€ <button type="button" class="rem-mat-emb-button"><span class="glyphicon glyphicon-minus"></span>Remover</button>`;
+      const matEmbSummaryList = document.getElementById("mat-emb-summary-list");
+      matEmbSummaryList.innerHTML += html;
+      matEmbSummaryList.addEventListener("click", MatEmbCtrl.removeMatEmb);
+    },
+
+    deleteMatEmbItem: (index) => {
+      const itemID = `#mat-emb-${index}`;
       const item = document.querySelector(itemID);
       item.remove();
     }
@@ -61,6 +74,9 @@ const MatPrimaCtrl = (function () {
     this.fator = fator;
   };
 
+  let fatores = UICtrl.fetchFatores();
+
+
   let materiasPrimas = [];
 
   return {
@@ -77,21 +93,41 @@ const MatPrimaCtrl = (function () {
       let fator = document.getElementById("select-fator").value;
       let matPrima = new MateriaPrima(id, nome, preco, qtd, fator);
       materiasPrimas.push(matPrima);
-      UICtrl.addListItem(matPrima);
+      UICtrl.addMatPrimaItem(matPrima);
     },
 
     removeMatPrima: (e) => {
       let elementToRemove = e.target.parentNode;
       console.log(elementToRemove);
       let indexToRemove = elementToRemove.id.split('-')[2];
-      let elementIdBase = "#mat - prima -"
       let matPrimaToRemove = materiasPrimas.find(o => o.id === indexToRemove);
       if (matPrimaToRemove) {
         materiasPrimas.elementToRemove(matPrimaToRemove)
       };
 
-      UICtrl.deleteListItem(indexToRemove, elementIdBase)
+      UICtrl.deleteMatPrimaItem(indexToRemove)
+    },
+
+    calculateLinePrice: (item) => {
+      return fatores.then(item.preco * item.qtd * fatores[item.fator][1])
+
+    },
+
+    calculateTotalPrice: () => {
+      let valor = 0;
+      return fatores.then(fct => {
+
+        for (let i = 0; i < materiasPrimas.length; i++) {
+          console.log(parseFloat((fct[materiasPrimas[i].fator][1])))
+          valor += parseInt(materiasPrimas[i].preco) * parseInt(materiasPrimas[i].qtd) * parseFloat((fct[materiasPrimas[i].fator][1]))
+          console.log(valor)
+        }
+        return valor
+      })
+
     }
+
+
 
 
   };
@@ -125,7 +161,8 @@ const MatEmbCtrl = (function () {
 
       let matEmb = new MaterialEmbalagem(id, nome, preco, qtd);
       materiaisEmbalagem.push(matEmb);
-      UICtrl.addListItem(matEmb);
+      UICtrl.addMatEmbItem(matEmb);
+      console.log(matEmb)
     },
 
     removeMatEmb: (e) => {
@@ -136,7 +173,7 @@ const MatEmbCtrl = (function () {
       if (matEmbToRemove) {
         materiaisEmbalagem.elementToRemove(matEmbToRemove)
       };
-      UICtrl.deleteListItem(indexToRemove)
+      UICtrl.deleteMatEmbItem(indexToRemove)
     }
 
   }
@@ -148,6 +185,8 @@ const AppCtrl = (function (UICtrl, MatPrimaCtrl) {
   const loadEventListeners = function () {
     const addMatPrimaButton = document.getElementById("add-mat-prima-button");
     addMatPrimaButton.addEventListener("click", MatPrimaCtrl.addMatPrima);
+    const addMatEmbButton = document.getElementById("add-mat-emb-button");
+    addMatEmbButton.addEventListener("click", MatEmbCtrl.addMatEmb);
 
   };
 
@@ -156,6 +195,9 @@ const AppCtrl = (function (UICtrl, MatPrimaCtrl) {
     UICtrl.formaFarmaceuticaSelectPopulate(fFarm);
     let fatores = UICtrl.fetchFatores().then((result) => UICtrl.fatorSelectPopulate(result));
     UICtrl.fatorSelectPopulate(fatores);
+    MatPrimaCtrl.fatores = UICtrl.fetchFatores();
+
+
   };
 
   return {
