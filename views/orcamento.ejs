@@ -22,9 +22,12 @@
             <input type="text" placeholder="Introduza o nome do manipulado" required>
             <label for="forma-farmaceutica">Forma farmacêutica</label>
             <select name="forma-farmaceutica" id="select-forma-farmaceutica" required>
+                <option disabled selected value> -- selecione uma opção -- </option>
             </select>
             <label for="quantidade">Quantidade</label>
-            <input type="number" required>
+            <input class="forma-farm-qtd" type="number" required>
+            <button class="add-forma-farm-button" type="button"><span
+                    class="glyphicon glyphicon-plus"></span>Selecionar</button>
             <div class="materias-primas-container">
                 <h3>Adicione as matérias-primas</h3>
                 <div class="mat-prima-create">
@@ -35,7 +38,9 @@
                     <label for="qtd-mat-prim">Quantidade</label>
                     <input type="number" placeholder="Quantidade" id="qtd-mat-prim">
                     <label for="select-fator">Fator</label>
-                    <select id="select-fator"></select>
+                    <select id="select-fator" required>
+                        <option disabled selected value> -- selecione uma opção -- </option>
+                    </select>
                     <button type="button" id="add-mat-prima-button"><span
                             class="glyphicon glyphicon-plus"></span>Adicionar</button>
                 </div>
@@ -60,11 +65,11 @@
                 </div>
                 <hr />
                 <div class="calculos-preco">
-                    <p>Forma farmacêutica</p>
-                    <p>Matérias-primas</p>
-                    <p>Materiais de embalagem</p>
-                    <p>IVA</p>
-                    <p>Total</p>
+                    <p>Forma farmacêutica: <span class="forma-farm-total-price"></span></p>
+                    <p>Matérias-primas: <span class="mat-prima-total-price"></span></p>
+                    <p>Materiais de embalagem: <span class="mat-emb-total-price"></span></p>
+                    <p>IVA: <span class="iva-total-price"></span></p>
+                    <p>Total: <span class="total-total-price"></span></p>
                 </div>
                 <hr />
             </div>
