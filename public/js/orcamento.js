@@ -1,10 +1,16 @@
+
+
+
 const Model = (function () {
 
+  let fatorF = 4;
+  let nomeManipulado;
   let fFarmPrice;
   let matPrimasPrice;
   let matEmbPrice;
   let totalPrice;
   let IVA;
+
 
   const fetchFatores = async () => {
     let response = await fetch("/fatores");
@@ -22,18 +28,19 @@ const Model = (function () {
     let formaFarmaceuticaPrice;
     const fFarm = document.getElementById("select-forma-farmaceutica").value;
     const qtd = document.querySelector('.forma-farm-qtd').value;
-    const limite = parseInt(formasFarmaceuticas[fFarm][0]);
-    const fatorNormal = parseFloat(formasFarmaceuticas[fFarm][1]);
-    const fatorSuplemento = parseFloat(formasFarmaceuticas[fFarm][2]);
+    const limite = +(formasFarmaceuticas[fFarm][0]);
+    const fatorNormal = +(formasFarmaceuticas[fFarm][1]);
+    const fatorSuplemento = +(formasFarmaceuticas[fFarm][2]);
 
     if (qtd <= limite) {
-      formaFarmaceuticaPrice = fatorNormal * qtd;
+      formaFarmaceuticaPrice = fatorF * fatorNormal;
     } else {
       let excesso = qtd - limite;
-      formaFarmaceuticaPrice = (fatorNormal * limite) + (excesso * fatorSuplemento);
+      formaFarmaceuticaPrice = (fatorF * fatorNormal) + (excesso * fatorSuplemento);
     }
 
-    setfFarmPrice(parseFloat(formaFarmaceuticaPrice));
+    formaFarmaceuticaPrice = +(formaFarmaceuticaPrice.toFixed(2));
+    setfFarmPrice(formaFarmaceuticaPrice);
     return formaFarmaceuticaPrice;
   }
 
@@ -42,11 +49,44 @@ const Model = (function () {
     let matPrimPrice = (getMatPrimasPrice() || 0);
     let matEmbPrice = (getMatEmbPrice() || 0);
     let totalPrice = (fFarmPrice + matPrimPrice + matEmbPrice) * 1.3;
-    let IVA = totalPrice * 0.023;
-    let finalPrice = totalPrice + IVA;
+    let IVA = +((totalPrice * 0.023).toFixed(2));
+    let finalPrice = +((totalPrice + IVA).toFixed(2));
     setTotalPrice(finalPrice);
     setIVA(IVA);
     return [finalPrice, IVA];
+  }
+
+
+  const createObjectToSend = () => {
+    let manipulado = {
+      "nomeManipulado": nomeManipulado,
+      "fatorF": fatorF,
+      "fFarmPrice": fFarmPrice,
+      "matPrimasPrice": matPrimasPrice,
+      "matEmbPrice": matEmbPrice,
+      "totalPrice": totalPrice,
+      "IVA": IVA,
+      "materiasPrimas": MatPrimaCtrl.getMatPrimas(),
+      "materiaisEmbalagem": MatEmbCtrl.getMatEmb()
+    }
+
+    return manipulado;
+  }
+
+  // try to understand better this function
+  const saveOrcamentoData = (e) => {
+    e.preventDefault()
+    fetch("/orcamento", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(createObjectToSend())
+
+    }).then((response) => {
+
+      console.log(response);
+    });
   }
 
   const getfFarmPrice = () => fFarmPrice;
@@ -58,6 +98,8 @@ const Model = (function () {
   const getTotalPrice = () => totalPrice;
 
   const getIVA = () => IVA;
+
+  const setNomeManipulado = (nome) => nomeManipulado = nome;
 
   const setfFarmPrice = (price) => fFarmPrice = price;
 
@@ -76,6 +118,10 @@ const Model = (function () {
     calculateFormaFarmaceutica,
 
     calculateTotalPrice,
+
+    createObjectToSend,
+
+    saveOrcamentoData,
 
     fetchFatores,
 
@@ -97,7 +143,9 @@ const Model = (function () {
 
     setIVA,
 
-    setTotalPrice
+    setTotalPrice,
+
+    setNomeManipulado
   }
 
 })();
@@ -140,6 +188,18 @@ const UICtrl = (function () {
     matPrimasSummaryList.addEventListener("click", MatPrimaCtrl.removeMatPrima);
   }
 
+  const deleteMatPrimaFields = () => {
+    let nome = document.getElementById("nome-mat-prim");
+    let preco = document.getElementById("preco-mat-prim");
+    let qtd = document.getElementById("qtd-mat-prim");
+    let fator = document.getElementById("select-fator");
+    nome.value = "";
+    preco.value = "";
+    qtd.value = "";
+    fator.selectedIndex = 0;
+
+  }
+
   const deleteMatPrimaItem = (index) => {
     const itemID = `#mat-prima-${index}`;
     const item = document.querySelector(itemID);
@@ -166,6 +226,15 @@ const UICtrl = (function () {
     matEmbSummaryList.addEventListener("click", MatEmbCtrl.removeMatEmb);
   }
 
+  const deleteMatEmbFields = () => {
+    let nome = document.getElementById("nome-mat-emb");
+    let preco = document.getElementById("preco-mat-emb");
+    let qtd = document.getElementById("qtd-mat-emb");
+    nome.value = "";
+    preco.value = "";
+    qtd.value = "";
+  }
+
   const deleteMatEmbItem = (index) => {
     const itemID = `#mat-emb-${index}`;
     const item = document.querySelector(itemID);
@@ -173,10 +242,10 @@ const UICtrl = (function () {
   }
 
   const displayMatEmbTotalPrice = () => {
-    let totalPrice = MatEmbCtrl.calculateTotalPrice() * 1.2;
+    let totalPrice = +((MatEmbCtrl.calculateTotalPrice() * 1.2).toFixed(2));
     const matEmbTotalPrice = document.querySelector('.mat-emb-total-price');
     matEmbTotalPrice.innerHTML = totalPrice;
-    Model.setMatEmbPrice(parseFloat(totalPrice));
+    Model.setMatEmbPrice(totalPrice);
   }
 
   const displayFormaFarmaceuticaPrice = () => {
@@ -185,8 +254,14 @@ const UICtrl = (function () {
       let price = Model.calculateFormaFarmaceutica(ff);
       formFarmTotalPrice.innerHTML = price;
       Model.setfFarmPrice(price);
+      Model.setNomeManipulado(saveNomeManipulado());
       displayTotal();
     })
+  }
+
+  const saveNomeManipulado = () => {
+    const nomeManipulado = document.querySelector('.nome-manipulado');
+    return nomeManipulado.value;
   }
 
   const displayTotal = () => {
@@ -205,11 +280,15 @@ const UICtrl = (function () {
 
     addMatPrimaItem,
 
+    deleteMatPrimaFields,
+
     deleteMatPrimaItem,
 
     displayMatPrimaTotalPrice,
 
     addMatEmbItem,
+
+    deleteMatEmbFields,
 
     deleteMatEmbItem,
 
@@ -256,9 +335,10 @@ const MatPrimaCtrl = (function () {
     Model.fetchFatores().then(fct => UICtrl.addMatPrimaItem(matPrima, fct));
     Model.fetchFatores().then(fct => {
       UICtrl.displayMatPrimaTotalPrice(fct);
-      UICtrl.displayTotal()
+      UICtrl.displayTotal();
+      UICtrl.deleteMatPrimaFields();
     });
-    currentId += 1;
+
   }
 
   const removeMatPrima = (e) => {
@@ -275,17 +355,17 @@ const MatPrimaCtrl = (function () {
   }
 
   const calculateLinePrice = (item, fct) => {
-    return (item.preco * item.qtd * fct[item.fator][1])
+    return +((item.preco * item.qtd * fct[item.fator][1]).toFixed(2))
   }
 
   const calculateTotalPrice = (fct) => {
     let valor = 0;
 
     for (let i = 0; i < materiasPrimas.length; i++) {
-      valor += parseInt(materiasPrimas[i].preco) * parseInt(materiasPrimas[i].qtd) * parseFloat((fct[materiasPrimas[i].fator][1]))
+      valor += +(materiasPrimas[i].preco) * +(materiasPrimas[i].qtd) * +((fct[materiasPrimas[i].fator][1]))
     }
 
-    return valor
+    return +(valor.toFixed(2));
   }
 
   return {
@@ -333,7 +413,8 @@ const MatEmbCtrl = (function () {
     UICtrl.addMatEmbItem(matEmb);
     UICtrl.displayMatEmbTotalPrice();
     currentId += 1;
-    UICtrl.displayTotal()
+    UICtrl.displayTotal();
+    UICtrl.deleteMatEmbFields();
   }
 
   const removeMatEmb = (e) => {
@@ -348,17 +429,23 @@ const MatEmbCtrl = (function () {
   }
 
   const calculateLinePrice = (item) => {
-    return item.preco * item.qtd;
+    return +((item.preco * item.qtd).toFixed(2));
   }
 
   const calculateTotalPrice = () => {
     let valor = 0;
 
     for (let i = 0; i < materiaisEmbalagem.length; i++) {
-      valor += parseInt(materiaisEmbalagem[i].preco) * parseInt(materiaisEmbalagem[i].qtd);
+      valor += +(materiaisEmbalagem[i].preco) * +(materiaisEmbalagem[i].qtd);
     }
 
-    return valor
+    return +(valor.toFixed(2))
+  }
+
+  const getMatEmb = () => {
+
+    return materiaisEmbalagem;
+
   }
 
   return {
@@ -369,7 +456,9 @@ const MatEmbCtrl = (function () {
 
     calculateLinePrice,
 
-    calculateTotalPrice
+    calculateTotalPrice,
+
+    getMatEmb
 
   }
 
@@ -384,6 +473,8 @@ const AppCtrl = (function (UICtrl, MatPrimaCtrl, MatEmbCtrl, Model) {
     addMatPrimaButton.addEventListener("click", MatPrimaCtrl.addMatPrima);
     const addMatEmbButton = document.getElementById("add-mat-emb-button");
     addMatEmbButton.addEventListener("click", MatEmbCtrl.addMatEmb);
+    const saveButton = document.querySelector(".save-button");
+    saveButton.addEventListener("click", Model.saveOrcamentoData);
   }
 
   const fetchData = function () {
