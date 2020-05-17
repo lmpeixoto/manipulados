@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const orcamentoManipuladoSchema = new Schema({
     nomeManipulado: { type: String, required: true },
     fatorF: { type: Number, required: true },
+    fFarmNome: { type: String, required: true },
     fFarmPrice: { type: Number, required: true },
     matPrimasPrice: { type: Number, required: true },
     matEmbPrice: { type: Number, required: true },

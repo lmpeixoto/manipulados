@@ -16,6 +16,7 @@ exports.postOrcamento = (req, res, next) => {
     const orcamentoManipulado = new OrcamentoManipulado({
         nomeManipulado: req.body.nomeManipulado,
         fatorF: req.body.fatorF,
+        fFarmNome: req.body.fFarmNome,
         fFarmPrice: req.body.fFarmPrice,
         matPrimasPrice: req.body.matPrimasPrice,
         matEmbPrice: req.body.matEmbPrice,

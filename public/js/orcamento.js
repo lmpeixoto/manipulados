@@ -5,6 +5,7 @@ const Model = (function () {
 
   let fatorF = 4;
   let nomeManipulado;
+  let fFarmNome;
   let fFarmPrice;
   let matPrimasPrice;
   let matEmbPrice;
@@ -26,8 +27,8 @@ const Model = (function () {
 
   const calculateFormaFarmaceutica = (formasFarmaceuticas) => {
     let formaFarmaceuticaPrice;
-    const fFarm = document.getElementById("select-forma-farmaceutica").value;
-    const qtd = document.querySelector('.forma-farm-qtd').value;
+    const fFarm = UICtrl.UISelectors.formaFarmNome.value;
+    const qtd = UICtrl.UISelectors.formaFarmQtd.value;
     const limite = +(formasFarmaceuticas[fFarm][0]);
     const fatorNormal = +(formasFarmaceuticas[fFarm][1]);
     const fatorSuplemento = +(formasFarmaceuticas[fFarm][2]);
@@ -61,6 +62,7 @@ const Model = (function () {
     let manipulado = {
       "nomeManipulado": nomeManipulado,
       "fatorF": fatorF,
+      "fFarmNome": fFarmNome,
       "fFarmPrice": fFarmPrice,
       "matPrimasPrice": matPrimasPrice,
       "matEmbPrice": matEmbPrice,
@@ -73,20 +75,55 @@ const Model = (function () {
     return manipulado;
   }
 
-  // try to understand better this function
   const saveOrcamentoData = (e) => {
     e.preventDefault()
-    fetch("/orcamento", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(createObjectToSend())
+    if (validateBeforeSaving()) {
+      fetch("/orcamento", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(createObjectToSend())
 
-    }).then((response) => {
+      }).then((response) => {
 
-      console.log(response);
-    });
+        console.log(response);
+      });
+    } else {
+      console.log('Data not saved!');
+    }
+  }
+
+  const validateBeforeSaving = () => {
+    console.log(validateFormaFarmaceutica() + ' ' + validateMateriasPrimas() + ' ' + validateMateriaisEmb())
+    if (validateFormaFarmaceutica() && validateMateriasPrimas() && validateMateriaisEmb()) {
+      console.log('Validated successfully!');
+      return true
+    } else {
+      alert('Um ou mais elementos não estão validados. Tente novamente!');
+      return false
+    }
+
+  }
+
+  const validateFormaFarmaceutica = () => {
+    console.log(nomeManipulado + ' ' + fFarmNome + ' ' + fFarmPrice + ' ' + totalPrice + ' ' + IVA)
+    if (nomeManipulado && fFarmNome && fFarmPrice && totalPrice && IVA) {
+
+      return true;
+    }
+  }
+
+  const validateMateriasPrimas = () => {
+    if (MatPrimaCtrl.getMatPrimas().length > 0) {
+      return true;
+    }
+  }
+
+  const validateMateriaisEmb = () => {
+    if (MatEmbCtrl.getMatEmb().length > 0) {
+      return true;
+    }
   }
 
   const getfFarmPrice = () => fFarmPrice;
@@ -109,7 +146,9 @@ const Model = (function () {
 
   const setIVA = (value) => IVA = value;
 
-  const setTotalPrice = (price) => totalPrice = price
+  const setTotalPrice = (price) => totalPrice = price;
+
+  const setNomeFormaFarm = (fFarm) => fFarmNome = fFarm
 
   return {
 
@@ -145,7 +184,17 @@ const Model = (function () {
 
     setTotalPrice,
 
-    setNomeManipulado
+    setNomeManipulado,
+
+    setNomeFormaFarm,
+
+    validateFormaFarmaceutica,
+
+    validateMateriasPrimas,
+
+    validateMateriaisEmb,
+
+    validateBeforeSaving
   }
 
 })();
@@ -153,6 +202,34 @@ const Model = (function () {
 
 
 const UICtrl = (function () {
+
+  const UISelectors = {
+
+    formaFarmaceuticaSelect: document.getElementById("select-forma-farmaceutica"),
+    nomeManipulado: document.querySelector('.nome-manipulado'),
+    formaFarmNome: document.getElementById("select-forma-farmaceutica"),
+    formaFarmQtd: document.querySelector('.forma-farm-qtd'),
+    fatorSelect: document.getElementById("select-fator"),
+    matPrimasSummaryList: document.getElementById("mat-primas-summary-list"),
+    matPrimaTotalPrice: document.querySelector('.mat-prima-total-price'),
+    matEmbTotalPrice: document.querySelector('.mat-emb-total-price'),
+    matPrimNome: document.getElementById("nome-mat-prim"),
+    matPrimPreco: document.getElementById("preco-mat-prim"),
+    matPrimQtd: document.getElementById("qtd-mat-prim"),
+    matPrimFator: document.getElementById("select-fator"),
+    matEmbNome: document.getElementById("nome-mat-emb"),
+    matEmbPreco: document.getElementById("preco-mat-emb"),
+    matEmbQtd: document.getElementById("qtd-mat-emb"),
+    matEmbSummaryList: document.getElementById("mat-emb-summary-list"),
+    formFarmTotalPrice: document.querySelector('.forma-farm-total-price'),
+    addFormaFarmButton: document.querySelector(".add-forma-farm-button"),
+    addMatPrimaButton: document.getElementById("add-mat-prima-button"),
+    addMatEmbButton: document.getElementById("add-mat-emb-button"),
+    saveButton: document.querySelector(".save-button")
+
+
+  }
+
 
   const formaFarmaceuticaSelectPopulate = (fFarm) => {
     const formaFarmaceuticaSelect = document.getElementById("select-forma-farmaceutica");
@@ -166,12 +243,11 @@ const UICtrl = (function () {
   }
 
   const fatorSelectPopulate = (fatores) => {
-    const fatorSelect = document.getElementById("select-fator");
     for (let fator in fatores) {
       let option = document.createElement("option");
       option.value = fator;
       option.text = fator;
-      fatorSelect.add(option);
+      UISelectors.fatorSelect.add(option);
     }
   }
 
@@ -189,14 +265,10 @@ const UICtrl = (function () {
   }
 
   const deleteMatPrimaFields = () => {
-    let nome = document.getElementById("nome-mat-prim");
-    let preco = document.getElementById("preco-mat-prim");
-    let qtd = document.getElementById("qtd-mat-prim");
-    let fator = document.getElementById("select-fator");
-    nome.value = "";
-    preco.value = "";
-    qtd.value = "";
-    fator.selectedIndex = 0;
+    UISelectors.matPrimNome.value = "";
+    UISelectors.matPrimPreco.value = "";
+    UISelectors.matPrimQtd.value = "";
+    UISelectors.matPrimFator.selectedIndex = 0;
 
   }
 
@@ -208,8 +280,7 @@ const UICtrl = (function () {
 
   const displayMatPrimaTotalPrice = (fct) => {
     let totalPrice = MatPrimaCtrl.calculateTotalPrice(fct);
-    const matPrimaTotalPrice = document.querySelector('.mat-prima-total-price');
-    matPrimaTotalPrice.innerHTML = totalPrice;
+    UISelectors.matPrimaTotalPrice.innerHTML = totalPrice;
     Model.setMatPrimasPrice(parseFloat(totalPrice));
   }
 
@@ -227,12 +298,10 @@ const UICtrl = (function () {
   }
 
   const deleteMatEmbFields = () => {
-    let nome = document.getElementById("nome-mat-emb");
-    let preco = document.getElementById("preco-mat-emb");
-    let qtd = document.getElementById("qtd-mat-emb");
-    nome.value = "";
-    preco.value = "";
-    qtd.value = "";
+
+    UISelectors.matEmbNome.value = "";
+    UISelectors.matEmbPreco.value = "";
+    UISelectors.matEmbQtd.value = "";
   }
 
   const deleteMatEmbItem = (index) => {
@@ -243,25 +312,27 @@ const UICtrl = (function () {
 
   const displayMatEmbTotalPrice = () => {
     let totalPrice = +((MatEmbCtrl.calculateTotalPrice() * 1.2).toFixed(2));
-    const matEmbTotalPrice = document.querySelector('.mat-emb-total-price');
-    matEmbTotalPrice.innerHTML = totalPrice;
+    UISelectors.matEmbTotalPrice.innerHTML = totalPrice;
     Model.setMatEmbPrice(totalPrice);
   }
 
   const displayFormaFarmaceuticaPrice = () => {
-    const formFarmTotalPrice = document.querySelector('.forma-farm-total-price');
     Model.fetchFormasFarmaceuticas().then(ff => {
       let price = Model.calculateFormaFarmaceutica(ff);
-      formFarmTotalPrice.innerHTML = price;
+      UISelectors.formFarmTotalPrice.innerHTML = price;
       Model.setfFarmPrice(price);
       Model.setNomeManipulado(saveNomeManipulado());
+      Model.setNomeFormaFarm(saveNomeFormaFarma());
       displayTotal();
     })
   }
 
+  const saveNomeFormaFarma = () => {
+    return UISelectors.formaFarmNome.value;
+  }
+
   const saveNomeManipulado = () => {
-    const nomeManipulado = document.querySelector('.nome-manipulado');
-    return nomeManipulado.value;
+    return UISelectors.nomeManipulado.value;
   }
 
   const displayTotal = () => {
@@ -273,6 +344,8 @@ const UICtrl = (function () {
   }
 
   return {
+
+    UISelectors,
 
     formaFarmaceuticaSelectPopulate,
 
@@ -320,24 +393,27 @@ const MatPrimaCtrl = (function () {
   }
 
   const addMatPrima = () => {
+    let id;
     if (currentId) {
       id = currentId;
     } else {
       id = 0;
       currentId = 0;
     }
-    let nome = document.getElementById("nome-mat-prim").value;
-    let preco = document.getElementById("preco-mat-prim").value;
-    let qtd = document.getElementById("qtd-mat-prim").value;
-    let fator = document.getElementById("select-fator").value;
-    let matPrima = new MateriaPrima(id, nome, preco, qtd, fator);
-    materiasPrimas.push(matPrima);
-    Model.fetchFatores().then(fct => UICtrl.addMatPrimaItem(matPrima, fct));
-    Model.fetchFatores().then(fct => {
-      UICtrl.displayMatPrimaTotalPrice(fct);
-      UICtrl.displayTotal();
-      UICtrl.deleteMatPrimaFields();
-    });
+
+    let matPrima = new MateriaPrima(id, UICtrl.UISelectors.matPrimNome.value, UICtrl.UISelectors.matPrimPreco.value, UICtrl.UISelectors.matPrimQtd.value, UICtrl.UISelectors.matPrimFator.value);
+    if (validateMatPrima(matPrima)) {
+      materiasPrimas.push(matPrima);
+      Model.fetchFatores().then(fct => UICtrl.addMatPrimaItem(matPrima, fct));
+      Model.fetchFatores().then(fct => {
+        UICtrl.displayMatPrimaTotalPrice(fct);
+        UICtrl.displayTotal();
+        UICtrl.deleteMatPrimaFields();
+      });
+    } else {
+      alert('Um ou mais campos da matéria prima estão em falta. Repita por favor!');
+    }
+
 
   }
 
@@ -349,8 +425,8 @@ const MatPrimaCtrl = (function () {
     materiasPrimas = materiasPrimasUpdated
     UICtrl.deleteMatPrimaItem(indexToRemove)
     Model.fetchFatores().then(fct => {
-      UICtrl.displayMatPrimaTotalPrice(fct)
-      UICtrl.displayTotal()
+      UICtrl.displayMatPrimaTotalPrice(fct);
+      UICtrl.displayTotal();
     });
   }
 
@@ -368,6 +444,14 @@ const MatPrimaCtrl = (function () {
     return +(valor.toFixed(2));
   }
 
+  const validateMatPrima = (matPrima) => {
+    if (matPrima.id !== null && matPrima.nome && matPrima.qtd && matPrima.fator) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   return {
 
     getMatPrimas,
@@ -378,7 +462,9 @@ const MatPrimaCtrl = (function () {
 
     calculateLinePrice,
 
-    calculateTotalPrice
+    calculateTotalPrice,
+
+    validateMatPrima
   };
 })();
 
@@ -398,6 +484,8 @@ const MatEmbCtrl = (function () {
 
   const addMatEmb = () => {
 
+    let id;
+
     if (currentId) {
       id = currentId;
     } else {
@@ -405,16 +493,18 @@ const MatEmbCtrl = (function () {
       currentId = 0;
     }
 
-    let nome = document.getElementById("nome-mat-emb").value;
-    let preco = document.getElementById("preco-mat-emb").value;
-    let qtd = document.getElementById("qtd-mat-emb").value;
-    let matEmb = new MaterialEmbalagem(id, nome, preco, qtd);
-    materiaisEmbalagem.push(matEmb);
-    UICtrl.addMatEmbItem(matEmb);
-    UICtrl.displayMatEmbTotalPrice();
-    currentId += 1;
-    UICtrl.displayTotal();
-    UICtrl.deleteMatEmbFields();
+    let matEmb = new MaterialEmbalagem(id, UICtrl.UISelectors.matEmbNome.value, UICtrl.UISelectors.matEmbPreco.value, UICtrl.UISelectors.matEmbQtd.value);
+    if (validateMatEmb(matEmb)) {
+      materiaisEmbalagem.push(matEmb);
+      UICtrl.addMatEmbItem(matEmb);
+      UICtrl.displayMatEmbTotalPrice();
+      currentId += 1;
+      UICtrl.displayTotal();
+      UICtrl.deleteMatEmbFields();
+    } else {
+      alert('Um ou mais campos do material de embalagem estão em falta. Repita por favor!')
+    }
+
   }
 
   const removeMatEmb = (e) => {
@@ -448,6 +538,14 @@ const MatEmbCtrl = (function () {
 
   }
 
+  const validateMatEmb = (matEmb) => {
+    if (matEmb.id !== null && matEmb.nome && matEmb.qtd) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   return {
 
     addMatEmb,
@@ -458,7 +556,9 @@ const MatEmbCtrl = (function () {
 
     calculateTotalPrice,
 
-    getMatEmb
+    getMatEmb,
+
+    validateMatEmb
 
   }
 
@@ -467,14 +567,10 @@ const MatEmbCtrl = (function () {
 const AppCtrl = (function (UICtrl, MatPrimaCtrl, MatEmbCtrl, Model) {
 
   const loadEventListeners = function () {
-    const addFormaFarmButton = document.querySelector(".add-forma-farm-button");
-    addFormaFarmButton.addEventListener("click", UICtrl.displayFormaFarmaceuticaPrice);
-    const addMatPrimaButton = document.getElementById("add-mat-prima-button");
-    addMatPrimaButton.addEventListener("click", MatPrimaCtrl.addMatPrima);
-    const addMatEmbButton = document.getElementById("add-mat-emb-button");
-    addMatEmbButton.addEventListener("click", MatEmbCtrl.addMatEmb);
-    const saveButton = document.querySelector(".save-button");
-    saveButton.addEventListener("click", Model.saveOrcamentoData);
+    UICtrl.UISelectors.addFormaFarmButton.addEventListener("click", UICtrl.displayFormaFarmaceuticaPrice);
+    UICtrl.UISelectors.addMatPrimaButton.addEventListener("click", MatPrimaCtrl.addMatPrima);
+    UICtrl.UISelectors.addMatEmbButton.addEventListener("click", MatEmbCtrl.addMatEmb);
+    UICtrl.UISelectors.saveButton.addEventListener("click", Model.saveOrcamentoData);
   }
 
   const fetchData = function () {
