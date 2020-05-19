@@ -17,11 +17,6 @@ exports.postOrcamento = (req, res, next) => {
         nomeManipulado: req.body.nomeManipulado,
         fatorF: req.body.fatorF,
         fFarmNome: req.body.fFarmNome,
-        fFarmPrice: req.body.fFarmPrice,
-        matPrimasPrice: req.body.matPrimasPrice,
-        matEmbPrice: req.body.matEmbPrice,
-        totalPrice: req.body.totalPrice,
-        IVA: req.body.IVA,
         materiasPrimas: req.body.materiasPrimas,
         materiaisEmbalagem: req.body.materiaisEmbalagem
     });

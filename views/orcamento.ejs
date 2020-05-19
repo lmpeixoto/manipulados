@@ -1,83 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Orcamento</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/orcamento.css">
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="css/orcamento.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <h1>Orçamento</h1>
-        <hr />
-        <%- include('includes/navigation.ejs') %>
-        <hr />
-        <form action="#" class="form-main">
-            <label for="nome-manipulado">Nome</label>
-            <input type="text" placeholder="Introduza o nome do manipulado" class="nome-manipulado" required>
-            <label for="forma-farmaceutica">Forma farmacêutica</label>
-            <select id="select-forma-farmaceutica" required>
-                <option disabled selected value> -- selecione uma opção -- </option>
+      <h1>Orçamento</h1>
+      <hr />
+      <%- include('includes/navigation.ejs') %>
+      <hr />
+      <form action="#" class="form-main">
+        <label for="nome-manipulado">Nome</label>
+        <input
+          type="text"
+          placeholder="Introduza o nome do manipulado"
+          class="nome-manipulado"
+          required
+        />
+        <label for="forma-farmaceutica">Forma farmacêutica</label>
+        <select id="select-forma-farmaceutica" required>
+          <option disabled selected value> -- selecione uma opção -- </option>
+        </select>
+        <label for="forma-farm-qtd">Quantidade</label>
+        <input class="forma-farm-qtd" type="number" required />
+        <button class="add-forma-farm-button" type="button">
+          <span class="glyphicon glyphicon-plus"></span>Selecionar
+        </button>
+        <div class="materias-primas-container">
+          <h3>Adicione as matérias-primas</h3>
+          <div class="mat-prima-create">
+            <label for="nome-mat-prim">Nome</label>
+            <input type="text" placeholder="Nome" id="nome-mat-prim" />
+            <label for="preco-mat-prim">Preço</label>
+            <input type="number" placeholder="Preço" id="preco-mat-prim" />
+            <label for="qtd-mat-prim">Quantidade</label>
+            <input type="number" placeholder="Quantidade" id="qtd-mat-prim" />
+            <label for="select-fator">Fator</label>
+            <select id="select-fator">
+              <option disabled selected value>
+                -- selecione uma opção --
+              </option>
             </select>
-            <label for="forma-farm-qtd">Quantidade</label>
-            <input class="forma-farm-qtd" type="number" required>
-            <button class="add-forma-farm-button" type="button"><span
-                    class="glyphicon glyphicon-plus"></span>Selecionar</button>
-            <div class="materias-primas-container">
-                <h3>Adicione as matérias-primas</h3>
-                <div class="mat-prima-create">
-                    <label for="nome-mat-prim">Nome</label>
-                    <input type="text" placeholder="Nome" id="nome-mat-prim">
-                    <label for="preco-mat-prim">Preço</label>
-                    <input type="number" placeholder="Preço" id="preco-mat-prim">
-                    <label for="qtd-mat-prim">Quantidade</label>
-                    <input type="number" placeholder="Quantidade" id="qtd-mat-prim">
-                    <label for="select-fator">Fator</label>
-                    <select id="select-fator">
-                        <option disabled selected value> -- selecione uma opção -- </option>
-                    </select>
-                    <button type="button" id="add-mat-prima-button"><span
-                            class="glyphicon glyphicon-plus"></span>Adicionar</button>
-                </div>
-                <hr />
-                <div class="mat-primas-summary">
-                    <ul id="mat-primas-summary-list"></ul>
-                </div>
-                <hr />
-                <h3>Adicione os materiais de embalagem</h3>
-                <div class="mat-emb-create">
-                    <label for="nome-mat-emb">Nome</label>
-                    <input type="text" placeholder="Nome" id="nome-mat-emb">
-                    <label for="preco-mat-emb">Preço</label>
-                    <input type="number" placeholder="Preço" id="preco-mat-emb">
-                    <label for="qtd-mat-emb">Quantidade</label>
-                    <input type="number" placeholder="Quantidade" id="qtd-mat-emb">
-                    <button type="button" id="add-mat-emb-button"><span
-                            class="glyphicon glyphicon-plus"></span>Adicionar</button>
-                </div>
-                <div class="mat-emb-summary">
-                    <ul id="mat-emb-summary-list"></ul>
-                </div>
-                <hr />
-                <div class="calculos-preco">
-                    <p>Forma farmacêutica: <span class="forma-farm-total-price"></span></p>
-                    <p>Matérias-primas: <span class="mat-prima-total-price"></span></p>
-                    <p>Materiais de embalagem: <span class="mat-emb-total-price"></span></p>
-                    <p>IVA: <span class="iva-total-price"></span></p>
-                    <p>Total: <span class="total-total-price"></span></p>
-                </div>
-                <hr />
-
-            </div>
-            <button type="submit" class="save-button">Gravar</button>
-        </form>
+            <button type="button" id="add-mat-prima-button">
+              <span class="glyphicon glyphicon-plus"></span>Adicionar
+            </button>
+          </div>
+          <hr />
+          <div class="mat-primas-summary">
+            <ul id="mat-primas-summary-list"></ul>
+          </div>
+          <hr />
+          <h3>Adicione os materiais de embalagem</h3>
+          <div class="mat-emb-create">
+            <label for="nome-mat-emb">Nome</label>
+            <input type="text" placeholder="Nome" id="nome-mat-emb" />
+            <label for="capacidade-mat-emb">Capacidade</label>
+            <input
+              type="text"
+              placeholder="Capacidade"
+              id="capacidade-mat-emb"
+            />
+            <label for="preco-mat-emb">Preço</label>
+            <input type="number" placeholder="Preço" id="preco-mat-emb" />
+            <label for="qtd-mat-emb">Quantidade</label>
+            <input type="number" placeholder="Quantidade" id="qtd-mat-emb" />
+            <button type="button" id="add-mat-emb-button">
+              <span class="glyphicon glyphicon-plus"></span>Adicionar
+            </button>
+          </div>
+          <div class="mat-emb-summary">
+            <ul id="mat-emb-summary-list"></ul>
+          </div>
+          <hr />
+          <div class="calculos-preco">
+            <p>
+              Forma farmacêutica: <span class="forma-farm-total-price"></span>
+            </p>
+            <p>Matérias-primas: <span class="mat-prima-total-price"></span></p>
+            <p>
+              Materiais de embalagem: <span class="mat-emb-total-price"></span>
+            </p>
+            <p>IVA: <span class="iva-total-price"></span></p>
+            <p>Total: <span class="total-total-price"></span></p>
+          </div>
+          <hr />
+        </div>
+        <button type="submit" class="save-button">Gravar</button>
+      </form>
     </div>
     <script src="js/orcamento.js"></script>
-</body>
-
+  </body>
 </html>
