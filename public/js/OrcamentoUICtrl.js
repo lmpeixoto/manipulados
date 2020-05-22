@@ -1,9 +1,9 @@
 import { MatEmbCtrl } from './MatEmbCtrl.js';
 import { MatPrimaCtrl } from './MatPrimaCtrl.js';
-import { Model } from "./Model.js";
+import { OrcamentoModel } from "./OrcamentoModel.js";
 
 
-export const UICtrl = (function () {
+export const OrcamentoUICtrl = (function () {
     const UISelectors = {
         formaFarmaceuticaSelect: document.getElementById("select-forma-farmaceutica"),
         nomeManipulado: document.querySelector('.nome-manipulado'),
@@ -72,7 +72,7 @@ export const UICtrl = (function () {
     const displayMatPrimaTotalPrice = (fct) => {
         let totalPrice = MatPrimaCtrl.calculateTotalPrice(fct);
         UISelectors.matPrimaTotalPrice.innerHTML = totalPrice;
-        Model.setMatPrimasPrice(parseFloat(totalPrice));
+        OrcamentoModel.setMatPrimasPrice(parseFloat(totalPrice));
     };
     const addMatEmbItem = (item) => {
         let precoLinha = MatEmbCtrl.calculateLinePrice(item);
@@ -100,15 +100,15 @@ export const UICtrl = (function () {
     const displayMatEmbTotalPrice = () => {
         let totalPrice = +((MatEmbCtrl.calculateTotalPrice() * 1.2).toFixed(2));
         UISelectors.matEmbTotalPrice.innerHTML = totalPrice;
-        Model.setMatEmbPrice(totalPrice);
+        OrcamentoModel.setMatEmbPrice(totalPrice);
     };
     const displayFormaFarmaceuticaPrice = () => {
-        Model.fetchFormasFarmaceuticas().then(ff => {
-            let price = Model.calculateFormaFarmaceutica(ff);
+        OrcamentoModel.fetchFormasFarmaceuticas().then(ff => {
+            let price = OrcamentoModel.calculateFormaFarmaceutica(ff);
             UISelectors.formFarmTotalPrice.innerHTML = price;
-            Model.setfFarmPrice(price);
-            Model.setNomeManipulado(saveNomeManipulado());
-            Model.setNomeFormaFarm(saveNomeFormaFarma());
+            OrcamentoModel.setfFarmPrice(price);
+            OrcamentoModel.setNomeManipulado(saveNomeManipulado());
+            OrcamentoModel.setNomeFormaFarm(saveNomeFormaFarma());
             displayTotal();
         });
     };
@@ -119,7 +119,7 @@ export const UICtrl = (function () {
         return UISelectors.nomeManipulado.value;
     };
     const displayTotal = () => {
-        let [total, iva] = Model.calculateTotalPrice();
+        let [total, iva] = OrcamentoModel.calculateTotalPrice();
         const totalTotalPrice = document.querySelector('.total-total-price');
         totalTotalPrice.innerHTML = total;
         const ivaTotalPrice = document.querySelector('.iva-total-price');

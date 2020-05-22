@@ -1,5 +1,5 @@
-import { Model } from "./Model.js";
-import { UICtrl } from "./UICtrl.js";
+import { OrcamentoModel } from "./OrcamentoModel.js";
+import { OrcamentoUICtrl } from "./OrcamentoUICtrl.js";
 
 
 export const MatPrimaCtrl = (function () {
@@ -24,14 +24,14 @@ export const MatPrimaCtrl = (function () {
             id = 0;
             currentId = 0;
         }
-        let matPrima = new MateriaPrima(id, UICtrl.UISelectors.matPrimNome.value, UICtrl.UISelectors.matPrimPreco.value, UICtrl.UISelectors.matPrimQtd.value, UICtrl.UISelectors.matPrimFator.value);
+        let matPrima = new MateriaPrima(id, OrcamentoUICtrl.UISelectors.matPrimNome.value, OrcamentoUICtrl.UISelectors.matPrimPreco.value, OrcamentoUICtrl.UISelectors.matPrimQtd.value, OrcamentoUICtrl.UISelectors.matPrimFator.value);
         if (validateMatPrima(matPrima)) {
             materiasPrimas.push(matPrima);
-            Model.fetchFatores().then(fct => UICtrl.addMatPrimaItem(matPrima, fct));
-            Model.fetchFatores().then(fct => {
-                UICtrl.displayMatPrimaTotalPrice(fct);
-                UICtrl.displayTotal();
-                UICtrl.deleteMatPrimaFields();
+            OrcamentoModel.fetchFatores().then(fct => OrcamentoUICtrl.addMatPrimaItem(matPrima, fct));
+            OrcamentoModel.fetchFatores().then(fct => {
+                OrcamentoUICtrl.displayMatPrimaTotalPrice(fct);
+                OrcamentoUICtrl.displayTotal();
+                OrcamentoUICtrl.deleteMatPrimaFields();
             });
         }
         else {
@@ -43,10 +43,10 @@ export const MatPrimaCtrl = (function () {
         let indexToRemove = elementToRemove.id.split('-')[2];
         let materiasPrimasUpdated = materiasPrimas.filter(matPrim => parseInt(matPrim.id) !== parseInt(indexToRemove));
         materiasPrimas = materiasPrimasUpdated;
-        UICtrl.deleteMatPrimaItem(indexToRemove);
-        Model.fetchFatores().then(fct => {
-            UICtrl.displayMatPrimaTotalPrice(fct);
-            UICtrl.displayTotal();
+        OrcamentoUICtrl.deleteMatPrimaItem(indexToRemove);
+        OrcamentoModel.fetchFatores().then(fct => {
+            OrcamentoUICtrl.displayMatPrimaTotalPrice(fct);
+            OrcamentoUICtrl.displayTotal();
         });
     };
     const calculateLinePrice = (item, fct) => {

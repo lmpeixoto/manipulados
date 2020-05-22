@@ -1,9 +1,9 @@
 import { MatEmbCtrl } from './MatEmbCtrl.js';
 import { MatPrimaCtrl } from './MatPrimaCtrl.js';
-import { UICtrl } from './UICtrl.js';
+import { OrcamentoUICtrl } from './OrcamentoUICtrl.js';
 
 
-export const Model = (function () {
+export const OrcamentoModel = (function () {
     let fatorF = 4;
     let nomeManipulado;
     let fFarmNome;
@@ -24,8 +24,8 @@ export const Model = (function () {
     };
     const calculateFormaFarmaceutica = (formasFarmaceuticas) => {
         let formaFarmaceuticaPrice;
-        const fFarm = UICtrl.UISelectors.formaFarmNome.value;
-        const qtd = UICtrl.UISelectors.formaFarmQtd.value;
+        const fFarm = OrcamentoUICtrl.UISelectors.formaFarmNome.value;
+        const qtd = OrcamentoUICtrl.UISelectors.formaFarmQtd.value;
         const limite = +(formasFarmaceuticas[fFarm][0]);
         const fatorNormal = +(formasFarmaceuticas[fFarm][1]);
         const fatorSuplemento = +(formasFarmaceuticas[fFarm][2]);

@@ -33,8 +33,8 @@ exports.postOrcamento = (req, res, next) => {
 
 }
 
-exports.getNovo = (req, res, next) => {
-    res.render('novo');
+exports.getNovoManipulado = (req, res, next) => {
+    res.render('novoManipulado');
 }
 
 exports.getFormasFarmaceuticas = (req, res, next) => {

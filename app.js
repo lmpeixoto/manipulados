@@ -35,7 +35,7 @@ app.get('/formasFarmaceuticas', controllers.getFormasFarmaceuticas);
 
 app.get('/fatores', controllers.getFatores);
 
-app.get('/novo', controllers.getNovo);
+app.get('/novoManipulado', controllers.getNovoManipulado);
 
 app.get('/orcamento', controllers.getOrcamento);
 

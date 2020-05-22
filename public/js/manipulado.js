@@ -4,13 +4,13 @@ import { OrcamentoUICtrl } from './OrcamentoUICtrl.js';
 import { OrcamentoModel } from './OrcamentoModel.js';
 
 
-const OrcamentoCtrl = (function (UICtrl, MatPrimaCtrl, MatEmbCtrl, Model) {
+const ManipuladoCtrl = (function (UICtrl, MatPrimaCtrl, MatEmbCtrl, Model) {
 
     const loadEventListeners = function () {
         UICtrl.UISelectors.addFormaFarmButton.addEventListener("click", UICtrl.displayFormaFarmaceuticaPrice);
         UICtrl.UISelectors.addMatPrimaButton.addEventListener("click", MatPrimaCtrl.addMatPrima);
         UICtrl.UISelectors.addMatEmbButton.addEventListener("click", MatEmbCtrl.addMatEmb);
-        UICtrl.UISelectors.saveButton.addEventListener("click", Model.saveOrcamentoData);
+
     }
 
     const fetchData = function () {
@@ -29,4 +29,4 @@ const OrcamentoCtrl = (function (UICtrl, MatPrimaCtrl, MatEmbCtrl, Model) {
 
 })(OrcamentoUICtrl, MatPrimaCtrl, MatEmbCtrl, OrcamentoModel);
 
-OrcamentoCtrl.init();
+ManipuladoCtrl.init();

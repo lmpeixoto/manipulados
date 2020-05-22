@@ -1,4 +1,4 @@
-import { UICtrl } from "./UICtrl.js";
+import { OrcamentoUICtrl } from "./OrcamentoUICtrl.js";
 
 export const MatEmbCtrl = (function () {
 
@@ -26,14 +26,14 @@ export const MatEmbCtrl = (function () {
             currentId = 0;
         }
 
-        let matEmb = new MaterialEmbalagem(id, UICtrl.UISelectors.matEmbNome.value, UICtrl.UISelectors.matEmbCapacidade.value, UICtrl.UISelectors.matEmbPreco.value, UICtrl.UISelectors.matEmbQtd.value);
+        let matEmb = new MaterialEmbalagem(id, OrcamentoUICtrl.UISelectors.matEmbNome.value, OrcamentoUICtrl.UISelectors.matEmbCapacidade.value, OrcamentoUICtrl.UISelectors.matEmbPreco.value, OrcamentoUICtrl.UISelectors.matEmbQtd.value);
         if (validateMatEmb(matEmb)) {
             materiaisEmbalagem.push(matEmb);
-            UICtrl.addMatEmbItem(matEmb);
-            UICtrl.displayMatEmbTotalPrice();
+            OrcamentoUICtrl.addMatEmbItem(matEmb);
+            OrcamentoUICtrl.displayMatEmbTotalPrice();
             currentId += 1;
-            UICtrl.displayTotal();
-            UICtrl.deleteMatEmbFields();
+            OrcamentoUICtrl.displayTotal();
+            OrcamentoUICtrl.deleteMatEmbFields();
         } else {
             alert('Um ou mais campos do material de embalagem estão em falta. Repita por favor!')
         }
@@ -46,9 +46,9 @@ export const MatEmbCtrl = (function () {
         let matEmbUpdated = materiaisEmbalagem.filter(
             matEmb => parseInt(matEmb.id) !== parseInt(indexToRemove));
         materiaisEmbalagem = matEmbUpdated
-        UICtrl.deleteMatEmbItem(indexToRemove);
-        UICtrl.displayMatEmbTotalPrice();
-        UICtrl.displayTotal()
+        OrcamentoUICtrl.deleteMatEmbItem(indexToRemove);
+        OrcamentoUICtrl.displayMatEmbTotalPrice();
+        OrcamentoUICtrl.displayTotal()
     }
 
     const calculateLinePrice = (item) => {
