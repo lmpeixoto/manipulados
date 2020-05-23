@@ -2,14 +2,18 @@ import { MatEmbCtrl } from './MatEmbCtrl.js'
 import { MatPrimaCtrl } from './MatPrimaCtrl.js';
 import { OrcamentoUICtrl } from './OrcamentoUICtrl.js';
 import { OrcamentoModel } from './OrcamentoModel.js';
+import { ManipuladoUICtrl } from './ManipuladoUICtrl.js';
+import { ValidCtrl } from './ValidCtrl.js';
 
 
 const ManipuladoCtrl = (function (UICtrl, MatPrimaCtrl, MatEmbCtrl, Model) {
 
     const loadEventListeners = function () {
-        UICtrl.UISelectors.addFormaFarmButton.addEventListener("click", UICtrl.displayFormaFarmaceuticaPrice);
-        UICtrl.UISelectors.addMatPrimaButton.addEventListener("click", MatPrimaCtrl.addMatPrima);
-        UICtrl.UISelectors.addMatEmbButton.addEventListener("click", MatEmbCtrl.addMatEmb);
+        OrcamentoUICtrl.UISelectors.addFormaFarmButton.addEventListener("click", UICtrl.displayFormaFarmaceuticaPrice);
+        OrcamentoUICtrl.UISelectors.addMatPrimaButton.addEventListener("click", MatPrimaCtrl.addMatPrima);
+        OrcamentoUICtrl.UISelectors.addMatEmbButton.addEventListener("click", MatEmbCtrl.addMatEmb);
+        ManipuladoUICtrl.UISelectors.addValidacaoButton.addEventListener("click", ValidCtrl.addValidacao)
+
 
     }
 

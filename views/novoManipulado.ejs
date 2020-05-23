@@ -29,6 +29,10 @@
         />
         <label for="lote-manipulado">Lote</label>
         <input type="text" class="lote-manipulado" />
+        <label for="preparador-manipulado">Preparador</label>
+        <input type="text" class="preparador-manipulado" />
+        <label for="supervisor-manipulado">Supervisor</label>
+        <input type="text" class="supervisor-manipulado" />
         <label for="forma-farmaceutica">Forma farmacêutica</label>
         <select
           name="forma-farmaceutica"
@@ -80,8 +84,8 @@
           <hr />
           <h3>Preparação</h3>
           <div class="preparacao-create">
-            <label for="preparacao">Nome</label>
-            <textarea class="preparacao" placeholder="Preparação"></textarea>
+            <label for="preparacao-manipulado">Modo de preparação</label>
+            <textarea class="preparacao-manipulado" placeholder="Preparação"></textarea>
             <button type="button" id="add-prep-button">
               <span class="glyphicon glyphicon-plus"></span>Adicionar
             </button>
@@ -109,20 +113,20 @@
           </div>
           <hr />
           <h3>Conservação e prazo de validade</h3>
-          <label for="conservacao">Conservação</label>
-          <textarea name="conservacao" cols="30" rows="10"></textarea>
-          <label for="validade">Validade</label>
-          <input type="date" class="validade" />
+          <label for="conservacao-manipulado">Conservação</label>
+          <textarea name="conservacao-manipulado" cols="30" rows="10"></textarea>
+          <label for="validade-manipulado">Validade</label>
+          <input type="date" class="validade-manipulado" />
           <hr />
           <h3>Validação</h3>
           <div class="validacao">
-            <label for="ensaio">Ensaio</label>
-            <input type="text" placeholder="Ensaio" id="ensaio" />
-            <label for="especificacao">Especificacao</label>
-            <input type="text" placeholder="Especificacao" id="especificacao" />
-            <label for="resultadb">Resultado</label>
-            <input type="text" placeholder="Resultado" id="resultado" />
-            <button type="button" id="add-mat-emb-button">
+            <label for="ensaio-validacao">Ensaio</label>
+            <input type="text" placeholder="Ensaio" id="ensaio-validacao" />
+            <label for="especificacao-validacao">Especificacao</label>
+            <input type="text" placeholder="Especificacao" id="especificacao-validacao" />
+            <label for="resultado-validacao">Resultado</label>
+            <input type="text" placeholder="Resultado" id="resultado-validacao" />
+            <button type="button" id="add-validacao-button">
               <span class="glyphicon glyphicon-plus"></span>Adicionar
             </button>
           </div>
@@ -143,6 +147,9 @@
           </div>
           <hr />
         </div>
+        <button type="button" id="save-manipulado-button">
+              <span class="glyphicon glyphicon-plus"></span>Gravar
+            </button>
       </form>
     </div>
     <script type="module" src="js/manipulado.js"></script>
