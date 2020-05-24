@@ -1,23 +1,64 @@
 import { MatEmbCtrl } from './MatEmbCtrl.js';
 import { MatPrimaCtrl } from './MatPrimaCtrl.js';
-import { FormaFarmCtrl } from './FormaFarmCtrl.js';
 import { OrcamentoUICtrl } from './OrcamentoUICtrl.js';
+import { ManipuladoUICtrl } from './ManipuladoUICtrl.js';
+import { ValidCtrl } from './ValidCtrl.js';
 
 
-export const OrcamentoModel = (function () {
+
+export const ManipuladoModel = (function () {
     let fatorF = 4;
     let nomeManipulado;
-    let formaFarmaceutica;
+    let fFarmNome;
+    let fFarmPrice;
     let matPrimasPrice;
     let matEmbPrice;
     let totalPrice;
     let IVA;
-
+    const fetchFatores = async () => {
+        let response = await fetch("/fatores");
+        let data = await response.json();
+        return data;
+    };
+    const fetchFormasFarmaceuticas = async () => {
+        let response = await fetch("/formasFarmaceuticas");
+        let data = await response.json();
+        return data;
+    };
+    const calculateFormaFarmaceutica = (formasFarmaceuticas) => {
+        let formaFarmaceuticaPrice;
+        const fFarm = OrcamentoUICtrl.UISelectors.formaFarmNome.value;
+        const qtd = OrcamentoUICtrl.UISelectors.formaFarmQtd.value;
+        const limite = +(formasFarmaceuticas[fFarm][0]);
+        const fatorNormal = +(formasFarmaceuticas[fFarm][1]);
+        const fatorSuplemento = +(formasFarmaceuticas[fFarm][2]);
+        if (qtd <= limite) {
+            formaFarmaceuticaPrice = fatorF * fatorNormal;
+        }
+        else {
+            let excesso = qtd - limite;
+            formaFarmaceuticaPrice = (fatorF * fatorNormal) + (excesso * fatorSuplemento);
+        }
+        formaFarmaceuticaPrice = +(formaFarmaceuticaPrice.toFixed(2));
+        setfFarmPrice(formaFarmaceuticaPrice);
+        return formaFarmaceuticaPrice;
+    };
+    const calculateTotalPrice = () => {
+        let fFarmPrice = (getfFarmPrice() || 0);
+        let matPrimPrice = (getMatPrimasPrice() || 0);
+        let matEmbPrice = (getMatEmbPrice() || 0);
+        let totalPrice = (fFarmPrice + matPrimPrice + matEmbPrice) * 1.3;
+        let IVA = +((totalPrice * 0.023).toFixed(2));
+        let finalPrice = +((totalPrice + IVA).toFixed(2));
+        setTotalPrice(finalPrice);
+        setIVA(IVA);
+        return [finalPrice, IVA];
+    };
     const createObjectToSend = () => {
         let manipulado = {
             "nomeManipulado": nomeManipulado,
             "fatorF": fatorF,
-            "fFarmNome": formaFarmaceutica.nome,
+            "fFarmNome": fFarmNome,
             "materiasPrimas": MatPrimaCtrl.getMatPrimas(),
             "materiaisEmbalagem": MatEmbCtrl.getMatEmb()
         };
@@ -52,7 +93,7 @@ export const OrcamentoModel = (function () {
         }
     };
     const validateFormaFarmaceutica = () => {
-        if (nomeManipulado && formaFarmaceutica.nome && formaFarmaceutica.preco && formaFarmaceutica.qtd) {
+        if (nomeManipulado && fFarmNome) {
             return true;
         }
     };
@@ -67,47 +108,36 @@ export const OrcamentoModel = (function () {
         }
     };
 
-    const calculateTotalPrice = () => {
-        let fFarmPrice = (formaFarmaceutica.preco || 0);
-        let matPrimPrice = (getMatPrimasPrice() || 0);
-        let matEmbPrice = (getMatEmbPrice() || 0);
-        let totalPrice = (fFarmPrice + matPrimPrice + matEmbPrice) * 1.3;
-        let IVA = +((totalPrice * 0.023).toFixed(2));
-        let finalPrice = +((totalPrice + IVA).toFixed(2));
-        setTotalPrice(finalPrice);
-        setIVA(IVA);
-        return [finalPrice, IVA];
-    };
-
-
     const getMatPrimasPrice = () => matPrimasPrice;
     const getMatEmbPrice = () => matEmbPrice;
     const getTotalPrice = () => totalPrice;
     const getIVA = () => IVA;
-    const getFatorF = () => fatorF;
     const setNomeManipulado = (nome) => nomeManipulado = nome;
+
     const setMatPrimasPrice = (price) => matPrimasPrice = price;
     const setMatEmbPrice = (price) => matEmbPrice = price;
     const setIVA = (value) => IVA = value;
     const setTotalPrice = (price) => totalPrice = price;
-    const setFormaFarm = (fFarm) => formaFarmaceutica = fFarm;
 
     return {
-
+        fetchFormasFarmaceuticas,
+        calculateFormaFarmaceutica,
         calculateTotalPrice,
         createObjectToSend,
         saveOrcamentoData,
+        fetchFatores,
+        getfFarmPrice,
         getMatPrimasPrice,
         getMatEmbPrice,
         getTotalPrice,
         getIVA,
-        getFatorF,
+        setfFarmPrice,
         setMatPrimasPrice,
         setMatEmbPrice,
         setIVA,
         setTotalPrice,
         setNomeManipulado,
-        setFormaFarm,
+        setNomeFormaFarm,
         validateFormaFarmaceutica,
         validateMateriasPrimas,
         validateMateriaisEmb,

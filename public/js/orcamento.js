@@ -2,9 +2,10 @@ import { MatEmbCtrl } from './MatEmbCtrl.js'
 import { MatPrimaCtrl } from './MatPrimaCtrl.js';
 import { OrcamentoUICtrl } from './OrcamentoUICtrl.js';
 import { OrcamentoModel } from './OrcamentoModel.js';
+import { FormaFarmCtrl } from './FormaFarmCtrl.js';
 
 
-const OrcamentoCtrl = (function (UICtrl, MatPrimaCtrl, MatEmbCtrl, Model) {
+const OrcamentoCtrl = (function (UICtrl, FormaFarmCtrl, MatPrimaCtrl, MatEmbCtrl, Model) {
 
     const loadEventListeners = function () {
         UICtrl.UISelectors.addFormaFarmButton.addEventListener("click", UICtrl.displayFormaFarmaceuticaPrice);
@@ -14,8 +15,8 @@ const OrcamentoCtrl = (function (UICtrl, MatPrimaCtrl, MatEmbCtrl, Model) {
     }
 
     const fetchData = function () {
-        Model.fetchFormasFarmaceuticas().then((result) => UICtrl.formaFarmaceuticaSelectPopulate(result));
-        Model.fetchFatores().then((result) => UICtrl.fatorSelectPopulate(result));
+        FormaFarmCtrl.fetchFormasFarmaceuticas().then((result) => UICtrl.formaFarmaceuticaSelectPopulate(result));
+        MatPrimaCtrl.fetchFatores().then((result) => UICtrl.fatorSelectPopulate(result));
     }
 
     return {
@@ -27,6 +28,6 @@ const OrcamentoCtrl = (function (UICtrl, MatPrimaCtrl, MatEmbCtrl, Model) {
     }
 
 
-})(OrcamentoUICtrl, MatPrimaCtrl, MatEmbCtrl, OrcamentoModel);
+})(OrcamentoUICtrl, FormaFarmCtrl, MatPrimaCtrl, MatEmbCtrl, OrcamentoModel);
 
 OrcamentoCtrl.init();

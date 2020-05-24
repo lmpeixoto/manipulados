@@ -15,6 +15,13 @@ export const MatPrimaCtrl = (function () {
     const getMatPrimas = () => {
         return materiasPrimas;
     };
+
+    const fetchFatores = async () => {
+        let response = await fetch("/fatores");
+        let data = await response.json();
+        return data;
+    };
+
     const addMatPrima = () => {
         let id;
         if (currentId) {
@@ -27,8 +34,8 @@ export const MatPrimaCtrl = (function () {
         let matPrima = new MateriaPrima(id, OrcamentoUICtrl.UISelectors.matPrimNome.value, OrcamentoUICtrl.UISelectors.matPrimPreco.value, OrcamentoUICtrl.UISelectors.matPrimQtd.value, OrcamentoUICtrl.UISelectors.matPrimFator.value);
         if (validateMatPrima(matPrima)) {
             materiasPrimas.push(matPrima);
-            OrcamentoModel.fetchFatores().then(fct => OrcamentoUICtrl.addMatPrimaItem(matPrima, fct));
-            OrcamentoModel.fetchFatores().then(fct => {
+            fetchFatores().then(fct => OrcamentoUICtrl.addMatPrimaItem(matPrima, fct));
+            fetchFatores().then(fct => {
                 OrcamentoUICtrl.displayMatPrimaTotalPrice(fct);
                 OrcamentoUICtrl.displayTotal();
                 OrcamentoUICtrl.deleteMatPrimaFields();
@@ -44,7 +51,7 @@ export const MatPrimaCtrl = (function () {
         let materiasPrimasUpdated = materiasPrimas.filter(matPrim => parseInt(matPrim.id) !== parseInt(indexToRemove));
         materiasPrimas = materiasPrimasUpdated;
         OrcamentoUICtrl.deleteMatPrimaItem(indexToRemove);
-        OrcamentoModel.fetchFatores().then(fct => {
+        fetchFatores().then(fct => {
             OrcamentoUICtrl.displayMatPrimaTotalPrice(fct);
             OrcamentoUICtrl.displayTotal();
         });
@@ -69,6 +76,7 @@ export const MatPrimaCtrl = (function () {
     };
     return {
         getMatPrimas,
+        fetchFatores,
         addMatPrima,
         removeMatPrima,
         calculateLinePrice,

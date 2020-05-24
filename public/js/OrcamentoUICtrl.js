@@ -1,6 +1,7 @@
 import { MatEmbCtrl } from './MatEmbCtrl.js';
 import { MatPrimaCtrl } from './MatPrimaCtrl.js';
 import { OrcamentoModel } from "./OrcamentoModel.js";
+import { FormaFarmCtrl } from './FormaFarmCtrl.js';
 
 
 export const OrcamentoUICtrl = (function () {
@@ -102,13 +103,15 @@ export const OrcamentoUICtrl = (function () {
         UISelectors.matEmbTotalPrice.innerHTML = totalPrice;
         OrcamentoModel.setMatEmbPrice(totalPrice);
     };
-    const displayFormaFarmaceuticaPrice = () => {
-        OrcamentoModel.fetchFormasFarmaceuticas().then(ff => {
-            let price = OrcamentoModel.calculateFormaFarmaceutica(ff);
+    const addFormaFarmaceutica = () => {
+        FormaFarmCtrl.fetchFormasFarmaceuticas().then(ff => {
+            const fFarm = OrcamentoUICtrl.UISelectors.formaFarmNome.value;
+            const qtd = OrcamentoUICtrl.UISelectors.formaFarmQtd.value;
+            let price = FormaFarmCtrl.calculateFormaFarmaceutica(ff, fFarm);
             UISelectors.formFarmTotalPrice.innerHTML = price;
-            OrcamentoModel.setfFarmPrice(price);
+            const formaFarmaceutica = FormaFarmCtrl.createFormaFarmaceutica(fFarm, qtd, price);
+            OrcamentoModel.setFormaFarm(formaFarmaceutica);
             OrcamentoModel.setNomeManipulado(saveNomeManipulado());
-            OrcamentoModel.setNomeFormaFarm(saveNomeFormaFarma());
             displayTotal();
         });
     };
@@ -138,6 +141,6 @@ export const OrcamentoUICtrl = (function () {
         deleteMatEmbItem,
         displayMatEmbTotalPrice,
         displayTotal,
-        displayFormaFarmaceuticaPrice
+        displayFormaFarmaceuticaPrice: addFormaFarmaceutica
     };
 })();

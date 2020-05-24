@@ -1,15 +1,15 @@
-import { MatEmbCtrl } from './MatEmbCtrl.js'
+import { FormaFarmCtrl } from './FormaFarmCtrl.js';
+import { MatEmbCtrl } from './MatEmbCtrl.js';
 import { MatPrimaCtrl } from './MatPrimaCtrl.js';
 import { OrcamentoUICtrl } from './OrcamentoUICtrl.js';
-import { OrcamentoModel } from './OrcamentoModel.js';
 import { ManipuladoUICtrl } from './ManipuladoUICtrl.js';
 import { ValidCtrl } from './ValidCtrl.js';
 
 
-const ManipuladoCtrl = (function (UICtrl, MatPrimaCtrl, MatEmbCtrl, Model) {
+const ManipuladoCtrl = (function (OrcamentoUICtrl, ManipuladoUICtrl, FormaFarmCtrl, MatPrimaCtrl, MatEmbCtrl) {
 
     const loadEventListeners = function () {
-        OrcamentoUICtrl.UISelectors.addFormaFarmButton.addEventListener("click", UICtrl.displayFormaFarmaceuticaPrice);
+        OrcamentoUICtrl.UISelectors.addFormaFarmButton.addEventListener("click", OrcamentoUICtrl.displayFormaFarmaceuticaPrice);
         OrcamentoUICtrl.UISelectors.addMatPrimaButton.addEventListener("click", MatPrimaCtrl.addMatPrima);
         OrcamentoUICtrl.UISelectors.addMatEmbButton.addEventListener("click", MatEmbCtrl.addMatEmb);
         ManipuladoUICtrl.UISelectors.addValidacaoButton.addEventListener("click", ValidCtrl.addValidacao)
@@ -18,8 +18,8 @@ const ManipuladoCtrl = (function (UICtrl, MatPrimaCtrl, MatEmbCtrl, Model) {
     }
 
     const fetchData = function () {
-        Model.fetchFormasFarmaceuticas().then((result) => UICtrl.formaFarmaceuticaSelectPopulate(result));
-        Model.fetchFatores().then((result) => UICtrl.fatorSelectPopulate(result));
+        FormaFarmCtrl.fetchFormasFarmaceuticas().then((result) => OrcamentoUICtrl.formaFarmaceuticaSelectPopulate(result));
+        MatPrimaCtrl.fetchFatores().then((result) => OrcamentoUICtrl.fatorSelectPopulate(result));
     }
 
     return {
@@ -31,6 +31,6 @@ const ManipuladoCtrl = (function (UICtrl, MatPrimaCtrl, MatEmbCtrl, Model) {
     }
 
 
-})(OrcamentoUICtrl, MatPrimaCtrl, MatEmbCtrl, OrcamentoModel);
+})(OrcamentoUICtrl, ManipuladoUICtrl, FormaFarmCtrl, MatPrimaCtrl, MatEmbCtrl);
 
 ManipuladoCtrl.init();
