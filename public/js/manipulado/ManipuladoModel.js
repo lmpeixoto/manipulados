@@ -1,6 +1,5 @@
 import { MatEmbCtrl } from "../utils/MatEmbCtrl.js";
 import { MatPrimaCtrl } from "../utils/MatPrimaCtrl.js";
-import { OrcamentoUICtrl } from "../orcamento/OrcamentoUICtrl.js";
 import { ManipuladoUICtrl } from "./ManipuladoUICtrl.js";
 import { ValidCtrl } from "../utils/ValidCtrl.js";
 

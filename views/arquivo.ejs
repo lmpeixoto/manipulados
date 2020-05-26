@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Principal</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Manipulados</h1>
+        <hr />
+        <%- include('includes/navigation.ejs') %>
+        <hr />
+        <div class="search-container">
+            <form>
+                <div class="inner-form">
+                    <div class="input-field first-wrap">
+                        <input id="search-input" type="text" placeholder="Introduza o termo de pesquisa" />
+                    </div>
+                    <div class="input-field second-wrap">
+                        <div class="input-select">
+                            <select data-trigger="" name="search-choices" id="search-choices">
+                                <option>Nome</option>
+                                <option>Substância Ativa</option>
+                                <option>Forma Farmacêutica</option>
+                                <option>Utente</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-field third-wrap">
+                        <button class="btn-search" id="btn-search" type="button">PROCURAR</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <hr />
+        <div class="results-container">
+        </div>
+    </div>
+    <script type="module" src="js/arquivo/arquivo.js"></script>
+</body>
+
+</html>

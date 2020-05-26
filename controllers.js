@@ -69,6 +69,14 @@ exports.postNovoManipulado = (req, res, next) => {
     });
 };
 
+exports.getArquivo = (req, res, next) => {
+  res.render("arquivo");
+};
+
+exports.postArquivo = (req, res, next) => {
+  console.log(req.body);
+};
+
 exports.getFormasFarmaceuticas = (req, res, next) => {
   res.send(formasFarmaceuticas);
 };

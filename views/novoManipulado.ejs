@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Orcamento</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="css/orcamento.css" />
+  <link rel="stylesheet" href="css/manipulado.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
@@ -15,7 +15,9 @@
   <div class="container">
     <h1>Novo Manipulado</h1>
     <hr />
-    <%- include('includes/navigation.ejs') %>
+    <div class="navigation-container">
+      <%- include('includes/navigation.ejs') %>
+    </div>
     <hr />
     <form action="#" class="form-main">
       <h3>Utente</h3>
@@ -49,7 +51,6 @@
       <button class="add-forma-farm-button" type="button">
         <span class="glyphicon glyphicon-plus"></span>Selecionar
       </button>
-
       <div class="materias-primas-container">
         <h3>Adicione as matérias-primas</h3>
         <div class="mat-prima-create">
@@ -75,12 +76,9 @@
         </div>
         <hr />
         <h3>Preparação</h3>
-        <div class="preparacao-create">
+        <div class="preparacao-container">
           <label for="preparacao-manipulado">Modo de preparação</label>
           <textarea class="preparacao-manipulado" placeholder="Preparação"></textarea>
-          <button type="button" id="add-prep-button">
-            <span class="glyphicon glyphicon-plus"></span>Adicionar
-          </button>
         </div>
         <hr />
         <h3>Adicione os materiais de embalagem</h3>
@@ -101,14 +99,16 @@
           <ul id="mat-emb-summary-list"></ul>
         </div>
         <hr />
-        <h3>Conservação e prazo de validade</h3>
-        <label for="conservacao-manipulado">Conservação</label>
-        <textarea name="conservacao-manipulado" cols="30" rows="10" class="conservacao-manipulado"></textarea>
-        <label for="validade-manipulado">Validade</label>
-        <input type="date" class="validade-manipulado" />
+        <div class="conservacao-container">
+          <h3>Conservação e prazo de validade</h3>
+          <label for="conservacao-manipulado">Conservação</label>
+          <textarea name="conservacao-manipulado" cols="30" rows="10" class="conservacao-manipulado"></textarea>
+          <label for="validade-manipulado">Validade</label>
+          <input type="date" class="validade-manipulado" />
+        </div>
         <hr />
-        <h3>Validação</h3>
-        <div class="validacao">
+        <div class="validacao-container">
+          <h3>Validação</h3>
           <label for="ensaio-validacao">Ensaio</label>
           <input type="text" placeholder="Ensaio" id="ensaio-validacao" />
           <label for="especificacao-validacao">Especificacao</label>
