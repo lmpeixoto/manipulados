@@ -4,10 +4,20 @@
   margin: 3rem 0;
 }
 
+.form-main > input,
+.form-main > select {
+  margin-bottom: 1.5rem;
+}
+
 .mat-prima-create {
   display: flex;
   flex-direction: column;
   margin: 3rem 0;
+}
+
+.mat-prima-create > input,
+.mat-prima-create > select {
+  margin-bottom: 1.5rem;
 }
 
 .mat-emb-create {
@@ -16,7 +26,12 @@
   margin: 3rem 0;
 }
 
-.navigation-bar {
+.mat-emb-create > input,
+.mat-emb-create > select {
+  margin-bottom: 1.5rem;
+}
+
+/* .navigation-bar {
   display: flex;
   justify-content: center;
 }
@@ -25,4 +40,5 @@
   font-size: 2rem;
   display: inline;
   margin: 0 5rem;
+  color: white;
 }

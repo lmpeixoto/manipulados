@@ -4,6 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/manipulado.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <title>Menu Principal</title>
 </head>
 
@@ -14,14 +18,15 @@
         <%- include('includes/navigation.ejs') %>
         <hr />
         <div class="search-container">
-            <form>
+            <form action="/arquivo" method="POST" id="form-search">
                 <div class="inner-form">
                     <div class="input-field first-wrap">
-                        <input id="search-input" type="text" placeholder="Introduza o termo de pesquisa" />
+                        <input id="search-input" name="search-query" type="text"
+                            placeholder="Introduza o termo de pesquisa" />
                     </div>
                     <div class="input-field second-wrap">
                         <div class="input-select">
-                            <select data-trigger="" name="search-choices" id="search-choices">
+                            <select name="search-choices" id="search-choices">
                                 <option>Nome</option>
                                 <option>Substância Ativa</option>
                                 <option>Forma Farmacêutica</option>
@@ -30,14 +35,13 @@
                         </div>
                     </div>
                     <div class="input-field third-wrap">
-                        <button class="btn-search" id="btn-search" type="button">PROCURAR</button>
+                        <button class="btn-search" id="btn-search" type="submit">PROCURAR</button>
                     </div>
                 </div>
             </form>
         </div>
         <hr />
-        <div class="results-container">
-        </div>
+
     </div>
     <script type="module" src="js/arquivo/arquivo.js"></script>
 </body>

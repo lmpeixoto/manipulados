@@ -1,3 +1,5 @@
+// @ts-check
+
 import { OrcamentoUICtrl } from "../orcamento/OrcamentoUICtrl.js";
 import { OrcamentoModel } from "../orcamento/OrcamentoModel.js";
 

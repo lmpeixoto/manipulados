@@ -1,3 +1,5 @@
+// @ts-check
+
 import { ValidCtrl } from "../utils/ValidCtrl.js";
 import { ManipuladoModel } from "./ManipuladoModel.js";
 import { FormaFarmCtrl } from "../utils/FormaFarmCtrl.js";

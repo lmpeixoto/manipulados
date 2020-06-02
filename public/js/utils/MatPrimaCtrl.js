@@ -1,4 +1,4 @@
-import { OrcamentoUICtrl } from "../orcamento/OrcamentoUICtrl.js";
+// @ts-check
 
 export const MatPrimaCtrl = (function () {
   const MateriaPrima = function (id, nome, preco, qtd, fator) {

@@ -1,3 +1,5 @@
+// @ts-check
+
 import { ManipuladoUICtrl } from "../manipulado/ManipuladoUICtrl.js";
 
 export const ValidCtrl = (function () {

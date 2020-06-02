@@ -43,9 +43,9 @@ app.get("/orcamento", controllers.getOrcamento);
 
 app.post("/orcamento", controllers.postOrcamento);
 
-app.get("/arquivo", controllers.getArquivo);
+app.get("/pesquisa", controllers.getPesquisa);
 
-app.post("/arquivo", controllers.postArquivo);
+app.post("/pesquisa", controllers.postPesquisa);
 
 app.listen(port, () =>
   console.log(`App listening at http://localhost:${port}`)

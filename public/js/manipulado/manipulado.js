@@ -1,3 +1,5 @@
+// @ts-check
+
 import { FormaFarmCtrl } from "../utils/FormaFarmCtrl.js";
 import { MatEmbCtrl } from "../utils/MatEmbCtrl.js";
 import { MatPrimaCtrl } from "../utils/MatPrimaCtrl.js";

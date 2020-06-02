@@ -1,3 +1,5 @@
+// @ts-check
+
 const formasFarmaceuticas = require("./model/formas-farmaceuticas.json");
 const fatores = require("./model/unidades.json");
 const OrcamentoManipulado = require("./model/orcamentoManipulado");
@@ -22,7 +24,6 @@ exports.postOrcamento = (req, res, next) => {
   orcamentoManipulado
     .save()
     .then((result) => {
-      // console.log(result);
       console.log(orcamentoManipulado);
       console.log("Manipulado criado com sucesso");
       res.redirect("/");
@@ -69,12 +70,45 @@ exports.postNovoManipulado = (req, res, next) => {
     });
 };
 
-exports.getArquivo = (req, res, next) => {
-  res.render("arquivo");
+exports.getPesquisa = (req, res, next) => {
+  res.render("pesquisa", { manipulados: undefined });
 };
 
-exports.postArquivo = (req, res, next) => {
-  console.log(req.body);
+function escapeRegex(text) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
+
+exports.postPesquisa = (req, res, next) => {
+  let searchQuery = req.body["search-query"];
+  const regex = new RegExp(escapeRegex(searchQuery), "gi");
+  let searchChoice = req.body["search-choices"];
+  let queryChoice;
+  let find = {};
+  switch (searchChoice) {
+    case "Nome":
+      queryChoice = "nomeManipulado";
+      break;
+    case "Substância Ativa":
+      queryChoice = "Substância Ativa";
+      break;
+    case "Forma Farmacêutica":
+      queryChoice = "fFarmNome";
+      break;
+    case "Utente":
+      queryChoice = "utenteNome";
+      break;
+  }
+  find[queryChoice] = regex;
+  Manipulado.find(find)
+    .then((manip) => {
+      console.log(manip);
+      if (manip.length > 0) {
+        res.render("pesquisa", { manipulados: manip });
+      } else {
+        res.render("pesquisa", { manipulados: "" });
+      }
+    })
+    .catch((err) => console.log(err));
 };
 
 exports.getFormasFarmaceuticas = (req, res, next) => {

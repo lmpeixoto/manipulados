@@ -4,145 +4,103 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Orcamento</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" />
+  <title>Novo Manipulado</title>
   <link rel="stylesheet" href="css/manipulado.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <%- include('includes/dependencies-top.ejs') %>
 </head>
 
 <body>
+  <%- include('includes/navigation.ejs') %>
   <div class="container">
     <h1>Novo Manipulado</h1>
     <hr />
-    <div class="navigation-container">
-      <%- include('includes/navigation.ejs') %>
-    </div>
     <hr />
     <form action="#" class="form-main">
       <h3>Utente</h3>
       <label for="nome-utente">Nome</label>
-      <input type="text" class="nome-utente" />
+      <input type="text" class="nome-utente form-control" />
       <label for="contacto-utente">Contacto</label>
-      <input type="text" class="contacto-utente" />
+      <input type="text" class="contacto-utente form-control" />
       <hr />
       <h3>Prescritor</h3>
       <label for="nome-prescritor">Nome</label>
-      <input type="text" class="nome-prescritor" />
+      <input type="text" class="nome-prescritor form-control" />
       <label for="contacto-prescritor">Contacto</label>
-      <input type="text" class="contacto-prescritor" />
+      <input type="text" class="contacto-prescritor form-control" />
       <hr />
       <h3>Farmacêutico</h3>
       <label for="preparador-manipulado">Preparador</label>
-      <input type="text" class="preparador-manipulado" />
+      <input type="text" class="preparador-manipulado form-control" />
       <label for="supervisor-manipulado">Supervisor</label>
-      <input type="text" class="supervisor-manipulado" />
+      <input type="text" class="supervisor-manipulado form-control" />
       <h3>Manipulado</h3>
       <label for="lote-manipulado">Lote</label>
-      <input type="text" class="lote-manipulado" />
+      <input type="text" class="lote-manipulado form-control" />
       <label for="nome-manipulado">Nome</label>
-      <input type="text" class="nome-manipulado" placeholder="Introduza o nome do manipulado" required />
+      <input type="text" class="nome-manipulado form-control" placeholder="Introduza o nome do manipulado" required />
       <label for="forma-farmaceutica">Forma farmacêutica</label>
-      <select name="forma-farmaceutica" id="select-forma-farmaceutica" required>
+      <select name="forma-farmaceutica" class="form-control" id="select-forma-farmaceutica" required>
         <option disabled selected value> -- selecione uma opção -- </option>
       </select>
       <label for="quantidade">Quantidade a preparar</label>
-      <input class="forma-farm-qtd" type="number" required />
-      <button class="add-forma-farm-button" type="button">
+      <input class="forma-farm-qtd  form-control" type="number" required />
+      <button class="btn btn-primary add-forma-farm-button" type="button">
         <span class="glyphicon glyphicon-plus"></span>Selecionar
       </button>
-      <div class="materias-primas-container">
-        <h3>Adicione as matérias-primas</h3>
-        <div class="mat-prima-create">
-          <label for="nome-mat-prim">Nome</label>
-          <input type="text" placeholder="Nome" id="nome-mat-prim" />
-          <label for="preco-mat-prim">Preço</label>
-          <input type="number" placeholder="Preço" id="preco-mat-prim" />
-          <label for="qtd-mat-prim">Quantidade</label>
-          <input type="number" placeholder="Quantidade" id="qtd-mat-prim" />
-          <label for="select-fator">Fator</label>
-          <select id="select-fator" required>
-            <option disabled selected value>
-              -- selecione uma opção --
-            </option>
-          </select>
-          <button type="button" id="add-mat-prima-button">
-            <span class="glyphicon glyphicon-plus"></span>Adicionar
-          </button>
-        </div>
-        <hr />
-        <div class="mat-primas-summary">
-          <ul id="mat-primas-summary-list"></ul>
-        </div>
-        <hr />
-        <h3>Preparação</h3>
-        <div class="preparacao-container">
-          <label for="preparacao-manipulado">Modo de preparação</label>
-          <textarea class="preparacao-manipulado" placeholder="Preparação"></textarea>
-        </div>
-        <hr />
-        <h3>Adicione os materiais de embalagem</h3>
-        <div class="mat-emb-create">
-          <label for="nome-mat-emb">Nome</label>
-          <input type="text" placeholder="Nome" id="nome-mat-emb" />
-          <label for="capacidade-mat-emb">Capacidade</label>
-          <input type="text" placeholder="Capacidade" id="capacidade-mat-emb" />
-          <label for="preco-mat-emb">Preço</label>
-          <input type="number" placeholder="Preço" id="preco-mat-emb" />
-          <label for="qtd-mat-emb">Quantidade</label>
-          <input type="number" placeholder="Quantidade" id="qtd-mat-emb" />
-          <button type="button" id="add-mat-emb-button">
-            <span class="glyphicon glyphicon-plus"></span>Adicionar
-          </button>
-        </div>
-        <div class="mat-emb-summary">
-          <ul id="mat-emb-summary-list"></ul>
-        </div>
-        <hr />
-        <div class="conservacao-container">
-          <h3>Conservação e prazo de validade</h3>
-          <label for="conservacao-manipulado">Conservação</label>
-          <textarea name="conservacao-manipulado" cols="30" rows="10" class="conservacao-manipulado"></textarea>
-          <label for="validade-manipulado">Validade</label>
-          <input type="date" class="validade-manipulado" />
-        </div>
-        <hr />
-        <div class="validacao-container">
-          <h3>Validação</h3>
-          <label for="ensaio-validacao">Ensaio</label>
-          <input type="text" placeholder="Ensaio" id="ensaio-validacao" />
-          <label for="especificacao-validacao">Especificacao</label>
-          <input type="text" placeholder="Especificacao" id="especificacao-validacao" />
-          <label for="resultado-validacao">Resultado</label>
-          <input type="text" placeholder="Resultado" id="resultado-validacao" />
-          <button type="button" id="add-validacao-button">
-            <span class="glyphicon glyphicon-plus"></span>Adicionar
-          </button>
-        </div>
-        <div class="validacao-summary">
-          <ul id="validacao-summary-list"></ul>
-        </div>
-        <hr />
-        <div class="calculos-preco">
-          <p>
-            Forma farmacêutica: <span class="forma-farm-total-price"></span>
-          </p>
-          <p>Matérias-primas: <span class="mat-prima-total-price"></span></p>
-          <p>
-            Materiais de embalagem: <span class="mat-emb-total-price"></span>
-          </p>
-          <p>IVA: <span class="iva-total-price"></span></p>
-          <p>Total: <span class="total-total-price"></span></p>
-        </div>
-        <hr />
-        <div>
-          <button type="button" id="save-manipulado-button">
-            <span class="glyphicon glyphicon-plus"></span>Gravar
-          </button>
-        </div>
+      <%- include('includes/materias-primas.ejs') %>
+      <hr />
+      <h3>Preparação</h3>
+      <div class="preparacao-container">
+        <label for="preparacao-manipulado">Modo de preparação</label>
+        <textarea class="preparacao-manipulado form-control" placeholder="Preparação"></textarea>
+      </div>
+      <%- include('includes/materiais-embalagem.ejs') %>
+      <div class="conservacao-container">
+        <h3>Conservação e prazo de validade</h3>
+        <label for="conservacao-manipulado">Conservação</label>
+        <textarea name="conservacao-manipulado" cols="30" rows="10"
+          class="conservacao-manipulado form-control"></textarea>
+        <label for="validade-manipulado">Validade</label>
+        <input type="date" class="validade-manipulado form-control" />
+      </div>
+      <hr />
+      <div class="validacao-container">
+        <h3>Validação</h3>
+        <label for="ensaio-validacao">Ensaio</label>
+        <input type="text" placeholder="Ensaio" class="form-control" id="ensaio-validacao" />
+        <label for="especificacao-validacao">Especificacao</label>
+        <input type="text" placeholder="Especificacao" class="form-control" id="especificacao-validacao" />
+        <label for="resultado-validacao">Resultado</label>
+        <input type="text" placeholder="Resultado" class="form-control" id="resultado-validacao" />
+        <button type="button" class="btn btn-primary" id="add-validacao-button">
+          <span class="glyphicon glyphicon-plus"></span>Adicionar
+        </button>
+      </div>
+      <div class="validacao-summary">
+        <ul id="validacao-summary-list"></ul>
+      </div>
+      <hr />
+      <div class="calculos-preco">
+        <p>
+          Forma farmacêutica: <span class="forma-farm-total-price"></span>
+        </p>
+        <p>Matérias-primas: <span class="mat-prima-total-price"></span></p>
+        <p>
+          Materiais de embalagem: <span class="mat-emb-total-price"></span>
+        </p>
+        <p>IVA: <span class="iva-total-price"></span></p>
+        <p>Total: <span class="total-total-price"></span></p>
+      </div>
+      <hr />
+      <div>
+        <button type="button" class="btn btn-primary" id="save-manipulado-button">
+          <span class="glyphicon glyphicon-plus"></span>Gravar
+        </button>
+      </div>
     </form>
   </div>
   <script type="module" src="js/manipulado/manipulado.js"></script>
+  <%- include('includes/dependencies-bottom.ejs') %>
 </body>
 
 </html>

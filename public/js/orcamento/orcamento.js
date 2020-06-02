@@ -1,3 +1,5 @@
+// @ts-check
+
 import { MatEmbCtrl } from "../utils/MatEmbCtrl.js";
 import { MatPrimaCtrl } from "../utils/MatPrimaCtrl.js";
 import { OrcamentoUICtrl } from "./OrcamentoUICtrl.js";
