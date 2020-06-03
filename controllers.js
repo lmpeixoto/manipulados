@@ -1,5 +1,4 @@
 // @ts-check
-
 const formasFarmaceuticas = require("./model/formas-farmaceuticas.json");
 const fatores = require("./model/unidades.json");
 const OrcamentoManipulado = require("./model/orcamentoManipulado");
@@ -70,6 +69,21 @@ exports.postNovoManipulado = (req, res, next) => {
     });
 };
 
+exports.getEditManipulado = (req, res, next) => {
+  res.render("editarManipulado", { manipulado: undefined });
+};
+
+exports.postEditManipulado = (req, res, next) => {
+  let manipuladoID = req.query.manipuladoID;
+  Manipulado.findById(manipuladoID)
+    .then((manipulado) => {
+      res.render("editarManipulado", {
+        manipulado: manipulado,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
 exports.getPesquisa = (req, res, next) => {
   res.render("pesquisa", { manipulados: undefined });
 };
@@ -101,7 +115,6 @@ exports.postPesquisa = (req, res, next) => {
   find[queryChoice] = regex;
   Manipulado.find(find)
     .then((manip) => {
-      console.log(manip);
       if (manip.length > 0) {
         res.render("pesquisa", { manipulados: manip });
       } else {

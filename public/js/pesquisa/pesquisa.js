@@ -19,14 +19,40 @@ const ArquivoUICtrl = (function () {
   };
 
   const loadEventListeners = () => {
-    UISelectors.searchResultContainer.addEventListener("click", openManipulado);
+    UISelectors.searchResultContainer.addEventListener("click", editManipulado);
   };
 
-  function openManipulado(e) {
-    if (e.target && e.target.className == "open-btn") {
-      console.log(e.target.parentNode.id);
+  function editManipulado(e) {
+    e.preventDefault();
+    if (e.target && e.target.className == "edit-btn") {
+      let manipuladoID = e.target.parentNode.id.split("-")[1];
+      console.log(manipuladoID);
+      let form = e.target.parentNode.parentNode;
+      form.action = "/editarManipulado" + `?manipuladoID=${manipuladoID}`;
+      form.submit();
     }
   }
+  // function openManipulado(e) {
+  //   e.preventDefault();
+  //   if (e.target && e.target.className == "edit-btn") {
+  //     let manipuladoID = e.target.parentNode.id.split("-")[1];
+  //     console.log(manipuladoID);
+  //     fetch("/editarManipulado", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         manipuladoID: manipuladoID,
+  //       }),
+  //     })
+  //       .then((response) => response.json())
+  //       .then((response) => {
+  //         console.log(response);
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  // }
 
   return {
     UISelectors,

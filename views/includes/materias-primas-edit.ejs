@@ -1,0 +1,25 @@
+<div class="materias-primas-container">
+    <hr />
+    <h3>Adicione as matérias-primas</h3>
+    <div class="mat-prima-create">
+        <label for="nome-mat-prim">Nome</label>
+        <input type="text" placeholder="Nome" id="nome-mat-prim" class="form-control" />
+        <label for="preco-mat-prim">Preço</label>
+        <input type="number" placeholder="Preço" id="preco-mat-prim" class="form-control" />
+        <label for="qtd-mat-prim">Quantidade</label>
+        <input type="number" placeholder="Quantidade" id="qtd-mat-prim" class="form-control" />
+        <label for="select-fator">Fator</label>
+        <select id="select-fator" class="form-control">
+            <option disabled selected value>
+                -- selecione uma opção --
+            </option>
+        </select>
+        <button type="button" id="add-mat-prima-button" class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus"></span> Adicionar
+        </button>
+    </div>
+    <hr />
+    <div class="mat-primas-summary">
+        <ul id="mat-primas-summary-list"></ul>
+    </div>
+    <hr />

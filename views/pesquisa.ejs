@@ -40,24 +40,26 @@
         </div>
         <hr />
         <div class="results-container">
-            <% if (typeof manipulados !== 'undefined') { %>
+            <form action="/editarManipulado" method="POST" class="results">
+                <% if (typeof manipulados !== 'undefined') { %>
 
-            <%=manipulados%></p>
-            <% if (manipulados === '') { %>
-            <p>Pesquisa não encontrou resultados!</p>
-            <% } else { %>
-            <% for (manip in manipulados) { %>
-            <div class="result-manipulado-search" id="manip-<%= manipulados[manip]._id %>">
-                <ul>
-                    <li><%= manipulados[manip].nomeManipulado %></li>
-                    <li><%= manipulados[manip].utenteNome %></li>
-                    <li><%= manipulados[manip].fFarmNome %></li>
-                </ul>
-                <button class="open-btn">Abrir</button>
-            </div>
-            <% } %>
-            <% } %>
-            <% } %>
+                <%=manipulados%></p>
+                <% if (manipulados === '') { %>
+                <p>Pesquisa não encontrou resultados!</p>
+                <% } else { %>
+                <% for (manip in manipulados) { %>
+                <div class="result-manipulado-search" id="manip-<%= manipulados[manip]._id %>">
+                    <ul>
+                        <li><%= manipulados[manip].nomeManipulado %></li>
+                        <li><%= manipulados[manip].utenteNome %></li>
+                        <li><%= manipulados[manip].fFarmNome %></li>
+                    </ul>
+                    <button class="edit-btn" type="submit">Editar</button>
+                </div>
+                <% } %>
+                <% } %>
+                <% } %>
+            </form>
         </div>
     </div>
     <script type="module" src="js/pesquisa/pesquisa.js"></script>

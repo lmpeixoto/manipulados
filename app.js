@@ -47,6 +47,10 @@ app.get("/pesquisa", controllers.getPesquisa);
 
 app.post("/pesquisa", controllers.postPesquisa);
 
+app.get("/editarManipulado", controllers.getEditManipulado);
+
+app.post("/editarManipulado", controllers.postEditManipulado);
+
 app.listen(port, () =>
   console.log(`App listening at http://localhost:${port}`)
 );

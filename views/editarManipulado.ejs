@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Editar Manipulado</title>
+    <link rel="stylesheet" href="css/manipulado.css" />
+    <%- include('includes/dependencies-top.ejs') %>
+</head>
+
+<body>
+    <%- include('includes/navigation.ejs') %>
+    <div class="container">
+        <h1>Editar Manipulado</h1>
+        <hr />
+        <hr />
+        <form action="#" class="form-main">
+            <h3>Utente</h3>
+            <label for="nome-utente">Nome</label>
+            <input type="text" class="nome-utente form-control" value="<%= manipulado.utenteNome %>" />
+            <label for="contacto-utente">Contacto</label>
+            <input type="text" class="contacto-utente form-control" value="<%= manipulado.utenteContacto %>" />
+            <hr />
+            <h3>Prescritor</h3>
+            <label for="nome-prescritor">Nome</label>
+            <input type="text" class="nome-prescritor form-control" value="<%= manipulado.prescritorNome %>" />
+            <label for="contacto-prescritor">Contacto</label>
+            <input type="text" class="contacto-prescritor form-control" value="<%= manipulado.prescritorContacto %>" />
+            <hr />
+            <h3>Farmacêutico</h3>
+            <label for=" preparador-manipulado">Preparador</label>
+            <input type="text" class="preparador-manipulado form-control" value="<%= manipulado.farmaceuticoNome %>" />
+            <label for=" supervisor-manipulado">Supervisor</label>
+            <input type="text" class="supervisor-manipulado form-control"
+                value="<%= manipulado.farmaceuticoSupervisor %>" />
+            <h3>Manipulado</h3>
+            <label for=" lote-manipulado">Lote</label>
+            <input type="text" class="lote-manipulado form-control" value="<%= manipulado.lote %>" />
+            <label for=" nome-manipulado">Nome</label>
+            <input type="text" class="nome-manipulado form-control" placeholder="Introduza o nome do manipulado"
+                value=<%= manipulado.nomeManipulado %>" required />
+            <label for="forma-farmaceutica">Forma farmacêutica</label>
+            <select name="forma-farmaceutica" class="form-control" id="select-forma-farmaceutica"
+                value="<%= manipulado.fFarmNome %>" required>
+                <option disabled selected value> -- selecione uma opção -- </option>
+            </select>
+            <label for=" quantidade">Quantidade a preparar</label>
+            <input class="forma-farm-qtd  form-control" type="number" value="<%= manipulado.quantidade %>" required />
+            <button class=" btn btn-primary add-forma-farm-button" type="button">
+                <span class="glyphicon glyphicon-plus"></span>Selecionar
+            </button>
+            <%- include('includes/materias-primas.ejs') %>
+            <hr />
+            <h3>Preparação</h3>
+            <div class="preparacao-container">
+                <label for="preparacao-manipulado">Modo de preparação</label>
+                <textarea class="preparacao-manipulado form-control"
+                    placeholder="Preparação"><%= manipulado.preparacao %></textarea>
+            </div>
+            <%- include('includes/materiais-embalagem.ejs') %>
+            <div class="conservacao-container">
+                <h3>Conservação e prazo de validade</h3>
+                <label for="conservacao-manipulado">Conservação</label>
+                <textarea name="conservacao-manipulado" cols="30" rows="10"
+                    class="conservacao-manipulado form-control"><%= manipulado.conservacao %></textarea>
+                <label for="validade-manipulado">Validade</label>
+                <input type="date" class="validade-manipulado form-control" value="<%= manipulado.validade %>" />
+            </div>
+            <hr />
+            <div class="validacao-container">
+                <h3>Validação</h3>
+                <label for="ensaio-validacao">Ensaio</label>
+                <input type="text" placeholder="Ensaio" class="form-control" id="ensaio-validacao" />
+                <label for="especificacao-validacao">Especificacao</label>
+                <input type="text" placeholder="Especificacao" class="form-control" id="especificacao-validacao" />
+                <label for="resultado-validacao">Resultado</label>
+                <input type="text" placeholder="Resultado" class="form-control" id="resultado-validacao" />
+                <button type="button" class="btn btn-primary" id="add-validacao-button">
+                    <span class="glyphicon glyphicon-plus"></span>Adicionar
+                </button>
+            </div>
+            <div class="validacao-summary">
+                <ul id="validacao-summary-list"></ul>
+            </div>
+            <hr />
+            <div class="calculos-preco">
+                <p>
+                    Forma farmacêutica: <span class="forma-farm-total-price"></span>
+                </p>
+                <p>Matérias-primas: <span class="mat-prima-total-price"></span></p>
+                <p>
+                    Materiais de embalagem: <span class="mat-emb-total-price"></span>
+                </p>
+                <p>IVA: <span class="iva-total-price"></span></p>
+                <p>Total: <span class="total-total-price"></span></p>
+            </div>
+            <hr />
+            <div>
+                <button type="button" class="btn btn-primary" id="save-manipulado-button">
+                    <span class="glyphicon glyphicon-plus"></span>Gravar
+                </button>
+            </div>
+        </form>
+    </div>
+    <!-- <script type="module" src="js/manipulado/manipulado.js"></script> -->
+    <%- include('includes/dependencies-bottom.ejs') %>
+</body>
+
+</html>
