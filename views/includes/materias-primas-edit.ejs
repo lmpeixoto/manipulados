@@ -3,11 +3,26 @@
     <h3>Adicione as matérias-primas</h3>
     <div class="mat-prima-create">
         <label for="nome-mat-prim">Nome</label>
-        <input type="text" placeholder="Nome" id="nome-mat-prim" class="form-control" />
+        <input
+            type="text"
+            placeholder="Nome"
+            id="nome-mat-prim"
+            class="form-control"
+        />
         <label for="preco-mat-prim">Preço</label>
-        <input type="number" placeholder="Preço" id="preco-mat-prim" class="form-control" />
+        <input
+            type="number"
+            placeholder="Preço"
+            id="preco-mat-prim"
+            class="form-control"
+        />
         <label for="qtd-mat-prim">Quantidade</label>
-        <input type="number" placeholder="Quantidade" id="qtd-mat-prim" class="form-control" />
+        <input
+            type="number"
+            placeholder="Quantidade"
+            id="qtd-mat-prim"
+            class="form-control"
+        />
         <label for="select-fator">Fator</label>
         <select id="select-fator" class="form-control">
             <option disabled selected value>
@@ -15,11 +30,27 @@
             </option>
         </select>
         <button type="button" id="add-mat-prima-button" class="btn btn-primary">
-            <span class="glyphicon glyphicon-plus"></span> Adicionar
+            <i class="fas fa-plus"></i> Adicionar
         </button>
     </div>
     <hr />
     <div class="mat-primas-summary">
         <ul id="mat-primas-summary-list"></ul>
+        <% for (let i=0; i < manipulado.materiasPrimas.length; i++) { %>
+        <li
+            class="mat-prim-element"
+            id="mat-prim-<%= manipulado.materiasPrimas[i].id %>"
+        >
+            <%= manipulado.materiasPrimas[i].nome %> - <%=
+            manipulado.materiasPrimas[i].qtd %> - <%=
+            manipulado.materiasPrimas[i].preco %> - <%=
+            manipulado.materiasPrimas[i].fator %> - Valor: <%=
+            manipulado.materiasPrimas[i].valor %>€
+            <button type="button" class="rem-mat-prim-button">
+                <i class="fas fa-minus"></i> Remover
+            </button>
+        </li>
+        <% } %>
     </div>
     <hr />
+</div>

@@ -1,34 +1,34 @@
 .form-main {
-  display: flex;
-  flex-direction: column;
-  margin: 3rem 0;
+    display: flex;
+    flex-direction: column;
+    margin: 3rem 0;
 }
 
 .form-main > input,
 .form-main > select {
-  margin-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .mat-prima-create {
-  display: flex;
-  flex-direction: column;
-  margin: 3rem 0;
+    display: flex;
+    flex-direction: column;
+    margin: 3rem 0;
 }
 
 .mat-prima-create > input,
 .mat-prima-create > select {
-  margin-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .mat-emb-create {
-  display: flex;
-  flex-direction: column;
-  margin: 3rem 0;
+    display: flex;
+    flex-direction: column;
+    margin: 3rem 0;
 }
 
 .mat-emb-create > input,
 .mat-emb-create > select {
-  margin-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 /* .navigation-bar {
@@ -42,3 +42,4 @@
   margin: 0 5rem;
   color: white;
 }
+*/
