@@ -77,9 +77,10 @@
                     class="form-control"
                     id="select-forma-farmaceutica"
                     value="<%= manipulado.fFarmNome %>"
+                    selected
                     required
                 >
-                    <option disabled selected value>
+                    <option value>
                         -- selecione uma opção --
                     </option>
                 </select>
@@ -94,7 +95,7 @@
                     class="btn btn-primary add-forma-farm-button"
                     type="button"
                 >
-                    <i class="fas fa-plus"></i>Selecionar
+                <i class="fas fa-check"></i> Selecionar
                 </button>
                 <%- include('includes/materias-primas-edit.ejs') %>
                 <hr />
@@ -163,6 +164,20 @@
                 </div>
                 <div class="validacao-summary">
                     <ul id="validacao-summary-list"></ul>
+                    <% for (let i=0; i < manipulado.validacoes.length; i++) { %>
+                        <li
+                            class="validacao-element"
+                            id="validacao-<%= manipulado.validacoes[i].id %>"
+                        >
+                            <%= manipulado.validacoes[i].nomeEnsaio %> - <%=
+                            manipulado.validacoes[i].especificacao %> - <%=
+                            manipulado.validacoes[i].resultado %>
+                            <button type="button" class="rem-validacao-button">
+                                <i class="fas fa-minus"></i> Remover
+                            </button>
+                        </li>
+                        <% } %>
+                    
                 </div>
                 <hr />
                 <div class="calculos-preco">
@@ -214,7 +229,7 @@
                 </div>
             </form>
         </div>
-        <!-- <script type="module" src="js/manipulado/manipulado.js"></script> -->
+        <script type="module" src="js/edit-manipulado/editManipulado.js"></script>
         <%- include('includes/dependencies-bottom.ejs') %>
     </body>
 </html>

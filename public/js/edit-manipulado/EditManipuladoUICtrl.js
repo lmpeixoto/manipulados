@@ -1,11 +1,12 @@
 // @ts-check
 
-import { MatEmbCtrl } from '../utils/MatEmbCtrl.js';
-import { MatPrimaCtrl } from '../utils/MatPrimaCtrl.js';
-import { OrcamentoModel } from './OrcamentoModel.js';
+import { ValidCtrl } from '../utils/ValidCtrl.js';
+import { EditManipuladoModel } from './EditManipuladoModel.js';
 import { FormaFarmCtrl } from '../utils/FormaFarmCtrl.js';
+import { MatPrimaCtrl } from '../utils/MatPrimaCtrl.js';
+import { MatEmbCtrl } from '../utils/MatEmbCtrl.js';
 
-export const OrcamentoUICtrl = (function () {
+export const EditManipuladoUICtrl = (function () {
     const UISelectors = {
         formaFarmaceuticaSelect: document.getElementById(
             'select-forma-farmaceutica'
@@ -32,8 +33,27 @@ export const OrcamentoUICtrl = (function () {
         addFormaFarmButton: document.querySelector('.add-forma-farm-button'),
         addMatPrimaButton: document.getElementById('add-mat-prima-button'),
         addMatEmbButton: document.getElementById('add-mat-emb-button'),
-        saveButton: document.querySelector('.save-button')
+        saveButton: document.querySelector('.save-button'),
+        lote: document.querySelector('.lote-manipulado'),
+        preparador: document.querySelector('.preparador-manipulado'),
+        supervisor: document.querySelector('.supervisor-manipulado'),
+        nomeUtente: document.querySelector('.nome-utente'),
+        contactoUtente: document.querySelector('.contacto-utente'),
+        nomePrescritor: document.querySelector('.nome-prescritor'),
+        contactoPrescritor: document.querySelector('.contacto-prescritor'),
+        preparacaoManipulado: document.querySelector('.preparacao-manipulado'),
+        conservacao: document.querySelector('.conservacao-manipulado'),
+        validade: document.querySelector('.validade-manipulado'),
+        ensaioValidacao: document.getElementById('ensaio-validacao'),
+        especificacaoValidacao: document.getElementById(
+            'especificacao-validacao'
+        ),
+        resultadoValidacao: document.getElementById('resultado-validacao'),
+        addValidacaoButton: document.getElementById('add-validacao-button'),
+        validacaoSummaryList: document.getElementById('validacao-summary-list'),
+        saveManipuladoButton: document.getElementById('save-manipulado-button')
     };
+
     const formaFarmaceuticaSelectPopulate = (fFarm) => {
         const formaFarmaceuticaSelect = document.getElementById(
             'select-forma-farmaceutica'
@@ -84,7 +104,7 @@ export const OrcamentoUICtrl = (function () {
     const displayMatPrimaTotalPrice = (fct) => {
         let totalPrice = MatPrimaCtrl.calculateTotalPrice(fct);
         UISelectors.matPrimaTotalPrice.innerHTML = totalPrice;
-        OrcamentoModel.setMatPrimasPrice(parseFloat(totalPrice));
+        EditManipuladoModel.setMatPrimasPrice(parseFloat(totalPrice));
     };
     const addMatEmbItem = (item) => {
         let html = `<li class="mat-emb-element" id="mat-emb-${item.id}">
@@ -112,7 +132,7 @@ export const OrcamentoUICtrl = (function () {
     const displayMatEmbTotalPrice = () => {
         let totalPrice = +(MatEmbCtrl.calculateTotalPrice() * 1.2).toFixed(2);
         UISelectors.matEmbTotalPrice.innerHTML = totalPrice;
-        OrcamentoModel.setMatEmbPrice(totalPrice);
+        EditManipuladoModel.setMatEmbPrice(totalPrice);
     };
     const addFormaFarmaceutica = () => {
         FormaFarmCtrl.fetchFormasFarmaceuticas().then((ff) => {
@@ -125,8 +145,8 @@ export const OrcamentoUICtrl = (function () {
                 qtd,
                 price
             );
-            OrcamentoModel.setFormaFarm(formaFarmaceutica);
-            OrcamentoModel.setNomeManipulado(saveNomeManipulado());
+            EditManipuladoModel.setFormaFarm(formaFarmaceutica);
+            EditManipuladoModel.setNomeManipulado(saveNomeManipulado());
             displayTotal();
         });
     };
@@ -135,26 +155,56 @@ export const OrcamentoUICtrl = (function () {
         return UISelectors.nomeManipulado.value;
     };
     const displayTotal = () => {
-        let [total, iva] = OrcamentoModel.calculateTotalPrice();
+        let [total, iva] = EditManipuladoModel.calculateTotalPrice();
         const totalTotalPrice = document.querySelector('.total-total-price');
         totalTotalPrice.innerHTML = total;
         const ivaTotalPrice = document.querySelector('.iva-total-price');
         ivaTotalPrice.innerHTML = iva;
     };
 
+    const displayValidacao = (item) => {
+        let html = `<li class="validacao-element" id="validacao-${item.id}">
+                    ${item.nomeEnsaio} -  ${item.especificacao} - ${item.resultado}  
+                      <button type="button" class="rem-validacao-button">
+                      <i class="fas fa-minus"></i> Remover
+                      </button>`;
+        UISelectors.validacaoSummaryList.innerHTML += html;
+        UISelectors.validacaoSummaryList.addEventListener(
+            'click',
+            ValidCtrl.removeEnsaioValidacao
+        );
+    };
+
+    const deleteValidacaoFields = () => {
+        UISelectors.ensaioValidacao.value = '';
+        UISelectors.especificacaoValidacao.value = '';
+        UISelectors.resultadoValidacao.value = '';
+    };
+    const deleteValidacaoItem = (index) => {
+        const itemID = `#validacao-${index}`;
+        const item = document.querySelector(itemID);
+        item.remove();
+    };
+
     return {
         UISelectors,
         formaFarmaceuticaSelectPopulate,
         fatorSelectPopulate,
-        addMatPrimaItem,
-        deleteMatPrimaFields,
-        deleteMatPrimaItem,
         displayMatPrimaTotalPrice,
+        displayMatEmbTotalPrice,
+        addFormaFarmaceutica,
         addMatEmbItem,
+        addMatPrimaItem,
         deleteMatEmbFields,
         deleteMatEmbItem,
-        displayMatEmbTotalPrice,
+        addMatPrimaItem,
+        deleteMatEmbFields,
+        deleteMatEmbItem,
+        deleteMatPrimaFields,
+        deleteMatPrimaItem,
+        displayValidacao,
         displayTotal,
-        addFormaFarmaceutica
+        deleteValidacaoFields,
+        deleteValidacaoItem
     };
 })();

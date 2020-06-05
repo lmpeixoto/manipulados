@@ -79,8 +79,7 @@ export const ManipuladoUICtrl = (function () {
         let html = `<li class="mat-prima-element" id="mat-prima-${item.id}">
                       ${item.nome} - ${item.qtd} - ${item.fator} - ${item.preco}€ - Valor: ${item.valor}€   
                           <button type="button" class="rem-mat-prima-button">
-                                <span class="glyphicon glyphicon-minus">
-                                </span>Remover
+                          <i class="fas fa-minus"></i> Remover
                           </button>`;
         const matPrimasSummaryList = document.getElementById(
             'mat-primas-summary-list'
@@ -111,8 +110,7 @@ export const ManipuladoUICtrl = (function () {
         let html = `<li class="mat-emb-element" id="mat-emb-${item.id}">
                     ${item.nome} -  ${item.capacidade} - ${item.qtd} - ${item.preco}€ - Valor: ${item.valor}€  
                       <button type="button" class="rem-mat-emb-button">
-                        <span class="glyphicon glyphicon-minus">
-                        </span>Remover
+                      <i class="fas fa-minus"></i> Remover
                       </button>`;
         const matEmbSummaryList = document.getElementById(
             'mat-emb-summary-list'
@@ -168,8 +166,7 @@ export const ManipuladoUICtrl = (function () {
         let html = `<li class="validacao-element" id="validacao-${item.id}">
                     ${item.nomeEnsaio} -  ${item.especificacao} - ${item.resultado}  
                       <button type="button" class="rem-validacao-button">
-                        <span class="glyphicon glyphicon-minus">
-                        </span>Remover
+                      <i class="fas fa-minus"></i> Remover
                       </button>`;
         UISelectors.validacaoSummaryList.innerHTML += html;
         UISelectors.validacaoSummaryList.addEventListener(

@@ -11,7 +11,9 @@ const ManipuladoCtrl = (function (
     ManipuladoUICtrl,
     FormaFarmCtrl,
     MatPrimaCtrl,
-    MatEmbCtrl
+    MatEmbCtrl,
+    ValidCtrl,
+    ManipuladoModel
 ) {
     const loadEventListeners = function () {
         ManipuladoUICtrl.UISelectors.addFormaFarmButton.addEventListener(
@@ -53,6 +55,13 @@ const ManipuladoCtrl = (function (
             MatEmbCtrl.setUI(ManipuladoUICtrl);
         }
     };
-})(ManipuladoUICtrl, FormaFarmCtrl, MatPrimaCtrl, MatEmbCtrl);
+})(
+    ManipuladoUICtrl,
+    FormaFarmCtrl,
+    MatPrimaCtrl,
+    MatEmbCtrl,
+    ValidCtrl,
+    ManipuladoModel
+);
 
 ManipuladoCtrl.init();

@@ -2,10 +2,10 @@
 
 import { MatEmbCtrl } from '../utils/MatEmbCtrl.js';
 import { MatPrimaCtrl } from '../utils/MatPrimaCtrl.js';
-import { ManipuladoUICtrl } from './ManipuladoUICtrl.js';
+import { EditManipuladoUICtrl } from './EditManipuladoUICtrl.js';
 import { ValidCtrl } from '../utils/ValidCtrl.js';
 
-export const ManipuladoModel = (function () {
+export const EditManipuladoModel = (function () {
     let lote;
     let fatorF = 4;
     let nomeManipulado;
@@ -160,26 +160,28 @@ export const ManipuladoModel = (function () {
     const setFormaFarm = (fFarm) => {
         formaFarmaceutica = fFarm;
     };
-    const setLote = () => (lote = ManipuladoUICtrl.UISelectors.lote.value);
+    const setLote = () => (lote = EditManipuladoUICtrl.UISelectors.lote.value);
     const setUtente = () => {
-        utenteNome = ManipuladoUICtrl.UISelectors.nomeUtente.value;
-        utenteContacto = ManipuladoUICtrl.UISelectors.contactoUtente.value;
+        utenteNome = EditManipuladoUICtrl.UISelectors.nomeUtente.value;
+        utenteContacto = EditManipuladoUICtrl.UISelectors.contactoUtente.value;
     };
     const setPrescritor = () => {
-        prescritorNome = ManipuladoUICtrl.UISelectors.nomePrescritor.value;
+        prescritorNome = EditManipuladoUICtrl.UISelectors.nomePrescritor.value;
         prescritorContacto =
-            ManipuladoUICtrl.UISelectors.contactoPrescritor.value;
+            EditManipuladoUICtrl.UISelectors.contactoPrescritor.value;
     };
     const setFarmaceutico = () => {
-        farmaceuticoNome = ManipuladoUICtrl.UISelectors.preparador.value;
-        farmaceuticoSupervisor = ManipuladoUICtrl.UISelectors.supervisor.value;
+        farmaceuticoNome = EditManipuladoUICtrl.UISelectors.preparador.value;
+        farmaceuticoSupervisor =
+            EditManipuladoUICtrl.UISelectors.supervisor.value;
     };
     const setPreparacao = () =>
-        (preparacao = ManipuladoUICtrl.UISelectors.preparacaoManipulado.value);
+        (preparacao =
+            EditManipuladoUICtrl.UISelectors.preparacaoManipulado.value);
     const setConservacao = () =>
-        (conservacao = ManipuladoUICtrl.UISelectors.conservacao.value);
+        (conservacao = EditManipuladoUICtrl.UISelectors.conservacao.value);
     const setValidade = () =>
-        (validade = ManipuladoUICtrl.UISelectors.validade.value);
+        (validade = EditManipuladoUICtrl.UISelectors.validade.value);
 
     return {
         assignAllFieldsData,
