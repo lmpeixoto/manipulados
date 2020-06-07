@@ -40,6 +40,7 @@ export const FormaFarmCtrl = (function () {
     };
 
     return {
+        FormaFarmaceutica,
         createFormaFarmaceutica,
         fetchFormasFarmaceuticas,
         calculateFormaFarmaceutica

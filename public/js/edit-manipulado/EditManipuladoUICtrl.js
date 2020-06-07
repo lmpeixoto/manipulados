@@ -54,7 +54,9 @@ export const EditManipuladoUICtrl = (function () {
         resultadoValidacao: document.getElementById('resultado-validacao'),
         addValidacaoButton: document.getElementById('add-validacao-button'),
         validacaoSummaryList: document.getElementById('validacao-summary-list'),
-        saveManipuladoButton: document.getElementById('save-manipulado-button')
+        saveManipuladoButton: document.getElementById('save-manipulado-button'),
+        ivaTotalPrice: document.querySelector('.iva-total-price'),
+        totalTotalPrice: document.querySelector('.total-total-price')
     };
 
     const formaFarmaceuticaSelectPopulate = (fFarm) => {

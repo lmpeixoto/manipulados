@@ -20,7 +20,24 @@ const EditManipuladoCtrl = (function (
         MatPrimaCtrl.setMateriasPrimas(getDataFromMatPrim());
         MatEmbCtrl.setMateriaisEmbalagem(getDataFromValid());
         addEventListenersToAutomaticallyFilledDOMObjects();
+        setManipuladoPrices();
     };
+
+    function setManipuladoPrices() {
+        EditManipuladoModel.setFormaFarm(getDataFromFormaFarm());
+        EditManipuladoModel.setMatPrimasPrice(
+            +EditManipuladoUICtrl.UISelectors.matPrimaTotalPrice.textContent
+        );
+        EditManipuladoModel.setMatEmbPrice(
+            +EditManipuladoUICtrl.UISelectors.matEmbTotalPrice.textContent
+        );
+        EditManipuladoModel.setIVA(
+            +EditManipuladoUICtrl.UISelectors.ivaTotalPrice.textContent
+        );
+        EditManipuladoModel.setTotalPrice(
+            +EditManipuladoUICtrl.UISelectors.totalTotalPrice.textContent
+        );
+    }
 
     function addEventListenersToAutomaticallyFilledDOMObjects() {
         EditManipuladoUICtrl.UISelectors.removeMatPrimaButton.addEventListener(
@@ -35,6 +52,15 @@ const EditManipuladoCtrl = (function (
             'click',
             ValidCtrl.removeEnsaioValidacao
         );
+    }
+
+    function getDataFromFormaFarm() {
+        let nome = EditManipuladoUICtrl.UISelectors.formaFarmNome.value;
+        let qtd = EditManipuladoUICtrl.UISelectors.formaFarmQtd.value;
+        let preco = +EditManipuladoUICtrl.UISelectors.formFarmTotalPrice
+            .textContent;
+        let fFarm = new FormaFarmCtrl.FormaFarmaceutica(nome, qtd, preco);
+        return fFarm;
     }
 
     function getDataFromMatPrim() {
