@@ -105,11 +105,17 @@ export const MatEmbCtrl = (function () {
 
     const setUI = (UI) => (UIController = UI);
 
+    const setMateriaisEmbalagem = (matEmb) => {
+        materiaisEmbalagem = matEmb;
+    };
+
     return {
+        MaterialEmbalagem,
         addMatEmb,
         removeMatEmb,
         calculateTotalPrice,
         getMatEmb,
+        setMateriaisEmbalagem,
         validateMatEmb,
         setUI
     };

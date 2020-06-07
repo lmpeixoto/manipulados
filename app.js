@@ -19,7 +19,7 @@ connection.once('open', function () {
     console.log('MongoDB database connection established successfully');
 });
 
-public_folder = path.join(__dirname, 'public');
+const public_folder = path.join(__dirname, 'public');
 
 app.set('view engine', 'ejs');
 

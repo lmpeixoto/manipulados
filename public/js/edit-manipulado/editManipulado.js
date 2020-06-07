@@ -15,6 +15,99 @@ const EditManipuladoCtrl = (function (
     ValidCtrl,
     EditManipuladoModel
 ) {
+    const getDataFromAutomaticallyFilledDOMObjects = () => {
+        ValidCtrl.setEnsaiosValidacao(getDataFromMatEmb());
+        MatPrimaCtrl.setMateriasPrimas(getDataFromMatPrim());
+        MatEmbCtrl.setMateriaisEmbalagem(getDataFromValid());
+        addEventListenersToAutomaticallyFilledDOMObjects();
+    };
+
+    function addEventListenersToAutomaticallyFilledDOMObjects() {
+        EditManipuladoUICtrl.UISelectors.removeMatPrimaButton.addEventListener(
+            'click',
+            MatPrimaCtrl.removeMatPrima
+        );
+        EditManipuladoUICtrl.UISelectors.removeMatEmbButton.addEventListener(
+            'click',
+            MatEmbCtrl.removeMatEmb
+        );
+        EditManipuladoUICtrl.UISelectors.removeValidButton.addEventListener(
+            'click',
+            ValidCtrl.removeEnsaioValidacao
+        );
+    }
+
+    function getDataFromMatPrim() {
+        let matPrimChildList =
+            EditManipuladoUICtrl.UISelectors.matPrimasSummaryList.children;
+        let materiasPrimas = [];
+        for (let i = 0; i < matPrimChildList.length; i++) {
+            let text = matPrimChildList[i].innerText.split(' ');
+            let id = matPrimChildList[i].id.split('-')[2];
+            let nome = text[0];
+            let capacidade = text[2];
+            let preco = text[4];
+            let qtd = text[6];
+            let valor = text[9].split('€')[0];
+            let matEmb = new MatPrimaCtrl.MateriaPrima(
+                id,
+                nome,
+                capacidade,
+                preco,
+                qtd,
+                valor
+            );
+            materiasPrimas.push(matEmb);
+        }
+        return materiasPrimas;
+    }
+
+    function getDataFromMatEmb() {
+        let validChildList =
+            EditManipuladoUICtrl.UISelectors.matEmbSummaryList.children;
+        let materiaisEmbalagem = [];
+        for (let i = 0; i < validChildList.length; i++) {
+            let text = validChildList[i].innerText.split(' ');
+            let id = validChildList[i].id.split('-')[2];
+            let nome = text[0];
+            let capacidade = text[2];
+            let preco = text[4];
+            let qtd = text[6];
+            let valor = text[9].split('€')[0];
+            let matEmb = new MatEmbCtrl.MaterialEmbalagem(
+                id,
+                nome,
+                capacidade,
+                preco,
+                qtd,
+                valor
+            );
+            materiaisEmbalagem.push(matEmb);
+        }
+        return materiaisEmbalagem;
+    }
+
+    function getDataFromValid() {
+        let validChildList =
+            EditManipuladoUICtrl.UISelectors.validacaoSummaryList.children;
+        let validacoes = [];
+        for (let i = 0; i < validChildList.length; i++) {
+            let text = validChildList[i].innerText.split(' ');
+            let id = validChildList[i].id.split('-')[1];
+            let ensaio = text[0];
+            let especificacao = text[2];
+            let resultado = text[4];
+            let matEmb = new ValidCtrl.Validacao(
+                id,
+                ensaio,
+                especificacao,
+                resultado
+            );
+            validacoes.push(matEmb);
+        }
+        return validacoes;
+    }
+
     const loadEventListeners = function () {
         EditManipuladoUICtrl.UISelectors.addFormaFarmButton.addEventListener(
             'click',
@@ -49,6 +142,7 @@ const EditManipuladoCtrl = (function (
 
     return {
         init: function () {
+            getDataFromAutomaticallyFilledDOMObjects();
             loadEventListeners();
             fetchData();
             MatPrimaCtrl.setUI(EditManipuladoUICtrl);

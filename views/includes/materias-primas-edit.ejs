@@ -35,22 +35,23 @@
     </div>
     <hr />
     <div class="mat-primas-summary">
-        <ul id="mat-primas-summary-list"></ul>
-        <% for (let i=0; i < manipulado.materiasPrimas.length; i++) { %>
-        <li
-            class="mat-prim-element"
-            id="mat-prim-<%= manipulado.materiasPrimas[i].id %>"
-        >
-            <%= manipulado.materiasPrimas[i].nome %> - <%=
-            manipulado.materiasPrimas[i].qtd %> - <%=
-            manipulado.materiasPrimas[i].preco %> - <%=
-            manipulado.materiasPrimas[i].fator %> - Valor: <%=
-            manipulado.materiasPrimas[i].valor %>€
-            <button type="button" class="rem-mat-prim-button">
-                <i class="fas fa-minus"></i> Remover
-            </button>
-        </li>
-        <% } %>
+        <ul id="mat-primas-summary-list">
+            <% for (let i=0; i < manipulado.materiasPrimas.length; i++) { %>
+            <li
+                class="mat-prim-element"
+                id="mat-prima-<%= manipulado.materiasPrimas[i].id %>"
+            >
+                <%= manipulado.materiasPrimas[i].nome %> - <%=
+                manipulado.materiasPrimas[i].qtd %> - <%=
+                manipulado.materiasPrimas[i].preco %> - <%=
+                manipulado.materiasPrimas[i].fator %> - Valor: <%=
+                manipulado.materiasPrimas[i].valor %>€
+                <button type="button" class="rem-mat-prim-button">
+                    <i class="fas fa-minus"></i> Remover
+                </button>
+            </li>
+            <% } %>
+        </ul>
     </div>
     <hr />
 </div>

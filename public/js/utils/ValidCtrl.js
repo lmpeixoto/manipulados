@@ -59,6 +59,10 @@ export const ValidCtrl = (function () {
         return ensaiosValidacao;
     };
 
+    const setEnsaiosValidacao = (valid) => {
+        ensaiosValidacao = valid;
+    };
+
     const validateEnsaioValidacao = (ensaioValidacao) => {
         if (
             ensaioValidacao.id !== null &&
@@ -73,9 +77,11 @@ export const ValidCtrl = (function () {
     };
 
     return {
+        Validacao,
         addValidacao,
         removeEnsaioValidacao,
         getEnsaiosValidacao,
+        setEnsaiosValidacao,
         validateEnsaioValidacao
     };
 })();

@@ -76,10 +76,9 @@
                     name="forma-farmaceutica"
                     class="form-control"
                     id="select-forma-farmaceutica"
-                    value="<%= manipulado.fFarmNome %>"
-                    selected
                     required
                 >
+                    <option value="<%= manipulado.fFarmNome %>" selected><%= manipulado.fFarmNome %></option>
                     <option value>
                         -- selecione uma opção --
                     </option>
@@ -163,7 +162,7 @@
                     </button>
                 </div>
                 <div class="validacao-summary">
-                    <ul id="validacao-summary-list"></ul>
+                    <ul id="validacao-summary-list">
                     <% for (let i=0; i < manipulado.validacoes.length; i++) { %>
                         <li
                             class="validacao-element"
@@ -177,6 +176,7 @@
                             </button>
                         </li>
                         <% } %>
+                    </ul>
                     
                 </div>
                 <hr />
@@ -185,36 +185,31 @@
                         Forma farmacêutica:
                         <span
                             class="forma-farm-total-price"
-                            value="<%= manipulado.fFarmPrice %>"
-                        ></span>
+                        ><%= manipulado.fFarmPrice %></span>
                     </p>
                     <p>
                         Matérias-primas:
                         <span
                             class="mat-prima-total-price"
-                            value="<%= manipulado.materiasPrimasPrice %>"
-                        ></span>
+                        ><%= manipulado.materiasPrimasPrice %></span>
                     </p>
                     <p>
                         Materiais de embalagem:
                         <span
                             class="mat-emb-total-price"
-                            value="<%= manipulado.materiaisEmbalagemPrice %>"
-                        ></span>
+                        ><%= manipulado.materiaisEmbalagemPrice %></span>
                     </p>
                     <p>
                         IVA:
                         <span
                             class="iva-total-price"
-                            value="<%= manipulado.IVA %>"
-                        ></span>
+                        ><%= manipulado.IVA %></span>
                     </p>
                     <p>
                         Total:
                         <span
                             class="total-total-price"
-                            value="<%= manipulado.totalPrice %>"
-                        ></span>
+                        ><%= manipulado.totalPrice %></span>
                     </p>
                 </div>
                 <hr />

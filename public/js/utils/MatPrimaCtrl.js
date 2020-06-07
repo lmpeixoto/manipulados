@@ -64,6 +64,7 @@ export const MatPrimaCtrl = (function () {
 
     const removeMatPrima = (e) => {
         let elementToRemove = e.target.parentNode;
+        console.log(elementToRemove);
         let indexToRemove = elementToRemove.id.split('-')[2];
         let materiasPrimasUpdated = materiasPrimas.filter(
             (matPrim) => parseInt(matPrim.id) !== parseInt(indexToRemove)
@@ -101,8 +102,14 @@ export const MatPrimaCtrl = (function () {
 
     const setUI = (UI) => (UIController = UI);
 
+    const setMateriasPrimas = (matPrim) => {
+        materiasPrimas = matPrim;
+    };
+
     return {
+        MateriaPrima,
         getMatPrimas,
+        setMateriasPrimas,
         fetchFatores,
         addMatPrima,
         removeMatPrima,

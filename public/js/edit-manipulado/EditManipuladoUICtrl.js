@@ -32,6 +32,9 @@ export const EditManipuladoUICtrl = (function () {
         formFarmTotalPrice: document.querySelector('.forma-farm-total-price'),
         addFormaFarmButton: document.querySelector('.add-forma-farm-button'),
         addMatPrimaButton: document.getElementById('add-mat-prima-button'),
+        removeMatPrimaButton: document.querySelector('.rem-mat-prim-button'),
+        removeMatEmbButton: document.querySelector('.rem-mat-emb-button'),
+        removeValidButton: document.querySelector('.rem-validacao-button'),
         addMatEmbButton: document.getElementById('add-mat-emb-button'),
         saveButton: document.querySelector('.save-button'),
         lote: document.querySelector('.lote-manipulado'),
@@ -76,11 +79,7 @@ export const EditManipuladoUICtrl = (function () {
     };
     const addMatPrimaItem = (item) => {
         console.log(item);
-        let html = `<li class="mat-prima-element" id="mat-prima-${item.id}">
-                      ${item.nome} - ${item.qtd} - ${item.fator} - ${item.preco}€ - Valor: ${item.valor}€   
-                          <button type="button" class="rem-mat-prima-button">
-                          <i class="fas fa-minus"></i> Remover
-                          </button>`;
+        let html = `<li class="mat-prima-element" id="mat-prima-${item.id}">${item.nome} - ${item.qtd} - ${item.fator} - ${item.preco}€ - Valor: ${item.valor}€<button type="button" class="rem-mat-prima-button"><i class="fas fa-minus"></i> Remover</button>`;
         const matPrimasSummaryList = document.getElementById(
             'mat-primas-summary-list'
         );
@@ -107,11 +106,7 @@ export const EditManipuladoUICtrl = (function () {
         EditManipuladoModel.setMatPrimasPrice(parseFloat(totalPrice));
     };
     const addMatEmbItem = (item) => {
-        let html = `<li class="mat-emb-element" id="mat-emb-${item.id}">
-                    ${item.nome} -  ${item.capacidade} - ${item.qtd} - ${item.preco}€ - Valor: ${item.valor}€  
-                      <button type="button" class="rem-mat-emb-button">
-                      <i class="fas fa-minus"></i> Remover
-                      </button>`;
+        let html = `<li class="mat-emb-element" id="mat-emb-${item.id}">${item.nome} -  ${item.capacidade} - ${item.qtd} - ${item.preco}€ - Valor: ${item.valor}€<button type="button" class="rem-mat-emb-button"><i class="fas fa-minus"></i> Remover</button>`;
         const matEmbSummaryList = document.getElementById(
             'mat-emb-summary-list'
         );
@@ -163,11 +158,7 @@ export const EditManipuladoUICtrl = (function () {
     };
 
     const displayValidacao = (item) => {
-        let html = `<li class="validacao-element" id="validacao-${item.id}">
-                    ${item.nomeEnsaio} -  ${item.especificacao} - ${item.resultado}  
-                      <button type="button" class="rem-validacao-button">
-                      <i class="fas fa-minus"></i> Remover
-                      </button>`;
+        let html = `<li class="validacao-element" id="validacao-${item.id}">${item.nomeEnsaio} -  ${item.especificacao} - ${item.resultado}<button type="button" class="rem-validacao-button"><i class="fas fa-minus"></i> Remover</button>`;
         UISelectors.validacaoSummaryList.innerHTML += html;
         UISelectors.validacaoSummaryList.addEventListener(
             'click',
@@ -194,9 +185,6 @@ export const EditManipuladoUICtrl = (function () {
         displayMatEmbTotalPrice,
         addFormaFarmaceutica,
         addMatEmbItem,
-        addMatPrimaItem,
-        deleteMatEmbFields,
-        deleteMatEmbItem,
         addMatPrimaItem,
         deleteMatEmbFields,
         deleteMatEmbItem,
