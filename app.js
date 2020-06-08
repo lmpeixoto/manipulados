@@ -47,6 +47,8 @@ app.get('/pesquisa', controllers.getPesquisa);
 
 app.post('/pesquisa', controllers.postPesquisa);
 
+app.get('/arquivo', controllers.getArquivo);
+
 app.get('/editarManipulado', controllers.getEditManipulado);
 
 app.post('/editarManipulado', controllers.postEditManipulado);

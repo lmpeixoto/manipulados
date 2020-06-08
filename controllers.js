@@ -137,6 +137,16 @@ exports.postPesquisa = (req, res, next) => {
         .catch((err) => console.log(err));
 };
 
+exports.getArquivo = (req, res, next) => {
+    Manipulado.find()
+        .then((resultado) => {
+            res.render('arquivo', {
+                resultado: resultado
+            });
+        })
+        .catch((err) => console.log(err));
+};
+
 exports.getFormasFarmaceuticas = (req, res, next) => {
     res.send(formasFarmaceuticas);
 };
