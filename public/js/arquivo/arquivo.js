@@ -59,3 +59,37 @@ function sortRows(rows, column, dirModifier) {
         return aColText > bColText ? 1 * dirModifier : -1 * dirModifier;
     });
 }
+let editButtons = document.querySelectorAll('.btn-warning');
+
+editButtons.forEach((button) => {
+    button.addEventListener('click', editManipulado);
+});
+
+function editManipulado(e) {
+    e.preventDefault();
+    let manipuladoID = e.target.parentElement.parentElement.className.split(
+        '-'
+    )[1];
+    console.log(manipuladoID);
+    let form =
+        e.target.parentElement.parentElement.parentElement.parentElement
+            .parentElement;
+    form.action = '/editarManipulado' + `?manipuladoID=${manipuladoID}`;
+    form.method = 'POST';
+    console.log(form);
+    form.submit();
+}
+
+// function editManipulado(e) {
+//     e.preventDefault();
+//     if (e.target && e.target.className === 'btn-warning') {
+//         console.log(e.target);
+//         let manipuladoID = e.target.parentNode.parentNode.className.split(
+//             '-'
+//         )[1];
+//         console.log(manipuladoID);
+//         // let form = e.target.parentNode.parentNode;
+//         // form.action = '/editarManipulado' + `?manipuladoID=${manipuladoID}`;
+//         // form.submit();
+//     }
+// }

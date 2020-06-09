@@ -1,68 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="css/manipulado.css" />
+        <%- include('includes/dependencies-top.ejs') %>
+        <title>Pesquisa</title>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/manipulado.css" />
-    <%- include('includes/dependencies-top.ejs') %>
-    <title>Pesquisa</title>
-</head>
-
-<body>
-    <%- include('includes/navigation.ejs') %>
-    <div class="container">
-        <h1>Pesquisa</h1>
-        <hr />
-        <div class="search-container">
-            <form action="/pesquisa" method="POST">
-                <div class="inner-form">
-                    <div class="input-field first-wrap">
-                        <input id="search-input" class="form-control" name="search-query" type="text"
-                            placeholder="Introduza o termo de pesquisa" />
-                    </div>
-                    <div class="input-field second-wrap">
-                        <div class="input-select">
-                            <select class="form-control" name="search-choices" id="search-choices">
-                                <option>Nome</option>
-                                <option>Substância Ativa</option>
-                                <option>Forma Farmacêutica</option>
-                                <option>Utente</option>
-                            </select>
+    <body>
+        <%- include('includes/navigation.ejs') %>
+        <div class="container">
+            <h1>Pesquisa</h1>
+            <hr />
+            <div class="search-container">
+                <form action="/pesquisa" method="POST">
+                    <div class="inner-form">
+                        <div class="input-field first-wrap">
+                            <input
+                                id="search-input"
+                                class="form-control"
+                                name="search-query"
+                                type="text"
+                                placeholder="Introduza o termo de pesquisa"
+                            />
+                        </div>
+                        <div class="input-field second-wrap">
+                            <div class="input-select">
+                                <select
+                                    class="form-control"
+                                    name="search-choices"
+                                    id="search-choices"
+                                >
+                                    <option>Nome</option>
+                                    <option>Substância Ativa</option>
+                                    <option>Forma Farmacêutica</option>
+                                    <option>Utente</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-field third-wrap">
+                            <button
+                                class="btn btn-primary btn-search"
+                                id="btn-search"
+                                type="submit"
+                            >
+                                PROCURAR
+                            </button>
                         </div>
                     </div>
-                    <div class="input-field third-wrap">
-                        <button class="btn btn-primary btn-search" id="btn-search" type="submit">PROCURAR</button>
+                </form>
+            </div>
+            <hr />
+            <div class="results-container">
+                <form method="POST" class="results">
+                    <% if (typeof manipulados !== 'undefined') { %> <% if
+                    (manipulados === '') { %>
+                    <p>Pesquisa não encontrou resultados!</p>
+                    <% } else { %> <% for (manip in manipulados) { %>
+                    <div
+                        class="result-manipulado-search"
+                        id="manip-<%= manipulados[manip]._id %>"
+                    >
+                        <ul>
+                            <li><%= manipulados[manip].nomeManipulado %></li>
+                            <li><%= manipulados[manip].utenteNome %></li>
+                            <li><%= manipulados[manip].fFarmNome %></li>
+                        </ul>
+                        <button class="edit-btn" type="button">Editar</button>
                     </div>
-                </div>
-            </form>
+                    <% } %> <% } %> <% } %>
+                </form>
+            </div>
         </div>
-        <hr />
-        <div class="results-container">
-            <form action="/editarManipulado" method="POST" class="results">
-                <% if (typeof manipulados !== 'undefined') { %>
-
-                <%=manipulados%></p>
-                <% if (manipulados === '') { %>
-                <p>Pesquisa não encontrou resultados!</p>
-                <% } else { %>
-                <% for (manip in manipulados) { %>
-                <div class="result-manipulado-search" id="manip-<%= manipulados[manip]._id %>">
-                    <ul>
-                        <li><%= manipulados[manip].nomeManipulado %></li>
-                        <li><%= manipulados[manip].utenteNome %></li>
-                        <li><%= manipulados[manip].fFarmNome %></li>
-                    </ul>
-                    <button class="edit-btn" type="submit">Editar</button>
-                </div>
-                <% } %>
-                <% } %>
-                <% } %>
-            </form>
-        </div>
-    </div>
-    <%- include('includes/dependencies-bottom.ejs') %>
-    
-</body>
-
+        <%- include('includes/dependencies-bottom.ejs') %>
+        <script type="module" src="js/pesquisa/pesquisa.js"></script>
+    </body>
 </html>

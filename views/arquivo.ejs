@@ -16,6 +16,7 @@
             <h1>Manipulados</h1>
             <hr />
             <div class="table-container">
+                <form action="POST" class="table-form">
                 <table
                     id="listaManipulados"
                     class="table table-striped table-bordered table-sm"
@@ -32,19 +33,20 @@
                     </thead>
                     <tbody>
                         <% for (let i=0; i<resultado.length ;i++) {  %> 
-                        <tr>
+                        <tr class="manip-<%= resultado[i]._id  %>"> 
                             <td><%= resultado[i].nomeManipulado %></td>
                             <td><%= resultado[i].fFarmNome %></td>
                             <td><%= resultado[i].utenteNome %></td>
                             <td><%= resultado[i].farmaceuticoNome %></td>
                             <td class="date"><%= resultado[i].createdAt %></td>
-                            <td><button class="btn btn-success" type="button">Abrir</button></td>
-                            <td><button class="btn btn-warning" type="button">Editar</button></td>
-                            <td><button class="btn btn-danger" type="button">Eliminar</button></td>                       
+                            <td><button class="btn btn-success" type="submit">Abrir</button></td>
+                            <td><button class="btn btn-warning" type="submit">Editar</button></td>
+                            <td><button class="btn btn-danger" type="submit">Eliminar</button></td>                       
                         </tr>
                         <% } %> 
                     </tbody>
                   </table>
+                </form>
             </div>
             <hr />
         </div>

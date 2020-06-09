@@ -90,9 +90,11 @@ exports.postEditManipulado = (req, res, next) => {
     let manipuladoID = req.query.manipuladoID;
     Manipulado.findById(manipuladoID)
         .then((manipulado) => {
-            res.render('editarManipulado', {
-                manipulado: manipulado
-            });
+            if (manipulado) {
+                res.render('editarManipulado', {
+                    manipulado: manipulado
+                });
+            }
         })
         .catch((err) => console.log(err));
 };
