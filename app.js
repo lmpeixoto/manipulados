@@ -57,6 +57,8 @@ app.get('/verManipulado', controllers.getViewManipulado);
 
 app.post('/verManipulado', controllers.postViewManipulado);
 
+app.post('/deleteManipulado/:id', controllers.postDeleteManipulado);
+
 app.listen(port, () =>
     console.log(`App listening at http://localhost:${port}`)
 );

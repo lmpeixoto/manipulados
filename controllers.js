@@ -125,6 +125,19 @@ exports.postViewManipulado = (req, res, next) => {
         .catch((err) => console.log(err));
 };
 
+exports.postDeleteManipulado = (req, res, next) => {
+    let manipuladoID = req.params.id;
+    console.log(req.params);
+    Manipulado.findByIdAndDelete(manipuladoID, (err, doc) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('Manipulado apagado com sucesso!');
+            res.redirect('/arquivo');
+        }
+    });
+};
+
 exports.getPesquisa = (req, res, next) => {
     res.render('pesquisa', { manipulados: undefined });
 };

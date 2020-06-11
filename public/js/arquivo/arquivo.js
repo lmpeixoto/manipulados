@@ -100,3 +100,24 @@ function viewManipulado(e) {
     console.log(form);
     form.submit();
 }
+
+let deleteButtons = document.querySelectorAll('.btn-danger');
+
+deleteButtons.forEach((button) => {
+    button.addEventListener('click', deleteManipulado);
+});
+
+function deleteManipulado(e) {
+    e.preventDefault();
+    let manipuladoID = e.target.parentElement.parentElement.className.split(
+        '-'
+    )[1];
+    console.log(manipuladoID);
+    let form =
+        e.target.parentElement.parentElement.parentElement.parentElement
+            .parentElement;
+    form.action = '/deleteManipulado/' + manipuladoID;
+    form.method = 'POST';
+    console.log(form);
+    form.submit();
+}
