@@ -99,6 +99,32 @@ exports.postEditManipulado = (req, res, next) => {
         .catch((err) => console.log(err));
 };
 
+exports.getViewManipulado = (req, res, next) => {
+    let manipuladoID = req.query.manipuladoID;
+    Manipulado.findById(manipuladoID)
+        .then((manipulado) => {
+            if (manipulado) {
+                res.render('ver-manipulado', {
+                    manipulado: manipulado
+                });
+            }
+        })
+        .catch((err) => console.log(err));
+};
+
+exports.postViewManipulado = (req, res, next) => {
+    let manipuladoID = req.query.manipuladoID;
+    Manipulado.findById(manipuladoID)
+        .then((manipulado) => {
+            if (manipulado) {
+                res.render('ver-manipulado', {
+                    manipulado: manipulado
+                });
+            }
+        })
+        .catch((err) => console.log(err));
+};
+
 exports.getPesquisa = (req, res, next) => {
     res.render('pesquisa', { manipulados: undefined });
 };

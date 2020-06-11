@@ -53,6 +53,10 @@ app.get('/editarManipulado', controllers.getEditManipulado);
 
 app.post('/editarManipulado', controllers.postEditManipulado);
 
+app.get('/verManipulado', controllers.getViewManipulado);
+
+app.post('/verManipulado', controllers.postViewManipulado);
+
 app.listen(port, () =>
     console.log(`App listening at http://localhost:${port}`)
 );

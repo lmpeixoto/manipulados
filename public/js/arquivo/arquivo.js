@@ -80,16 +80,23 @@ function editManipulado(e) {
     form.submit();
 }
 
-// function editManipulado(e) {
-//     e.preventDefault();
-//     if (e.target && e.target.className === 'btn-warning') {
-//         console.log(e.target);
-//         let manipuladoID = e.target.parentNode.parentNode.className.split(
-//             '-'
-//         )[1];
-//         console.log(manipuladoID);
-//         // let form = e.target.parentNode.parentNode;
-//         // form.action = '/editarManipulado' + `?manipuladoID=${manipuladoID}`;
-//         // form.submit();
-//     }
-// }
+let viewButtons = document.querySelectorAll('.btn-primary');
+
+viewButtons.forEach((button) => {
+    button.addEventListener('click', viewManipulado);
+});
+
+function viewManipulado(e) {
+    e.preventDefault();
+    let manipuladoID = e.target.parentElement.parentElement.className.split(
+        '-'
+    )[1];
+    console.log(manipuladoID);
+    let form =
+        e.target.parentElement.parentElement.parentElement.parentElement
+            .parentElement;
+    form.action = '/verManipulado' + `?manipuladoID=${manipuladoID}`;
+    form.method = 'POST';
+    console.log(form);
+    form.submit();
+}
