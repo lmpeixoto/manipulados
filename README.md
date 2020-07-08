@@ -19,3 +19,15 @@ Manipulados uses a number of open source projects to work properly:
 
 And of course Manipulados itself is open source with a public repository
  on GitHub.
+ 
+### Installation
+
+Manipulados requires [Node.js](https://nodejs.org/) v8+ to run.
+
+Install the dependencies and devDependencies and start the server.
+
+```sh
+$ cd manipulados
+$ npm install
+$ node app.js
+```
