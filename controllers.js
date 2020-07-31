@@ -1,4 +1,5 @@
-// @ts-check
+const { validationResult } = require('express-validator/check');
+
 const formasFarmaceuticas = require('./model/formas-farmaceuticas.json');
 const fatores = require('./model/unidades.json');
 const OrcamentoManipulado = require('./model/orcamentoManipulado');
@@ -139,7 +140,7 @@ exports.postDeleteManipulado = (req, res, next) => {
 };
 
 exports.getPesquisa = (req, res, next) => {
-    res.render('pesquisa', { manipulados: undefined });
+    res.render('pesquisa', { manipulados: null, errorMessage: null });
 };
 
 function escapeRegex(text) {
@@ -147,35 +148,46 @@ function escapeRegex(text) {
 }
 
 exports.postPesquisa = (req, res, next) => {
-    let searchQuery = req.body['search-query'];
-    const regex = new RegExp(escapeRegex(searchQuery), 'gi');
-    let searchChoice = req.body['search-choices'];
-    let queryChoice;
-    let find = {};
-    switch (searchChoice) {
-        case 'Nome':
-            queryChoice = 'nomeManipulado';
-            break;
-        case 'Substância Ativa':
-            queryChoice = 'Substância Ativa';
-            break;
-        case 'Forma Farmacêutica':
-            queryChoice = 'fFarmNome';
-            break;
-        case 'Utente':
-            queryChoice = 'utenteNome';
-            break;
+    const { errors } = validationResult(req);
+    if (errors.length > 0) {
+        res.render('pesquisa', {
+            manipulados: '',
+            errorMessage: errors[0].msg
+        });
+    } else {
+        let searchQuery = req.body['search-query'];
+        const regex = new RegExp(escapeRegex(searchQuery), 'gi');
+        let searchChoice = req.body['search-choices'];
+        let queryChoice;
+        let find = {};
+        switch (searchChoice) {
+            case 'Nome':
+                queryChoice = 'nomeManipulado';
+                break;
+            case 'Substância Ativa':
+                queryChoice = 'Substância Ativa';
+                break;
+            case 'Forma Farmacêutica':
+                queryChoice = 'fFarmNome';
+                break;
+            case 'Utente':
+                queryChoice = 'utenteNome';
+                break;
+        }
+        find[queryChoice] = regex;
+        Manipulado.find(find)
+            .then((manip) => {
+                if (manip.length > 0) {
+                    res.render('pesquisa', { manipulados: manip });
+                } else {
+                    res.render('pesquisa', {
+                        manipulados: '',
+                        errorMessage: 'Resultado de pesquisa não encontrado!'
+                    });
+                }
+            })
+            .catch((err) => console.log(err));
     }
-    find[queryChoice] = regex;
-    Manipulado.find(find)
-        .then((manip) => {
-            if (manip.length > 0) {
-                res.render('pesquisa', { manipulados: manip });
-            } else {
-                res.render('pesquisa', { manipulados: '' });
-            }
-        })
-        .catch((err) => console.log(err));
 };
 
 exports.getArquivo = (req, res, next) => {

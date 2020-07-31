@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const { check, body } = require('express-validator/check');
 
 const controllers = require('./controllers');
 const app = express();
@@ -45,7 +46,11 @@ app.post('/orcamento', controllers.postOrcamento);
 
 app.get('/pesquisa', controllers.getPesquisa);
 
-app.post('/pesquisa', controllers.postPesquisa);
+app.post(
+    '/pesquisa',
+    [body('search-query').isLength({ min: 5 }).isAlphanumeric().trim()],
+    controllers.postPesquisa
+);
 
 app.get('/arquivo', controllers.getArquivo);
 
