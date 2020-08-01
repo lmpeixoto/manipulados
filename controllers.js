@@ -41,46 +41,53 @@ exports.postOrcamento = (req, res, next) => {
 };
 
 exports.getNovoManipulado = (req, res, next) => {
-    res.render('novoManipulado');
+    res.render('novoManipulado', { errorMessage: '' });
 };
 
 exports.postNovoManipulado = (req, res, next) => {
-    console.log(req.body);
-    const manipulado = new Manipulado({
-        lote: req.body.lote,
-        nomeManipulado: req.body.nomeManipulado,
-        fatorF: req.body.fatorF,
-        utenteNome: req.body.utenteNome,
-        utenteContacto: req.body.utenteContacto,
-        prescritorNome: req.body.prescritorNome,
-        prescritorContacto: req.body.prescritorContacto,
-        farmaceuticoNome: req.body.farmaceuticoNome,
-        farmaceuticoSupervisor: req.body.farmaceuticoSupervisor,
-        preparacao: req.body.preparacao,
-        conservacao: req.body.conservacao,
-        validade: req.body.validade,
-        fFarmNome: req.body.fFarmNome,
-        fFarmPrice: req.body.fFarmPrice,
-        fFarmQtd: req.body.fFarmQtd,
-        materiasPrimas: req.body.materiasPrimas,
-        materiasPrimasPrice: req.body.materiasPrimasPrice,
-        materiaisEmbalagem: req.body.materiaisEmbalagem,
-        materiaisEmbalagemPrice: req.body.materiaisEmbalagemPrice,
-        validacoes: req.body.validacoes,
-        IVA: req.body.IVA,
-        totalPrice: req.body.totalPrice
-    });
-    manipulado
-        .save()
-        .then((result) => {
-            // console.log(result);
-            console.log(manipulado);
-            console.log('Manipulado criado com sucesso');
-            res.redirect('/');
-        })
-        .catch((err) => {
-            console.log(err);
+    const { errors } = validationResult(req);
+    if (errors.length > 0) {
+        res.render('novoManipulado', {
+            errorMessage: errors[0].msg
         });
+    } else {
+        console.log(req.body);
+        const manipulado = new Manipulado({
+            lote: req.body.lote,
+            nomeManipulado: req.body.nomeManipulado,
+            fatorF: req.body.fatorF,
+            utenteNome: req.body.utenteNome,
+            utenteContacto: req.body.utenteContacto,
+            prescritorNome: req.body.prescritorNome,
+            prescritorContacto: req.body.prescritorContacto,
+            farmaceuticoNome: req.body.farmaceuticoNome,
+            farmaceuticoSupervisor: req.body.farmaceuticoSupervisor,
+            preparacao: req.body.preparacao,
+            conservacao: req.body.conservacao,
+            validade: req.body.validade,
+            fFarmNome: req.body.fFarmNome,
+            fFarmPrice: req.body.fFarmPrice,
+            fFarmQtd: req.body.fFarmQtd,
+            materiasPrimas: req.body.materiasPrimas,
+            materiasPrimasPrice: req.body.materiasPrimasPrice,
+            materiaisEmbalagem: req.body.materiaisEmbalagem,
+            materiaisEmbalagemPrice: req.body.materiaisEmbalagemPrice,
+            validacoes: req.body.validacoes,
+            IVA: req.body.IVA,
+            totalPrice: req.body.totalPrice
+        });
+        manipulado
+            .save()
+            .then((result) => {
+                // console.log(result);
+                console.log(manipulado);
+                console.log('Manipulado criado com sucesso');
+                res.redirect('/');
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
 };
 
 exports.getEditManipulado = (req, res, next) => {

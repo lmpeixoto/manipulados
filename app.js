@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const { check, body } = require('express-validator/check');
 
 const controllers = require('./controllers');
+const { validateManipulado } = require('./middleware/validators');
+
 const app = express();
 const port = 3000;
 const MONGODB_URI = `mongodb+srv://sleepl:oMLvdUrSfsOlZY3w@cluster0-kwnmr.mongodb.net/test`;
@@ -38,7 +40,7 @@ app.get('/fatores', controllers.getFatores);
 
 app.get('/novoManipulado', controllers.getNovoManipulado);
 
-app.post('/novoManipulado', controllers.postNovoManipulado);
+app.post('/novoManipulado', validateManipulado, controllers.postNovoManipulado);
 
 app.get('/orcamento', controllers.getOrcamento);
 
