@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const { check, body } = require('express-validator/check');
+const { check, body } = require('express-validator');
 
 const controllers = require('./controllers');
 const { validateManipulado } = require('./middleware/validators');
