@@ -62,25 +62,27 @@ export const ManipuladoModel = (function () {
         return manipulado;
     };
 
-    const displayMessage = (message, type) => {
+    const displayMessages = (messages, type) => {
+        const messagesContainer = document.querySelector('.user-messages');
+        messagesContainer.classList.remove('hide');
         let html;
-        if (type == 'error') {
-            html = `<div class="alert alert-danger fixed-top" role="alert">
-                        ${message}
-                    </div>`;
-        } else {
-            html = `<div class="alert alert-success fixed-top" role="alert">
-                        ${message}
-                    </div>`;
-        }
-
-        const container = document.querySelector('.container');
-        container.innerHTML += html;
+        messages.forEach((message) => {
+            if (type == 'error') {
+                html = `<div class="user-message user-message--error">
+                            ${message}
+                        </div>`;
+            } else {
+                html = `<div class="user-message user-message--success">
+                            ${message}
+                        </div>`;
+            }
+            messagesContainer.innerHTML += html;
+        });
         setTimeout(clearAllMessages, 5000);
     };
 
     const clearAllMessages = () => {
-        const messageBoxes = document.querySelectorAll('.alert');
+        const messageBoxes = document.querySelectorAll('.user-message');
         messageBoxes.forEach((box) => (box.style.display = 'none'));
     };
 
@@ -101,12 +103,10 @@ export const ManipuladoModel = (function () {
                 })
                 .then((data) => {
                     if (data.errorMessage !== '') {
-                        displayMessage(data.errorMessage, 'error');
-                    } else {
-                        displayMessage(
-                            'Manipulado criado com sucesso!',
-                            'success'
-                        );
+                        displayMessages(data.errorMessages, 'error');
+                    } else if (data.errorMessage === '') {
+                        let successMessage = ['Manipulado criado com sucesso!'];
+                        displayMessages(successMessage, 'success');
                     }
                 });
         } else {

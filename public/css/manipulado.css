@@ -64,6 +64,19 @@ label {
     padding: 1.5rem 1.5rem;
 }
 
+.user-messages {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+    position: sticky;
+    top: 4rem;
+}
+
+.hide {
+    display: none;
+}
+
 .user-message {
     margin: auto;
     width: 90%;
@@ -78,4 +91,10 @@ label {
     border-color: red;
     background: rgb(255, 176, 176);
     color: red;
+}
+
+.user-message--success {
+    border-color: green;
+    background: rgb(136, 255, 172);
+    color: green;
 }

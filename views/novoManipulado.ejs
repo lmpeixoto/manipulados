@@ -11,11 +11,7 @@
     <body>
         <%- include('includes/navigation.ejs') %>
         <div class="container">
-            <% if (errorMessage) { %>
-            <div class="user-message user-message--error">
-                <%= errorMessage %>
-            </div>
-            <% } %>
+            <div class="user-messages hide"></div>
             <h1><i class="far fa-file-alt"></i> Novo Manipulado</h1>
             <hr />
             <form action="#" class="form-main">

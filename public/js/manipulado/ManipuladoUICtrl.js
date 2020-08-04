@@ -75,7 +75,6 @@ export const ManipuladoUICtrl = (function () {
         }
     };
     const addMatPrimaItem = (item) => {
-        console.log(item);
         let html = `<li class="mat-prima-element" id="mat-prima-${item.id}">
                       ${item.nome} - ${item.qtd} - ${item.fator} - ${item.preco}€ - Valor: ${item.valor}€   
                           <button type="button" class="rem-mat-prima-button">

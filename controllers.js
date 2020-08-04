@@ -71,9 +71,11 @@ exports.postNovoManipulado = (req, res, next) => {
         totalPrice: req.body.totalPrice
     });
     if (errors.length > 0) {
+        let errorsArray = [];
+        errors.forEach((error) => errorsArray.push(error.msg));
         res.json({
             manipulado: manipulado,
-            errorMessage: errors[0].msg
+            errorMessages: errorsArray
         });
     } else {
         manipulado
@@ -84,14 +86,15 @@ exports.postNovoManipulado = (req, res, next) => {
                 console.log('Manipulado criado com sucesso');
                 res.json({
                     manipulado: manipulado,
-                    errorMessage: ''
+                    errorMessages: ''
                 });
             })
             .catch((err) => {
                 res.json({
                     manipulado: manipulado,
-                    errorMessage:
+                    errorMessages: [
                         'Ocorreu um erro a gravar para a base de dados!'
+                    ]
                 });
             });
     }
