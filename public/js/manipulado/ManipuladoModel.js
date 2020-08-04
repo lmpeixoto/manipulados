@@ -61,6 +61,29 @@ export const ManipuladoModel = (function () {
         };
         return manipulado;
     };
+
+    const displayMessage = (message, type) => {
+        let html;
+        if (type == 'error') {
+            html = `<div class="alert alert-danger fixed-top" role="alert">
+                        ${message}
+                    </div>`;
+        } else {
+            html = `<div class="alert alert-success fixed-top" role="alert">
+                        ${message}
+                    </div>`;
+        }
+
+        const container = document.querySelector('.container');
+        container.innerHTML += html;
+        setTimeout(clearAllMessages, 5000);
+    };
+
+    const clearAllMessages = () => {
+        const messageBoxes = document.querySelectorAll('.alert');
+        messageBoxes.forEach((box) => (box.style.display = 'none'));
+    };
+
     const saveManipuladoData = (e) => {
         e.preventDefault();
         console.log(createObjectToSend());
@@ -70,10 +93,22 @@ export const ManipuladoModel = (function () {
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                redirect: 'follow',
                 body: JSON.stringify(createObjectToSend())
-            }).then((response) => {
-                console.log(response);
-            });
+            })
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    if (data.errorMessage !== '') {
+                        displayMessage(data.errorMessage, 'error');
+                    } else {
+                        displayMessage(
+                            'Manipulado criado com sucesso!',
+                            'success'
+                        );
+                    }
+                });
         } else {
             console.log('Data not saved!');
         }
