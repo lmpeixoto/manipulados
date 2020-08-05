@@ -62,22 +62,24 @@ export const ManipuladoModel = (function () {
         return manipulado;
     };
 
-    const displayMessages = (messages, type) => {
+    const displayMessages = (messages) => {
         const messagesContainer = document.querySelector('.user-messages');
         messagesContainer.classList.remove('hide');
         let html;
-        messages.forEach((message) => {
-            if (type == 'error') {
-                html = `<div class="user-message user-message--error">
-                            ${message}
+        if (messages === '') {
+            html = `<div class="user-message user-message--success">
+                            Manipulado criado com sucesso!
                         </div>`;
-            } else {
-                html = `<div class="user-message user-message--success">
-                            ${message}
-                        </div>`;
-            }
             messagesContainer.innerHTML += html;
-        });
+        } else {
+            messages.forEach((message) => {
+                html = `<div class="user-message user-message--error">
+                                ${message}
+                            </div>`;
+                messagesContainer.innerHTML += html;
+            });
+        }
+
         setTimeout(clearAllMessages, 5000);
     };
 
@@ -102,13 +104,9 @@ export const ManipuladoModel = (function () {
                     return response.json();
                 })
                 .then((data) => {
-                    if (data.errorMessage !== '') {
-                        displayMessages(data.errorMessages, 'error');
-                    } else if (data.errorMessage === '') {
-                        let successMessage = ['Manipulado criado com sucesso!'];
-                        displayMessages(successMessage, 'success');
-                    }
-                });
+                    displayMessages(data.errorMessages);
+                })
+                .catch((err) => console.log(err));
         } else {
             console.log('Data not saved!');
         }
