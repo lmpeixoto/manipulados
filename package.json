@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -e js,ejs app.js",
-    "debug": "node --inspect app.js"
+    "start": "env-cmd -f ./config/dev.env nodemon -e js,ejs index.js",
+    "debug": "env-cmd -f ./config/dev.env nodemon --inspect index.js"
   },
   "keywords": [],
   "author": "",

@@ -1,26 +1,12 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 const { check, body } = require('express-validator');
 
 const controllers = require('./controllers');
 const { validateManipulado } = require('./middleware/validators');
 
 const app = express();
-const port = 3000;
-const MONGODB_URI = `mongodb+srv://sleepl:oMLvdUrSfsOlZY3w@cluster0-kwnmr.mongodb.net/test`;
-
-mongoose.connect(MONGODB_URI, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true
-});
-
-const connection = mongoose.connection;
-
-connection.once('open', function () {
-    console.log('MongoDB database connection established successfully');
-});
 
 const public_folder = path.join(__dirname, 'public');
 
@@ -66,6 +52,4 @@ app.post('/verManipulado', controllers.postViewManipulado);
 
 app.post('/deleteManipulado/:id', controllers.postDeleteManipulado);
 
-app.listen(port, () =>
-    console.log(`App listening at http://localhost:${port}`)
-);
+module.exports = app;
