@@ -16,11 +16,7 @@
     <body>
         <%- include('includes/navigation.ejs') %>
         <div class="container">
-            <% if (errorMessage) { %>
-            <div class="user-message user-message--error">
-                <%= errorMessage %>
-            </div>
-            <% } %>
+            <div class="user-messages hide"></div>
             <h1><i class="fas fa-search"></i> Pesquisa</h1>
             <hr />
             <div class="search-container">

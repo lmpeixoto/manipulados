@@ -6,7 +6,7 @@ services:
         ports:
             - '3000:3000'
         volumes:
-            - '/home/node/code:/home/lmpeixoto/dev/manipulados'
+            - /home/node/code:/home/lmpeixoto/dev/manipulados
         links:
             - mongo
     mongo:
