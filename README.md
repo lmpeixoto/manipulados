@@ -22,12 +22,8 @@ on GitHub.
 
 ### Installation
 
-Manipulados requires [Node.js](https://nodejs.org/) v8+ to run.
-
-Install the dependencies and devDependencies and start the server.
+Docker must be installed on your machine. To run the dev docker environment run:
 
 ```sh
-$ cd manipulados
-$ npm install
-$ node app.js
+$ docker-compose up
 ```
