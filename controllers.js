@@ -3,7 +3,8 @@ const { validationResult } = require('express-validator');
 const formasFarmaceuticas = require('./model/formas-farmaceuticas.json');
 const fatores = require('./model/unidades.json');
 const OrcamentoManipulado = require('./model/orcamentoManipulado');
-const Manipulado = require('./model/manipulado');
+const ManipuladoModel = require('./model/manipulado');
+const Manipulado = require('./utils/manipulado');
 
 exports.getIndex = (req, res, next) => {
     res.render('index');
@@ -64,7 +65,29 @@ exports.getNovoManipulado = (req, res, next) => {
 
 exports.postNovoManipulado = (req, res, next) => {
     const { errors } = validationResult(req);
-    const manipulado = new Manipulado({
+    const manipuladoClassData = new Manipulado({
+        lote: req.body.lote,
+        nomeManipulado: req.body.nomeManipulado,
+        fatorF: req.body.fatorF,
+        utenteNome: req.body.utenteNome,
+        utenteContacto: req.body.utenteContacto,
+        prescritorNome: req.body.prescritorNome,
+        prescritorContacto: req.body.prescritorContacto,
+        farmaceuticoNome: req.body.farmaceuticoNome,
+        farmaceuticoSupervisor: req.body.farmaceuticoSupervisor,
+        preparacao: req.body.preparacao,
+        conservacao: req.body.conservacao,
+        validade: req.body.validade,
+        fFarmNome: req.body.fFarmNome,
+        fFarmPrice: req.body.fFarmPrice,
+        fFarmQtd: req.body.fFarmQtd,
+        materiasPrimas: req.body.materiasPrimas,
+        materiaisEmbalagem: req.body.materiaisEmbalagem,
+        validacoes: req.body.validacoes
+    });
+    manipuladoClassData.calculateTotalPrice();
+    console.log(manipuladoClassData);
+    const manipulado = new ManipuladoModel({
         lote: req.body.lote,
         nomeManipulado: req.body.nomeManipulado,
         fatorF: req.body.fatorF,
@@ -124,7 +147,7 @@ exports.getEditManipulado = (req, res, next) => {
 
 exports.postEditManipulado = (req, res, next) => {
     let manipuladoID = req.query.manipuladoID;
-    Manipulado.findById(manipuladoID)
+    ManipuladoModel.findById(manipuladoID)
         .then((manipulado) => {
             if (manipulado) {
                 res.render('editarManipulado', {
@@ -137,7 +160,7 @@ exports.postEditManipulado = (req, res, next) => {
 
 exports.getViewManipulado = (req, res, next) => {
     let manipuladoID = req.query.manipuladoID;
-    Manipulado.findById(manipuladoID)
+    ManipuladoModel.findById(manipuladoID)
         .then((manipulado) => {
             if (manipulado) {
                 res.render('ver-manipulado', {
@@ -150,7 +173,7 @@ exports.getViewManipulado = (req, res, next) => {
 
 exports.postViewManipulado = (req, res, next) => {
     let manipuladoID = req.query.manipuladoID;
-    Manipulado.findById(manipuladoID)
+    ManipuladoModel.findById(manipuladoID)
         .then((manipulado) => {
             if (manipulado) {
                 res.render('ver-manipulado', {
@@ -164,7 +187,7 @@ exports.postViewManipulado = (req, res, next) => {
 exports.postDeleteManipulado = (req, res, next) => {
     let manipuladoID = req.params.id;
     console.log(req.params);
-    Manipulado.findByIdAndDelete(manipuladoID, (err, doc) => {
+    ManipuladoModel.findByIdAndDelete(manipuladoID, (err, doc) => {
         if (err) {
             console.log(err);
         } else {
@@ -210,7 +233,7 @@ exports.postPesquisa = (req, res, next) => {
                 break;
         }
         find[queryChoice] = regex;
-        Manipulado.find(find)
+        ManipuladoModel.find(find)
             .then((manip) => {
                 if (manip.length > 0) {
                     res.render('pesquisa', { manipulados: manip });
@@ -226,7 +249,7 @@ exports.postPesquisa = (req, res, next) => {
 };
 
 exports.getArquivo = (req, res, next) => {
-    Manipulado.find()
+    ManipuladoModel.find()
         .then((resultado) => {
             res.render('arquivo', {
                 resultado: resultado
