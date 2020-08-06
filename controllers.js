@@ -15,6 +15,7 @@ exports.getOrcamento = (req, res, next) => {
 
 exports.postOrcamento = (req, res, next) => {
     console.log(req.body);
+    const { errors } = validationResult(req);
     const orcamentoManipulado = new OrcamentoManipulado({
         nomeManipulado: req.body.nomeManipulado,
         fatorF: req.body.fatorF,
@@ -28,16 +29,33 @@ exports.postOrcamento = (req, res, next) => {
         totalPrice: req.body.totalPrice,
         IVA: req.body.IVA
     });
-    orcamentoManipulado
-        .save()
-        .then((result) => {
-            console.log(orcamentoManipulado);
-            console.log('Manipulado criado com sucesso');
-            res.redirect('/');
-        })
-        .catch((err) => {
-            console.log(err);
+    if (errors.length > 0) {
+        let errorsArray = [];
+        errors.forEach((error) => errorsArray.push(error.msg));
+        res.json({
+            manipulado: orcamentoManipulado,
+            errorMessages: errorsArray
         });
+    } else {
+        orcamentoManipulado
+            .save()
+            .then((result) => {
+                console.log(orcamentoManipulado);
+                console.log('Manipulado criado com sucesso');
+                res.json({
+                    manipulado: orcamentoManipulado,
+                    errorMessages: ''
+                });
+            })
+            .catch((err) => {
+                res.json({
+                    manipulado: orcamentoManipulado,
+                    errorMessages: [
+                        'Ocorreu um erro a gravar para a base de dados!'
+                    ]
+                });
+            });
+    }
 };
 
 exports.getNovoManipulado = (req, res, next) => {

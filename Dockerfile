@@ -1,4 +1,8 @@
-FROM node:12-stretch
+FROM alpine:3.12
+
+RUN apk add --update nodejs npm
+
+RUN addgroup -S node && adduser -S node -G node
 
 USER node
 

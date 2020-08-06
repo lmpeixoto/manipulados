@@ -4,7 +4,10 @@ const bodyParser = require('body-parser');
 const { check, body } = require('express-validator');
 
 const controllers = require('./controllers');
-const { validateManipulado } = require('./middleware/validators');
+const {
+    validateManipulado,
+    validateOrcamento
+} = require('./middleware/validators');
 
 const app = express();
 
@@ -30,7 +33,7 @@ app.post('/novoManipulado', validateManipulado, controllers.postNovoManipulado);
 
 app.get('/orcamento', controllers.getOrcamento);
 
-app.post('/orcamento', controllers.postOrcamento);
+app.post('/orcamento', validateOrcamento, controllers.postOrcamento);
 
 app.get('/pesquisa', controllers.getPesquisa);
 

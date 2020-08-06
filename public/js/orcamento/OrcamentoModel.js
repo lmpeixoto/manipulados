@@ -28,6 +28,33 @@ export const OrcamentoModel = (function () {
         };
         return manipulado;
     };
+
+    const displayMessages = (messages) => {
+        const messagesContainer = document.querySelector('.user-messages');
+        messagesContainer.classList.remove('hide');
+        let html;
+        if (messages === '') {
+            html = `<div class="user-message user-message--success">
+                            Manipulado criado com sucesso!
+                        </div>`;
+            messagesContainer.innerHTML += html;
+        } else {
+            messages.forEach((message) => {
+                html = `<div class="user-message user-message--error">
+                                ${message}
+                            </div>`;
+                messagesContainer.innerHTML += html;
+            });
+        }
+
+        setTimeout(clearAllMessages, 5000);
+    };
+
+    const clearAllMessages = () => {
+        const messageBoxes = document.querySelectorAll('.user-message');
+        messageBoxes.forEach((box) => (box.style.display = 'none'));
+    };
+
     const saveOrcamentoData = (e) => {
         e.preventDefault();
         if (validateBeforeSaving()) {
@@ -37,9 +64,14 @@ export const OrcamentoModel = (function () {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(createObjectToSend())
-            }).then((response) => {
-                console.log(response);
-            });
+            })
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    displayMessages(data.errorMessages);
+                })
+                .catch((err) => console.log(err));
         } else {
             console.log('Data not saved!');
         }
