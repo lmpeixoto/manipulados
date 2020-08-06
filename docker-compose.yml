@@ -3,5 +3,16 @@ services:
     nodejs:
         build:
             context: .
+        ports:
+            - '3000:3000'
         volumes:
             - '/home/node/code:/home/lmpeixoto/dev/manipulados'
+        links:
+            - mongo
+    mongo:
+        container_name: mongo
+        image: mongo
+        volumes:
+            - ./data:/home/lmpeixoto/dev/manipulados/data/db
+        ports:
+            - '27017:27017'

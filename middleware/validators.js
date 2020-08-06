@@ -10,7 +10,7 @@ exports.validateManipulado = [
         .withMessage('Lote do manipulado não pode ser nulo!')
         .bail()
         .isLength({ min: 3 })
-        .withMessage('Nome do manipulado tem de ter no mínimo 3 caracteres!')
+        .withMessage('Lote do manipulado tem de ter no mínimo 3 caracteres!')
         .bail(),
     check('nomeManipulado')
         .trim()
@@ -93,10 +93,12 @@ exports.validateManipulado = [
         .escape()
         .not()
         .isEmpty()
-        .withMessage('Nome do farmacêutico não pode ser nulo!')
+        .withMessage('Nome do farmacêutico supervisor não pode ser nulo!')
         .bail()
         .isLength({ min: 3 })
-        .withMessage('Nome do farmacêutico tem de ter no mínimo 3 caracteres!')
+        .withMessage(
+            'Nome do farmacêutico supervisor tem de ter no mínimo 3 caracteres!'
+        )
         .bail(),
     check('preparacao')
         .trim()
@@ -183,7 +185,7 @@ exports.validateManipulado = [
         .isArray()
         .not()
         .isEmpty()
-        .withMessage('Matériais de embalagem do manipulado não pode ser nulo!')
+        .withMessage('Materiais de embalagem do manipulado não pode ser nulo!')
         .bail()
         .isLength({ min: 1 })
         .withMessage('Tem de ter pelo menos 1 material de embalagem!')
