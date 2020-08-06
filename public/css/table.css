@@ -1,5 +1,13 @@
+.table {
+    vertical-align: middle;
+}
+
 .table th {
     cursor: pointer;
+}
+
+.table td {
+    text-align: center;
 }
 
 .table .th-sort-asc::after {
