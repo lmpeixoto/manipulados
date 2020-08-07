@@ -23,9 +23,9 @@ const matEmbReader = (matEmbArray) => {
         materiaisEmbalagem.push(
             new MaterialEmbalagem(
                 matEmb.nome,
+                matEmb.capacidade,
                 matEmb.preco,
-                matEmb.qtd,
-                matEmb.fator
+                matEmb.qtd
             )
         );
     });
@@ -34,6 +34,7 @@ const matEmbReader = (matEmbArray) => {
 
 class Manipulado {
     constructor(
+        lote,
         nomeManipulado,
         fatorF,
         utenteNome,
@@ -52,6 +53,7 @@ class Manipulado {
         materiaisEmbalagem,
         validacoes
     ) {
+        this.lote = lote;
         this.nomeManipulado = nomeManipulado;
         this.fatorF = fatorF;
         this.utenteNome = utenteNome;
@@ -100,11 +102,13 @@ class Manipulado {
     calculateTotalPrice() {
         this.setMatPrimasTotalPrice(this.calculateMatPrimasTotalPrice(fct));
         this.setMatEmbTotalPrice(this.calculateMatEmbTotalPrice());
-        let totalPrice = (fFarmPrice + matPrimPrice + matEmbPrice) * 1.3;
+        let totalPrice =
+            (this.fFarmPrice + this.matPrimTotalPrice + this.matEmbTotalPrice) *
+            1.3;
         let IVA = +(totalPrice * 0.023).toFixed(2);
         let finalPrice = +(totalPrice + IVA).toFixed(2);
-        setTotalPrice(finalPrice);
-        setIVA(IVA);
+        this.setTotalPrice(finalPrice);
+        this.setIVA(IVA);
     }
 
     setMatPrimasTotalPrice(val) {

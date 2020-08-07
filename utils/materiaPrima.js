@@ -1,7 +1,7 @@
 const fct = require('../model/unidades.json');
 
 class MateriaPrima {
-    constructor(nome, preco, qtd, fator, valor) {
+    constructor(nome, preco, qtd, fator) {
         this.nome = nome;
         this.preco = preco;
         this.qtd = qtd;

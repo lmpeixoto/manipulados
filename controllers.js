@@ -65,26 +65,27 @@ exports.getNovoManipulado = (req, res, next) => {
 
 exports.postNovoManipulado = (req, res, next) => {
     const { errors } = validationResult(req);
-    const manipuladoClassData = new Manipulado({
-        lote: req.body.lote,
-        nomeManipulado: req.body.nomeManipulado,
-        fatorF: req.body.fatorF,
-        utenteNome: req.body.utenteNome,
-        utenteContacto: req.body.utenteContacto,
-        prescritorNome: req.body.prescritorNome,
-        prescritorContacto: req.body.prescritorContacto,
-        farmaceuticoNome: req.body.farmaceuticoNome,
-        farmaceuticoSupervisor: req.body.farmaceuticoSupervisor,
-        preparacao: req.body.preparacao,
-        conservacao: req.body.conservacao,
-        validade: req.body.validade,
-        fFarmNome: req.body.fFarmNome,
-        fFarmPrice: req.body.fFarmPrice,
-        fFarmQtd: req.body.fFarmQtd,
-        materiasPrimas: req.body.materiasPrimas,
-        materiaisEmbalagem: req.body.materiaisEmbalagem,
-        validacoes: req.body.validacoes
-    });
+    console.log(req.body.nomeManipulado);
+    const manipuladoClassData = new Manipulado(
+        req.body.lote,
+        req.body.nomeManipulado,
+        req.body.fatorF,
+        req.body.utenteNome,
+        req.body.utenteContacto,
+        req.body.prescritorNome,
+        req.body.prescritorContacto,
+        req.body.farmaceuticoNome,
+        req.body.farmaceuticoSupervisor,
+        req.body.preparacao,
+        req.body.conservacao,
+        req.body.validade,
+        req.body.fFarmNome,
+        req.body.fFarmPrice,
+        req.body.fFarmQtd,
+        req.body.materiasPrimas,
+        req.body.materiaisEmbalagem,
+        req.body.validacoes
+    );
     manipuladoClassData.calculateTotalPrice();
     console.log(manipuladoClassData);
     const manipulado = new ManipuladoModel({

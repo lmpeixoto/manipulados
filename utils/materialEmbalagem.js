@@ -1,5 +1,5 @@
 class MaterialEmbalagem {
-    constructor(nome, preco, qtd, fator, valor) {
+    constructor(nome, capacidade, preco, qtd) {
         this.nome = nome;
         this.capacidade = capacidade;
         this.preco = preco;
