@@ -38,3 +38,40 @@ label {
     border: 1px solid #cccccc;
     padding: 1.5rem 1.5rem;
 }
+
+.mat-primas-summary-list {
+    display: flex;
+    flex-direction: column;
+    background-color: #dcdcdcdc;
+    border-radius: 15px;
+    padding: 10px 20px;
+    list-style: none;
+    text-align: center;
+}
+
+.mat-prim-element {
+    text-decoration: none;
+}
+.rem-mat-prima-button {
+    border-radius: 10px;
+    border-color: snow;
+    margin-left: 20px;
+}
+
+.mat-emb-summary-list {
+    display: flex;
+    flex-direction: column;
+    background-color: #dcdcdcdc;
+    border-radius: 15px;
+    padding: 10px 20px;
+    list-style: none;
+    text-align: center;
+}
+
+.mat-emb-element {
+}
+.rem-mat-emb-button {
+    border-radius: 10px;
+    border-color: snow;
+    margin-left: 20px;
+}
