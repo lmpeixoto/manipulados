@@ -42,15 +42,16 @@ label {
 .mat-primas-summary-list {
     display: flex;
     flex-direction: column;
+    margin: 10px 0;
+}
+
+.mat-prima-element {
     background-color: #dcdcdcdc;
     border-radius: 15px;
     padding: 10px 20px;
     list-style: none;
     text-align: center;
-}
-
-.mat-prim-element {
-    text-decoration: none;
+    margin-bottom: 10px;
 }
 .rem-mat-prima-button {
     border-radius: 10px;
@@ -61,14 +62,16 @@ label {
 .mat-emb-summary-list {
     display: flex;
     flex-direction: column;
+    margin: 10px 0;
+}
+
+.mat-emb-element {
     background-color: #dcdcdcdc;
     border-radius: 15px;
     padding: 10px 20px;
     list-style: none;
     text-align: center;
-}
-
-.mat-emb-element {
+    margin-bottom: 10px;
 }
 .rem-mat-emb-button {
     border-radius: 10px;
