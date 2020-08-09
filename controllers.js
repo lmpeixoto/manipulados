@@ -80,7 +80,6 @@ exports.postNovoManipulado = (req, res, next) => {
         req.body.conservacao,
         req.body.validade,
         req.body.fFarmNome,
-        req.body.fFarmPrice,
         req.body.fFarmQtd,
         req.body.materiasPrimas,
         req.body.materiaisEmbalagem,

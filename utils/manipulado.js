@@ -1,3 +1,4 @@
+const formasFarmaceuticas = require('../model/formas-farmaceuticas.json');
 const fct = require('../model/unidades.json');
 const MateriaPrima = require('./materiaPrima');
 const MaterialEmbalagem = require('./materialEmbalagem');
@@ -32,6 +33,10 @@ const matEmbReader = (matEmbArray) => {
     return materiaisEmbalagem;
 };
 
+const roundNumberToTwoDecimals = (num) => {
+    return +num.toFixed(2);
+};
+
 class Manipulado {
     constructor(
         lote,
@@ -47,7 +52,6 @@ class Manipulado {
         conservacao,
         validade,
         fFarmNome,
-        fFarmPrice,
         fFarmQtd,
         materiasPrimas,
         materiaisEmbalagem,
@@ -55,7 +59,7 @@ class Manipulado {
     ) {
         this.lote = lote;
         this.nomeManipulado = nomeManipulado;
-        this.fatorF = fatorF;
+        this.fatorF = 4;
         this.utenteNome = utenteNome;
         this.utenteContacto = utenteContacto;
         this.prescritorNome = prescritorNome;
@@ -66,7 +70,7 @@ class Manipulado {
         this.conservacao = conservacao;
         this.validade = validade;
         this.fFarmNome = fFarmNome;
-        this.fFarmPrice = fFarmPrice;
+        this.fFarmPrice;
         this.fFarmQtd = fFarmQtd;
         this.materiasPrimas = matPrimReader(materiasPrimas);
         this.materiaisEmbalagem = matEmbReader(materiaisEmbalagem);
@@ -77,6 +81,26 @@ class Manipulado {
         this.totalPrice;
     }
 
+    calculateFFarmPrice(formasFarmaceuticas) {
+        let formaFarmaceuticaPrice;
+        const qtd = this.fFarmQtd;
+        const fatorF = this.fatorF;
+        const limite = +formasFarmaceuticas[this.fFarmNome][0];
+        const fatorNormal = +formasFarmaceuticas[this.fFarmNome][1];
+        const fatorSuplemento = +formasFarmaceuticas[this.fFarmNome][2];
+        if (qtd <= limite) {
+            formaFarmaceuticaPrice = fatorF * fatorNormal;
+        } else {
+            let excesso = qtd - limite;
+            formaFarmaceuticaPrice =
+                fatorF * fatorNormal + excesso * fatorSuplemento;
+        }
+        formaFarmaceuticaPrice = roundNumberToTwoDecimals(
+            formaFarmaceuticaPrice
+        );
+        return formaFarmaceuticaPrice;
+    }
+
     calculateMatPrimasTotalPrice(fct) {
         let val = 0;
         for (let i = 0; i < this.materiasPrimas.length; i++) {
@@ -85,7 +109,7 @@ class Manipulado {
                 +this.materiasPrimas[i].qtd *
                 +fct[this.materiasPrimas[i].fator][1];
         }
-        return +val.toFixed(2);
+        return roundNumberToTwoDecimals(val);
     }
 
     calculateMatEmbTotalPrice() {
@@ -96,19 +120,41 @@ class Manipulado {
                 +this.materiaisEmbalagem[i].preco *
                 +this.materiaisEmbalagem[i].qtd;
         }
-        return +valor.toFixed(2);
+        return roundNumberToTwoDecimals(valor);
     }
 
     calculateTotalPrice() {
+        this.calculateIVA();
+        let finalPrice = roundNumberToTwoDecimals(
+            this.calculateSemiTotalPrice() + this.IVA
+        );
+        this.setTotalPrice(finalPrice);
+        return finalPrice;
+    }
+
+    calculateIVA() {
+        const IVA = roundNumberToTwoDecimals(
+            this.calculateSemiTotalPrice() * 0.23
+        );
+        this.setIVA(IVA);
+        return IVA;
+    }
+
+    calculateSemiTotalPrice() {
+        this.setFFarmPrice(this.calculateFFarmPrice(formasFarmaceuticas));
         this.setMatPrimasTotalPrice(this.calculateMatPrimasTotalPrice(fct));
         this.setMatEmbTotalPrice(this.calculateMatEmbTotalPrice());
-        let totalPrice =
-            (this.fFarmPrice + this.matPrimTotalPrice + this.matEmbTotalPrice) *
-            1.3;
-        let IVA = +(totalPrice * 0.023).toFixed(2);
-        let finalPrice = +(totalPrice + IVA).toFixed(2);
-        this.setTotalPrice(finalPrice);
-        this.setIVA(IVA);
+        let semiTotalPrice = roundNumberToTwoDecimals(
+            1.3 *
+                (this.fFarmPrice +
+                    this.matPrimTotalPrice +
+                    this.matEmbTotalPrice)
+        );
+        return semiTotalPrice;
+    }
+
+    setFFarmPrice(price) {
+        this.fFarmPrice = price;
     }
 
     setMatPrimasTotalPrice(val) {

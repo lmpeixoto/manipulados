@@ -144,7 +144,7 @@ export const ManipuladoUICtrl = (function () {
                 qtd,
                 price
             );
-            ManipuladoModel.setFormaFarm(formaFarmaceutica);
+            ManipuladoModel.setFormaFarm(formaFarmaceutica.toLowerCase();
             ManipuladoModel.setNomeManipulado(saveNomeManipulado());
             displayTotal();
         });
