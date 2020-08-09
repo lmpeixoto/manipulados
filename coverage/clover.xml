@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1596989934687" clover="3.2.0">
+  <project timestamp="1596989934688" name="All files">
+    <metrics statements="95" coveredstatements="86" conditionals="2" coveredconditionals="1" methods="26" coveredmethods="19" elements="123" coveredelements="106" complexity="0" loc="95" ncloc="95" packages="1" files="3" classes="3"/>
+    <file name="manipulado.js" path="/home/node/code/utils/manipulado.js">
+      <metrics statements="76" coveredstatements="73" conditionals="2" coveredconditionals="1" methods="18" coveredmethods="17"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="2" count="1" type="stmt"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="4" count="1" type="stmt"/>
+      <line num="6" count="1" type="stmt"/>
+      <line num="7" count="2" type="stmt"/>
+      <line num="8" count="2" type="stmt"/>
+      <line num="9" count="5" type="stmt"/>
+      <line num="18" count="2" type="stmt"/>
+      <line num="21" count="1" type="stmt"/>
+      <line num="22" count="2" type="stmt"/>
+      <line num="23" count="2" type="stmt"/>
+      <line num="24" count="3" type="stmt"/>
+      <line num="33" count="2" type="stmt"/>
+      <line num="36" count="1" type="stmt"/>
+      <line num="37" count="44" type="stmt"/>
+      <line num="60" count="2" type="stmt"/>
+      <line num="61" count="2" type="stmt"/>
+      <line num="62" count="2" type="stmt"/>
+      <line num="63" count="2" type="stmt"/>
+      <line num="64" count="2" type="stmt"/>
+      <line num="65" count="2" type="stmt"/>
+      <line num="66" count="2" type="stmt"/>
+      <line num="67" count="2" type="stmt"/>
+      <line num="68" count="2" type="stmt"/>
+      <line num="69" count="2" type="stmt"/>
+      <line num="70" count="2" type="stmt"/>
+      <line num="71" count="2" type="stmt"/>
+      <line num="72" count="2" type="stmt"/>
+      <line num="73" count="2" type="stmt"/>
+      <line num="74" count="2" type="stmt"/>
+      <line num="75" count="2" type="stmt"/>
+      <line num="76" count="2" type="stmt"/>
+      <line num="77" count="2" type="stmt"/>
+      <line num="78" count="2" type="stmt"/>
+      <line num="79" count="2" type="stmt"/>
+      <line num="80" count="2" type="stmt"/>
+      <line num="81" count="2" type="stmt"/>
+      <line num="86" count="10" type="stmt"/>
+      <line num="87" count="10" type="stmt"/>
+      <line num="88" count="10" type="stmt"/>
+      <line num="89" count="10" type="stmt"/>
+      <line num="90" count="10" type="stmt"/>
+      <line num="91" count="10" type="cond" truecount="1" falsecount="1"/>
+      <line num="92" count="10" type="stmt"/>
+      <line num="94" count="0" type="stmt"/>
+      <line num="95" count="0" type="stmt"/>
+      <line num="98" count="10" type="stmt"/>
+      <line num="101" count="10" type="stmt"/>
+      <line num="105" count="10" type="stmt"/>
+      <line num="106" count="10" type="stmt"/>
+      <line num="107" count="25" type="stmt"/>
+      <line num="112" count="10" type="stmt"/>
+      <line num="116" count="10" type="stmt"/>
+      <line num="118" count="10" type="stmt"/>
+      <line num="119" count="15" type="stmt"/>
+      <line num="123" count="10" type="stmt"/>
+      <line num="127" count="2" type="stmt"/>
+      <line num="128" count="2" type="stmt"/>
+      <line num="131" count="2" type="stmt"/>
+      <line num="132" count="2" type="stmt"/>
+      <line num="136" count="4" type="stmt"/>
+      <line num="139" count="4" type="stmt"/>
+      <line num="140" count="4" type="stmt"/>
+      <line num="144" count="8" type="stmt"/>
+      <line num="145" count="8" type="stmt"/>
+      <line num="146" count="8" type="stmt"/>
+      <line num="147" count="8" type="stmt"/>
+      <line num="153" count="8" type="stmt"/>
+      <line num="157" count="8" type="stmt"/>
+      <line num="161" count="8" type="stmt"/>
+      <line num="165" count="8" type="stmt"/>
+      <line num="169" count="2" type="stmt"/>
+      <line num="173" count="4" type="stmt"/>
+      <line num="177" count="0" type="stmt"/>
+      <line num="181" count="1" type="stmt"/>
+    </file>
+    <file name="materiaPrima.js" path="/home/node/code/utils/materiaPrima.js">
+      <metrics statements="10" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="1"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="5" count="5" type="stmt"/>
+      <line num="6" count="5" type="stmt"/>
+      <line num="7" count="5" type="stmt"/>
+      <line num="8" count="5" type="stmt"/>
+      <line num="9" count="5" type="stmt"/>
+      <line num="13" count="0" type="stmt"/>
+      <line num="17" count="0" type="stmt"/>
+      <line num="21" count="0" type="stmt"/>
+      <line num="25" count="1" type="stmt"/>
+    </file>
+    <file name="materialEmbalagem.js" path="/home/node/code/utils/materialEmbalagem.js">
+      <metrics statements="9" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="1"/>
+      <line num="3" count="3" type="stmt"/>
+      <line num="4" count="3" type="stmt"/>
+      <line num="5" count="3" type="stmt"/>
+      <line num="6" count="3" type="stmt"/>
+      <line num="7" count="3" type="stmt"/>
+      <line num="11" count="0" type="stmt"/>
+      <line num="15" count="0" type="stmt"/>
+      <line num="19" count="0" type="stmt"/>
+      <line num="23" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>

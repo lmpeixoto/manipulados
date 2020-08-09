@@ -132,6 +132,7 @@ exports.validateManipulado = [
         .bail(),
     check('fFarmNome')
         .trim()
+
         .escape()
         .not()
         .isEmpty()

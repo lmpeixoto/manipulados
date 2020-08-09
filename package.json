@@ -8,6 +8,14 @@
     "test:watch": "npm run test --watch",
     "start": "env-cmd -f ./config/dev.env nodemon -e js,ejs --inspect=0.0.0.0 index.js"
   },
+  "jest": {
+    "collectCoverage": true,
+    "coverageDirectory": "./coverage/",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/jest/"
+    ]
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

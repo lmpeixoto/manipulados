@@ -8,6 +8,7 @@ services:
             - 9229:9229
         volumes:
             - /home/lmpeixoto/dev/manipulados:/home/node/code
+        user: root
         links:
             - mongo
     mongo:
