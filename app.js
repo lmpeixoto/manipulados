@@ -37,6 +37,10 @@ app.post('/orcamento', validateOrcamento, controllers.postOrcamento);
 
 app.get('/pesquisa', controllers.getPesquisa);
 
+app.get('/signup', controllers.getSignup);
+
+app.get('/login', controllers.getLogin);
+
 app.post(
     '/pesquisa',
     [body('search-query').isLength({ min: 5 }).isAlphanumeric().trim()],

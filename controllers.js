@@ -258,6 +258,14 @@ exports.getArquivo = (req, res, next) => {
         .catch((err) => console.log(err));
 };
 
+exports.getSignup = (req, res, next) => {
+    res.render('signup');
+};
+
+exports.getLogin = (req, res, next) => {
+    res.render('login');
+};
+
 exports.getFormasFarmaceuticas = (req, res, next) => {
     res.send(formasFarmaceuticas);
 };

@@ -1,0 +1,26 @@
+.auth-form-container {
+    margin-top: 3rem;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 3rem 0;
+}
+
+.form-control {
+    margin-top: 30px;
+}
+
+.btn {
+    align-items: center;
+}
+
+.forgot-password-signup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+}
