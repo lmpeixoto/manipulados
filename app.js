@@ -2,16 +2,25 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const { check, body } = require('express-validator');
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 
 const controllers = require('./controllers');
 const {
     validateManipulado,
     validateOrcamento
 } = require('./middleware/validators');
+const MONGODB_URI = process.env.MONGODB_URI;
+const SESSION_SECRET = process.env.SESSION_SECRET;
 
 const app = express();
 
 const public_folder = path.join(__dirname, 'public');
+
+const store = new MongoDBStore({
+    uri: MONGODB_URI,
+    collection: 'sessions'
+});
 
 app.set('view engine', 'ejs');
 
@@ -20,6 +29,15 @@ app.use(express.static(public_folder));
 app.use(express.json());
 
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(
+    session({
+        secret: SESSION_SECRET,
+        resave: false,
+        saveUninitialized: false,
+        store: store
+    })
+);
 
 app.get('/', controllers.getIndex);
 
@@ -40,6 +58,10 @@ app.get('/pesquisa', controllers.getPesquisa);
 app.get('/signup', controllers.getSignup);
 
 app.get('/login', controllers.getLogin);
+
+app.post('/signup', controllers.postSignup);
+
+app.post('/login', controllers.postLogin);
 
 app.post(
     '/pesquisa',

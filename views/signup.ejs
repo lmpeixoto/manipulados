@@ -17,13 +17,27 @@
             <h1><i class="fas fa-user-plus"></i></i> Registar</h1>
             <hr />
             <!-- Login Form -->
-            <form class="auth-form">
+            <form class="auth-form" action="/signup" method="POST">
                 <h5>Introduza as suas credenciais de acesso</h5>
+                <input
+                    type="text"
+                    id="primeiro-nome"
+                    class="primeiro-nome-signup form-control"
+                    name="primeiroNome"
+                    placeholder="primeiro nome"
+                />
+                <input
+                    type="text"
+                    id="apelido-nome"
+                    class="apelido-nome-signup form-control"
+                    name="apelido"
+                    placeholder="apelido"
+                />
                 <input
                     type="email"
                     id="email"
                     class="email-signup form-control"
-                    name="email-signup"
+                    name="email"
                     placeholder="email"
                 />
                 <input
@@ -37,7 +51,7 @@
                     type="text"
                     id="confirmPassword"
                     class="password-signup-confirm form-control"
-                    name="password-signup-confirm"
+                    name="password-confirm"
                     placeholder="password"
                 />
                 <input type="submit" class="signup btn btn-primary" value="Sign Up" />

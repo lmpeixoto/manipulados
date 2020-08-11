@@ -1,10 +1,13 @@
 const { validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
 
 const formasFarmaceuticas = require('./model/formas-farmaceuticas.json');
 const fatores = require('./model/unidades.json');
 const OrcamentoManipulado = require('./model/orcamentoManipulado');
 const ManipuladoModel = require('./model/manipulado');
 const Manipulado = require('./utils/manipulado');
+const User = require('./model/user');
+const user = require('./model/user');
 
 exports.getIndex = (req, res, next) => {
     res.render('index');
@@ -264,6 +267,75 @@ exports.getSignup = (req, res, next) => {
 
 exports.getLogin = (req, res, next) => {
     res.render('login');
+};
+
+exports.postSignup = (req, res, next) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    const primeiroNome = req.body.primeiroNome;
+    const apelido = req.body.apelido;
+    User.findOne({ email: email })
+        .then((user) => {
+            if (user) {
+                console.log('user already exists!');
+                return res.redirect('/login');
+            } else {
+                return bcrypt
+                    .hash(password, 12)
+                    .then((hashedPassword) => {
+                        const newUser = new User({
+                            primeiroNome: primeiroNome,
+                            apelido: apelido,
+                            email: email,
+                            password: hashedPassword
+                        });
+                        return newUser.save();
+                    })
+                    .then((result) => {
+                        console.log('User successfully created!');
+                        res.redirect('/login');
+                    });
+            }
+        })
+        .catch((err) => console.log(err));
+};
+
+exports.postLogin = (req, res, next) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    User.findOne({ email: email })
+        .then((user) => {
+            if (!user) {
+                console.log('Invalid email or password!');
+                return res.redirect('/login');
+            }
+            bcrypt
+                .compare(password, user.password)
+                .then((doMatch) => {
+                    if (doMatch) {
+                        req.session.isLoggedIn = true;
+                        req.session.user = user;
+                        return req.session.save((err) => {
+                            console.log(err);
+                            res.redirect('/');
+                        });
+                    }
+                    console.log('Invalid email or password!');
+                    return res.redirect('/login');
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.redirect('/login');
+                });
+        })
+        .catch((err) => console.log(err));
+};
+
+exports.postLogout = (req, res, next) => {
+    req.session.destroy((err) => {
+        console.log(err);
+        res.redirect('/');
+    });
 };
 
 exports.getFormasFarmaceuticas = (req, res, next) => {
