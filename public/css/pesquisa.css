@@ -7,3 +7,16 @@
     margin-bottom: 1rem;
     padding-top: 0;
 }
+
+.form-control {
+    margin-bottom: 1rem;
+}
+
+.radio-type-selector-container {
+    margin-bottom: 1rem;
+}
+
+.radio-manipulado-orcamento {
+    vertical-align: baseline;
+    margin: 5px 5px;
+}

@@ -72,7 +72,7 @@ app.get('/orcamento', isAuth, controllers.getOrcamento);
 
 app.post('/orcamento', isAuth, validateOrcamento, controllers.postOrcamento);
 
-app.get('/pesquisa', isAuth, controllers.getPesquisa);
+app.get('/pesquisa', controllers.getPesquisa);
 
 app.get('/signup', controllers.getSignup);
 
@@ -84,13 +84,9 @@ app.post('/login', validateLogin, controllers.postLogin);
 
 app.post('/logout', controllers.postLogout);
 
-app.post(
-    '/pesquisa',
-    [body('search-query').isLength({ min: 5 }).isAlphanumeric().trim()],
-    controllers.postPesquisa
-);
+app.post('/pesquisa', controllers.postPesquisa);
 
-app.get('/arquivo', isAuth, controllers.getArquivo);
+app.get('/arquivo', controllers.getArquivo);
 
 app.get('/editarManipulado', isAuth, controllers.getEditManipulado);
 
