@@ -344,3 +344,79 @@ exports.validateOrcamento = [
         .withMessage('Preço total não pode ser nulo!')
         .bail()
 ];
+
+exports.validateLogin = [
+    check('email')
+        .trim()
+        .escape()
+        .isEmail()
+        .withMessage('Email inválido!')
+        .bail()
+        .not()
+        .isEmpty()
+        .withMessage('Email não pode ser nulo!')
+        .bail(),
+    // Password
+    // min 8 char long.
+    // At least one uppercase.
+    // At least one lower case.
+    // At least one special character.
+    check('password')
+        .not()
+        .isEmpty()
+        .withMessage('Password não pode ser nula!')
+        .isLength({ min: 8 })
+        .withMessage('Password tem de ter no mínimo 8 caracteres!')
+        .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]$/, 'i')
+        .withMessage(
+            'Password tem de ter no mínimo 1 caracter especial e 1 número!'
+        )
+];
+
+exports.validateSignup = [
+    check('email')
+        .trim()
+        .escape()
+        .isEmail()
+        .withMessage('Email inválido!')
+        .bail()
+        .not()
+        .isEmpty()
+        .withMessage('Email não pode ser nulo!')
+        .bail(),
+    check('primeiroNome')
+        .trim()
+        .escape()
+        .not()
+        .isEmpty()
+        .withMessage('Primeiro nome não pode ser nulo!')
+        .bail()
+        .isLength({ min: 3 })
+        .withMessage('Primeiro nome tem de ter no mínimo 3 caracteres!')
+        .bail(),
+    check('apelido')
+        .trim()
+        .escape()
+        .not()
+        .isEmpty()
+        .withMessage('Apelido não pode ser nulo!')
+        .bail()
+        .isLength({ min: 3 })
+        .withMessage('Apelido tem de ter no mínimo 3 caracteres!')
+        .bail(),
+    // Password
+    // min 8 char long.
+    // At least one uppercase.
+    // At least one lower case.
+    // At least one special character.
+    check('password')
+        .not()
+        .isEmpty()
+        .withMessage('Password não pode ser nula!')
+        .isLength({ min: 8 })
+        .withMessage('Password tem de ter no mínimo 8 caracteres!')
+        .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]$/, 'i')
+        .withMessage(
+            'Password tem de ter no mínimo 1 caracter especial e 1 número!'
+        )
+];

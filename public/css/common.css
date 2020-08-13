@@ -19,6 +19,7 @@
     border-radius: 3px;
     background: #b9c9ff;
     text-align: center;
+    margin-bottom: 5px;
 }
 
 .user-message--error {

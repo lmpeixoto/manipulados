@@ -10,7 +10,9 @@ const controllers = require('./controllers');
 const isAuth = require('./middleware/is-auth');
 const {
     validateManipulado,
-    validateOrcamento
+    validateOrcamento,
+    validateLogin,
+    validateSignup
 } = require('./middleware/validators');
 const MONGODB_URI = process.env.MONGODB_URI;
 const SESSION_SECRET = process.env.SESSION_SECRET;
@@ -71,9 +73,9 @@ app.get('/signup', controllers.getSignup);
 
 app.get('/login', controllers.getLogin);
 
-app.post('/signup', controllers.postSignup);
+app.post('/signup', validateSignup, controllers.postSignup);
 
-app.post('/login', controllers.postLogin);
+app.post('/login', validateLogin, controllers.postLogin);
 
 app.post('/logout', controllers.postLogout);
 

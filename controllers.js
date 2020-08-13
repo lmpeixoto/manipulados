@@ -7,7 +7,6 @@ const OrcamentoManipulado = require('./model/orcamentoManipulado');
 const ManipuladoModel = require('./model/manipulado');
 const Manipulado = require('./utils/manipulado');
 const User = require('./model/user');
-const user = require('./model/user');
 
 exports.getIndex = (req, res, next) => {
     res.render('index');
@@ -266,72 +265,95 @@ exports.getSignup = (req, res, next) => {
 };
 
 exports.getLogin = (req, res, next) => {
-    res.render('login');
+    res.render('login', { errorMessages: null });
 };
 
 exports.postSignup = (req, res, next) => {
+    const { errors } = validationResult(req);
     const email = req.body.email;
     const password = req.body.password;
+    const confirmPassword = req.body.confirmPassword;
     const primeiroNome = req.body.primeiroNome;
     const apelido = req.body.apelido;
-    User.findOne({ email: email })
-        .then((user) => {
-            if (user) {
-                console.log('user already exists!');
-                return res.redirect('/login');
-            } else {
-                return bcrypt
-                    .hash(password, 12)
-                    .then((hashedPassword) => {
-                        const newUser = new User({
-                            primeiroNome: primeiroNome,
-                            apelido: apelido,
-                            email: email,
-                            password: hashedPassword
+    if (password !== confirmPassword) {
+        console.log('A password e a confirmação não coincidem!');
+        return res.redirect('/signup');
+    }
+    if (errors.length > 0) {
+        let errorsArray = [];
+        errors.forEach((error) => errorsArray.push(error.msg));
+        res.render('signup', {
+            errorMessages: errorsArray
+        });
+    } else {
+        User.findOne({ email: email })
+            .then((user) => {
+                if (user) {
+                    console.log('user already exists!');
+                    return res.redirect('/login');
+                } else {
+                    return bcrypt
+                        .hash(password, 12)
+                        .then((hashedPassword) => {
+                            const newUser = new User({
+                                primeiroNome: primeiroNome,
+                                apelido: apelido,
+                                email: email,
+                                password: hashedPassword
+                            });
+                            return newUser.save();
+                        })
+                        .then((result) => {
+                            console.log('User successfully created!');
+                            res.redirect('/login');
                         });
-                        return newUser.save();
-                    })
-                    .then((result) => {
-                        console.log('User successfully created!');
-                        res.redirect('/login');
-                    });
-            }
-        })
-        .catch((err) => console.log(err));
+                }
+            })
+            .catch((err) => console.log(err));
+    }
 };
 
 exports.postLogin = (req, res, next) => {
+    const { errors } = validationResult(req);
     const email = req.body.email;
     const password = req.body.password;
-    User.findOne({ email: email })
-        .then((user) => {
-            if (!user) {
-                console.log('Invalid email or password!');
-                return res.redirect('/login');
-            }
-            bcrypt
-                .compare(password, user.password)
-                .then((doMatch) => {
-                    if (doMatch) {
-                        req.session.isLoggedIn = true;
-                        req.session.user = user;
-                        return req.session.save((err) => {
-                            if (err) {
-                                console.log(err);
-                            }
-                            console.log('User logged in!');
-                            res.redirect('/');
-                        });
-                    }
+    if (errors.length > 0) {
+        let errorsArray = [];
+        errors.forEach((error) => errorsArray.push(error.msg));
+        res.render('login', {
+            errorMessages: errorsArray
+        });
+    } else {
+        User.findOne({ email: email })
+            .then((user) => {
+                if (!user) {
                     console.log('Invalid email or password!');
                     return res.redirect('/login');
-                })
-                .catch((err) => {
-                    console.log(err);
-                    res.redirect('/login');
-                });
-        })
-        .catch((err) => console.log(err));
+                }
+                bcrypt
+                    .compare(password, user.password)
+                    .then((doMatch) => {
+                        if (doMatch) {
+                            req.session.isLoggedIn = true;
+                            req.session.user = user;
+                            return req.session.save((err) => {
+                                if (err) {
+                                    console.log(err);
+                                }
+                                console.log('User logged in!');
+                                res.redirect('/');
+                            });
+                        }
+                        console.log('Invalid email or password!');
+                        return res.redirect('/login');
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        res.redirect('/login');
+                    });
+            })
+            .catch((err) => console.log(err));
+    }
 };
 
 exports.postLogout = (req, res, next) => {
