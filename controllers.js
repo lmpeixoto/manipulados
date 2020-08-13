@@ -261,7 +261,7 @@ exports.getArquivo = (req, res, next) => {
 };
 
 exports.getSignup = (req, res, next) => {
-    res.render('signup');
+    res.render('signup', { errorMessages: null });
 };
 
 exports.getLogin = (req, res, next) => {
@@ -276,8 +276,9 @@ exports.postSignup = (req, res, next) => {
     const primeiroNome = req.body.primeiroNome;
     const apelido = req.body.apelido;
     if (password !== confirmPassword) {
-        console.log('A password e a confirmação não coincidem!');
-        return res.redirect('/signup');
+        return res.render('signup', {
+            errorMessages: ['A password e a confirmação não coincidem!']
+        });
     }
     if (errors.length > 0) {
         let errorsArray = [];

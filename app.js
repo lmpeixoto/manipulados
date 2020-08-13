@@ -61,13 +61,18 @@ app.get('/fatores', controllers.getFatores);
 
 app.get('/novoManipulado', isAuth, controllers.getNovoManipulado);
 
-app.post('/novoManipulado', validateManipulado, controllers.postNovoManipulado);
+app.post(
+    '/novoManipulado',
+    isAuth,
+    validateManipulado,
+    controllers.postNovoManipulado
+);
 
-app.get('/orcamento', controllers.getOrcamento);
+app.get('/orcamento', isAuth, controllers.getOrcamento);
 
-app.post('/orcamento', validateOrcamento, controllers.postOrcamento);
+app.post('/orcamento', isAuth, validateOrcamento, controllers.postOrcamento);
 
-app.get('/pesquisa', controllers.getPesquisa);
+app.get('/pesquisa', isAuth, controllers.getPesquisa);
 
 app.get('/signup', controllers.getSignup);
 
@@ -85,16 +90,16 @@ app.post(
     controllers.postPesquisa
 );
 
-app.get('/arquivo', controllers.getArquivo);
+app.get('/arquivo', isAuth, controllers.getArquivo);
 
-app.get('/editarManipulado', controllers.getEditManipulado);
+app.get('/editarManipulado', isAuth, controllers.getEditManipulado);
 
-app.post('/editarManipulado', controllers.postEditManipulado);
+app.post('/editarManipulado', isAuth, controllers.postEditManipulado);
 
-app.get('/verManipulado', controllers.getViewManipulado);
+app.get('/verManipulado', isAuth, controllers.getViewManipulado);
 
-app.post('/verManipulado', controllers.postViewManipulado);
+app.post('/verManipulado', isAuth, controllers.postViewManipulado);
 
-app.post('/deleteManipulado/:id', controllers.postDeleteManipulado);
+app.post('/deleteManipulado/:id', isAuth, controllers.postDeleteManipulado);
 
 module.exports = app;

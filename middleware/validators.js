@@ -367,7 +367,12 @@ exports.validateLogin = [
         .withMessage('Password não pode ser nula!')
         .isLength({ min: 8 })
         .withMessage('Password tem de ter no mínimo 8 caracteres!')
-        .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]$/, 'i')
+        .isLength({ max: 15 })
+        .withMessage('Password tem de ter no máximo 15 caracteres!')
+        .matches(
+            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/,
+            'i'
+        )
         .withMessage(
             'Password tem de ter no mínimo 1 caracter especial e 1 número!'
         )
@@ -415,7 +420,12 @@ exports.validateSignup = [
         .withMessage('Password não pode ser nula!')
         .isLength({ min: 8 })
         .withMessage('Password tem de ter no mínimo 8 caracteres!')
-        .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]$/, 'i')
+        .isLength({ max: 15 })
+        .withMessage('Password tem de ter no máximo 15 caracteres!')
+        .matches(
+            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/,
+            'i'
+        )
         .withMessage(
             'Password tem de ter no mínimo 1 caracter especial e 1 número!'
         )
