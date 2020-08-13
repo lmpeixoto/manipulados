@@ -1,11 +1,13 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const { check, body } = require('express-validator');
+const { body } = require('express-validator');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
+const csrf = require('csurf');
 
 const controllers = require('./controllers');
+const isAuth = require('./middleware/is-auth');
 const {
     validateManipulado,
     validateOrcamento
@@ -21,6 +23,8 @@ const store = new MongoDBStore({
     uri: MONGODB_URI,
     collection: 'sessions'
 });
+
+const csrfProtection = csrf();
 
 app.set('view engine', 'ejs');
 
@@ -39,13 +43,21 @@ app.use(
     })
 );
 
+app.use(csrfProtection);
+
+app.use((req, res, next) => {
+    res.locals.isAuthenticated = req.session.isLoggedIn;
+    res.locals.csrfToken = req.csrfToken();
+    next();
+});
+
 app.get('/', controllers.getIndex);
 
 app.get('/formasFarmaceuticas', controllers.getFormasFarmaceuticas);
 
 app.get('/fatores', controllers.getFatores);
 
-app.get('/novoManipulado', controllers.getNovoManipulado);
+app.get('/novoManipulado', isAuth, controllers.getNovoManipulado);
 
 app.post('/novoManipulado', validateManipulado, controllers.postNovoManipulado);
 
@@ -62,6 +74,8 @@ app.get('/login', controllers.getLogin);
 app.post('/signup', controllers.postSignup);
 
 app.post('/login', controllers.postLogin);
+
+app.post('/logout', controllers.postLogout);
 
 app.post(
     '/pesquisa',

@@ -24,6 +24,7 @@
             >
         </li>
     </ul>
+    <% if (!isAuthenticated) { %>
     <ul class="navbar-nav ml-auto">
         <li class="nav-item ml-auto login">
             <a class="nav-link" href="/login"
@@ -36,4 +37,17 @@
             >
         </li>
     </ul>
+    <% } else { %>
+
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item ml-auto logout">
+            <form action="/logout" method="post">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                <button type="submit" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Saír
+                </button>
+            </form>
+        </li>
+    </ul>
+    <% } %>
 </nav>
