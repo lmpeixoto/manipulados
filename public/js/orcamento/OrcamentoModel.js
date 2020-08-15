@@ -57,11 +57,14 @@ export const OrcamentoModel = (function () {
 
     const saveOrcamentoData = (e) => {
         e.preventDefault();
+        let token = document.querySelector('#csrf').value;
         if (validateBeforeSaving()) {
             fetch('/orcamento', {
                 method: 'POST',
+                credentials: 'same-origin', // <-- includes cookies in the request
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'CSRF-Token': token
                 },
                 body: JSON.stringify(createObjectToSend())
             })

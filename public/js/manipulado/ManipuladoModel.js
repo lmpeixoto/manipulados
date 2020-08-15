@@ -92,10 +92,13 @@ export const ManipuladoModel = (function () {
         e.preventDefault();
         console.log(createObjectToSend());
         if (validateBeforeSaving()) {
+            let token = document.querySelector('#csrf').value;
             fetch('/novoManipulado', {
                 method: 'POST',
+                credentials: 'same-origin', // <-- includes cookies in the request
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'CSRF-Token': token
                 },
                 redirect: 'follow',
                 body: JSON.stringify(createObjectToSend())

@@ -208,39 +208,31 @@ function escapeRegex(text) {
 }
 
 exports.postPesquisa = (req, res, next) => {
-    const { errors } = validationResult(req);
-    if (errors.length > 0) {
-        res.render('pesquisa', {
-            manipulados: '',
-            errorMessage: errors[0].msg
-        });
-    } else {
-        let searchQuery = req.body['search-query'];
-        const regex = new RegExp(escapeRegex(searchQuery), 'gi');
-        let searchChoice = req.body['search-choices'];
-        let queryChoice;
-        let find = {};
-        switch (searchChoice) {
-            case 'Nome':
-                queryChoice = 'nomeManipulado';
-                break;
-            case 'Substância Ativa':
-                queryChoice = 'Substância Ativa';
-                break;
-            case 'Forma Farmacêutica':
-                queryChoice = 'fFarmNome';
-                break;
-            case 'Utente':
-                queryChoice = 'utenteNome';
-                break;
-        }
-        find[queryChoice] = regex;
-        ManipuladoModel.find(find)
+    let searchQuery = req.body['search-query'];
+    const regex = new RegExp(escapeRegex(searchQuery), 'gi');
+    let searchChoice = req.body['search-choices'];
+    let radioManipulado = req.body.manipulado;
+    let queryChoice;
+    let find = {};
+    switch (searchChoice) {
+        case 'Nome':
+            queryChoice = 'nomeManipulado';
+            break;
+        case 'Substância Ativa':
+            queryChoice = 'Substância Ativa';
+            break;
+        case 'Forma Farmacêutica':
+            queryChoice = 'fFarmNome';
+            break;
+    }
+    find[queryChoice] = regex;
+    if (radioManipulado === 'orçamento') {
+        OrcamentoManipulado.find(find)
             .then((manip) => {
                 if (manip.length > 0) {
-                    res.render('pesquisa', { manipulados: manip });
+                    return res.render('pesquisa', { manipulados: manip });
                 } else {
-                    res.render('pesquisa', {
+                    return res.render('pesquisa', {
                         manipulados: '',
                         errorMessage: 'Resultado de pesquisa não encontrado!'
                     });
@@ -248,6 +240,18 @@ exports.postPesquisa = (req, res, next) => {
             })
             .catch((err) => console.log(err));
     }
+    ManipuladoModel.find(find)
+        .then((manip) => {
+            if (manip.length > 0) {
+                return res.render('pesquisa', { manipulados: manip });
+            } else {
+                return res.render('pesquisa', {
+                    manipulados: '',
+                    errorMessage: 'Resultado de pesquisa não encontrado!'
+                });
+            }
+        })
+        .catch((err) => console.log(err));
 };
 
 exports.getArquivo = (req, res, next) => {

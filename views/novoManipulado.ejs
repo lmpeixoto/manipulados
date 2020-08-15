@@ -148,7 +148,12 @@
                     <p>IVA: <span class="iva-total-price"></span></p>
                     <p>Total: <span class="total-total-price"></span></p>
                 </div>
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                <input
+                    id="csrf"
+                    type="hidden"
+                    name="_csrf"
+                    value="<%= csrfToken %>"
+                />
                 <button
                     type="button"
                     class="btn btn-primary"

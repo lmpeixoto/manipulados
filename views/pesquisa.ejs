@@ -19,31 +19,32 @@
             <div class="user-messages hide"></div>
             <h1><i class="fas fa-search"></i> Pesquisa</h1>
             <hr />
-            <div class="radio-type-selector-container">
-                <label
-                    ><input
-                        type="radio"
-                        id="orcamento"
-                        name="orcamento"
-                        value="orçamento"
-                        class="radio-manipulado-orcamento"
-                    />
-                    Orçamento</label
-                >
 
-                <label
-                    ><input
-                        type="radio"
-                        id="manipulado"
-                        name="manipulado"
-                        value="manipulado"
-                        class="radio-manipulado-orcamento"
-                    />Manipulado</label
-                ><br />
-            </div>
             <div class="search-container">
                 <form action="/pesquisa" method="POST">
                     <div class="inner-form">
+                        <div class="radio-type-selector-container">
+                            <label
+                                ><input
+                                    type="radio"
+                                    id="orcamento"
+                                    name="manipulado"
+                                    value="orçamento"
+                                    class="radio-manipulado-orcamento"
+                                />
+                                Orçamento</label
+                            >
+
+                            <label
+                                ><input
+                                    type="radio"
+                                    id="manipulado"
+                                    name="manipulado"
+                                    value="manipulado"
+                                    class="radio-manipulado-orcamento"
+                                />Manipulado</label
+                            ><br />
+                        </div>
                         <div class="input-field first-wrap">
                             <input
                                 id="search-input"
@@ -77,6 +78,7 @@
                         </div>
                     </div>
                     <input
+                        id="csrf"
                         type="hidden"
                         name="_csrf"
                         value="<%= csrfToken %>"

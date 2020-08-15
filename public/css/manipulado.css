@@ -34,11 +34,6 @@ label {
     flex-direction: column;
 }
 
-.validacao-container {
-    display: flex;
-    flex-direction: column;
-}
-
 .navigation-bar {
     display: flex;
     justify-content: center;
@@ -99,6 +94,27 @@ label {
     margin-bottom: 10px;
 }
 .rem-mat-emb-button {
+    border-radius: 10px;
+    border-color: snow;
+    margin-left: 20px;
+}
+
+.validacao-container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+}
+
+.validacao-element {
+    background-color: #dcdcdcdc;
+    border-radius: 15px;
+    padding: 10px 20px;
+    list-style: none;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.rem-validacao-button {
     border-radius: 10px;
     border-color: snow;
     margin-left: 20px;
