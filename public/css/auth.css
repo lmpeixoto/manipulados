@@ -24,3 +24,11 @@
     align-items: center;
     margin-top: 15px;
 }
+
+.password-signup {
+    margin-top: 0;
+}
+
+p {
+    margin: 30px 0 5px 0;
+}

@@ -5,8 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="css/manipulado.css" />
         <link rel="stylesheet" href="css/index.css" />
-        <link rel="stylesheet" href="css/auth.css" />
         <%- include('includes/dependencies-top.ejs') %>
+        <link rel="stylesheet" href="css/auth.css" />
+        <script src="js/auth/validateSignup.js"></script>
         <title>Autenticação</title>
     </head>
 
@@ -25,18 +26,18 @@
             <h1><i class="fas fa-user-plus"></i></i> Registar</h1>
             <hr />
             <!-- Login Form -->
-            <form class="auth-form" action="/signup" method="POST">
+            <form class="auth-form" action="/signup" method="POST" onsubmit="return checkForm(this)">
                 <h5>Introduza as suas credenciais de acesso</h5>
                 <input
                     type="text"
-                    id="primeiro-nome"
+                    id="primeiroNome"
                     class="primeiro-nome-signup form-control"
                     name="primeiroNome"
                     placeholder="primeiro nome"
                 />
                 <input
                     type="text"
-                    id="apelido-nome"
+                    id="apelidoNome"
                     class="apelido-nome-signup form-control"
                     name="apelido"
                     placeholder="apelido"
@@ -48,6 +49,7 @@
                     name="email"
                     placeholder="email"
                 />
+                <p>A password deve conter no mínimo 8 caracteres, minúsculas, maiúsculas, caracter especial e algarismo.</p>
                 <input
                     type="password"
                     id="password"
