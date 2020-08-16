@@ -4,12 +4,12 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="css/manipulado.css" />
-        <link rel="stylesheet" href="css/pesquisa.css" />
         <script
             src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js"
             type="text/javascript"
         ></script>
         <%- include('includes/dependencies-top.ejs') %>
+        <link rel="stylesheet" href="css/pesquisa.css" />
         <title>Pesquisa</title>
     </head>
 
@@ -27,6 +27,16 @@
                             <label
                                 ><input
                                     type="radio"
+                                    id="manipulado"
+                                    name="manipulado"
+                                    value="manipulado"
+                                    class="radio-manipulado-orcamento"
+                                    checked
+                                />Manipulado</label
+                            >
+                            <label
+                                ><input
+                                    type="radio"
                                     id="orcamento"
                                     name="manipulado"
                                     value="orçamento"
@@ -34,16 +44,7 @@
                                 />
                                 Orçamento</label
                             >
-
-                            <label
-                                ><input
-                                    type="radio"
-                                    id="manipulado"
-                                    name="manipulado"
-                                    value="manipulado"
-                                    class="radio-manipulado-orcamento"
-                                />Manipulado</label
-                            ><br />
+                            <br />
                         </div>
                         <div class="input-field first-wrap">
                             <input
@@ -85,7 +86,6 @@
                     />
                 </form>
             </div>
-            <hr />
             <div class="results-container">
                 <form method="POST" class="results">
                     <% if (typeof manipulados !== 'undefined') { %> <% if

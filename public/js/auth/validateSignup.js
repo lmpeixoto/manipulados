@@ -1,11 +1,5 @@
 const signupForm = document.querySelector('.auth-form');
 
-const beforeSubmit = (e) => {
-    e.preventDefault();
-    if (checkForm(this)) {
-        signupForm.submit();
-    }
-};
 const focusRed = (formElement) => {
     formElement.style.border = '1px solid red';
 };

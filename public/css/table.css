@@ -1,4 +1,5 @@
 .table {
+    margin-top: 3rem;
     vertical-align: middle;
 }
 
@@ -6,8 +7,18 @@
     cursor: pointer;
 }
 
+.table tr {
+    vertical-align: middle;
+    text-align: center;
+}
+
 .table td {
     text-align: center;
+    vertical-align: middle;
+}
+
+.table button {
+    margin: 1rem 0;
 }
 
 .table .th-sort-asc::after {
