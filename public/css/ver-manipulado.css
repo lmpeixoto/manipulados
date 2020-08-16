@@ -1,0 +1,15 @@
+h5 {
+    margin-right: 5px;
+}
+p {
+    margin-right: 1rem;
+}
+
+.manipulado-container,
+.utente-container,
+.prescritor-container,
+.farmaceutico-container,
+.preparacao-container,
+.conservacao-container {
+    display: flex;
+}

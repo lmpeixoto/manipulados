@@ -32,7 +32,8 @@
     "fetch": "^1.1.0",
     "moment": "^2.26.0",
     "mongoose": "^5.9.13",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "print-js": "^1.0.63"
   },
   "devDependencies": {
     "jest": "^26.2.2",
