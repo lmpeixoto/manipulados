@@ -1,0 +1,43 @@
+{
+  "name": "manipulados",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "npm run test --watch",
+    "start": "env-cmd -f ./config/dev.env nodemon -e js,ejs --inspect=0.0.0.0 index.js"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageDirectory": "./coverage/",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/jest/"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "connect-mongodb-session": "^2.4.0",
+    "csurf": "^1.11.0",
+    "ejs": "^3.1.2",
+    "env-cmd": "^10.1.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "express-validator": "^6.6.0",
+    "fetch": "^1.1.0",
+    "moment": "^2.26.0",
+    "mongoose": "^5.9.13",
+    "path": "^0.12.7",
+    "print-js": "^1.0.63"
+  },
+  "devDependencies": {
+    "jest": "^26.2.2",
+    "nodemon": "^2.0.4",
+    "prettier": "^2.0.5"
+  }
+}

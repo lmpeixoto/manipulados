@@ -1,0 +1,80 @@
+.container {
+    margin-top: 3rem;
+}
+
+.form-main {
+    display: flex;
+    flex-direction: column;
+    margin: 3rem 0;
+}
+
+label {
+    margin-top: 1rem;
+}
+
+.mat-prima-create {
+    display: flex;
+    flex-direction: column;
+    margin: 3rem 0;
+}
+
+.mat-emb-create {
+    display: flex;
+    flex-direction: column;
+    margin: 3rem 0;
+}
+
+.nav-link {
+    font-size: 1.2rem;
+}
+
+.btn {
+    margin-top: 2rem;
+}
+
+.calculos-preco {
+    margin-top: 1.2rem;
+    margin-bottom: 0px;
+    border: 1px solid #cccccc;
+    padding: 1.5rem 1.5rem;
+}
+
+.mat-primas-summary-list {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+}
+
+.mat-prima-element {
+    background-color: #dcdcdcdc;
+    border-radius: 15px;
+    padding: 10px 20px;
+    list-style: none;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.rem-mat-prima-button {
+    border-radius: 10px;
+    border-color: snow;
+    margin-left: 20px;
+}
+
+.mat-emb-summary-list {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+}
+
+.mat-emb-element {
+    background-color: #dcdcdcdc;
+    border-radius: 15px;
+    padding: 10px 20px;
+    list-style: none;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.rem-mat-emb-button {
+    border-radius: 10px;
+    border-color: snow;
+    margin-left: 20px;
+}
