@@ -7,13 +7,13 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 
 const controllers = require('./controllers');
-const isAuth = require('./middleware/is-auth');
+const isAuth = require('../middleware/is-auth');
 const {
     validateManipulado,
     validateOrcamento,
     validateLogin,
     validateSignup
-} = require('./middleware/validators');
+} = require('../middleware/validators');
 const MONGODB_URI = process.env.MONGODB_URI;
 const SESSION_SECRET = process.env.SESSION_SECRET;
 
@@ -45,53 +45,46 @@ app.use(
     })
 );
 
-app.use(csrfProtection);
+// app.use(csrfProtection);
 
-app.use((req, res, next) => {
-    res.locals.isAuthenticated = req.session.isLoggedIn;
-    res.locals.csrfToken = req.csrfToken();
-    next();
-});
+// app.use((req, res, next) => {
+//     res.locals.isAuthenticated = req.session.isLoggedIn;
+//     res.locals.csrfToken = req.csrfToken();
+//     next();
+// });
 
-app.get('/', controllers.getIndex);
+// app.get('/', controllers.getIndex);
 
-app.get('/formasFarmaceuticas', controllers.getFormasFarmaceuticas);
+// app.get('/formasFarmaceuticas', controllers.getFormasFarmaceuticas);
 
-app.get('/fatores', controllers.getFatores);
+// app.get('/fatores', controllers.getFatores);
 
-app.get('/novoManipulado', isAuth, controllers.getNovoManipulado);
+// app.get('/novoManipulado', isAuth, controllers.getNovoManipulado);
 
-app.post(
-    '/novoManipulado',
-    isAuth,
-    validateManipulado,
-    controllers.postNovoManipulado
-);
+app.post('/manipulado', validateManipulado, controllers.postManipulado);
 
-app.get('/orcamento/:orcamentoId', isAuth, controllers.getOrcamento);
+// app.get('/orcamento/:orcamentoId', isAuth, controllers.getOrcamento);
 
-app.post('/orcamento', isAuth, validateOrcamento, controllers.postOrcamento);
+app.post('/orcamento', validateOrcamento, controllers.postOrcamento);
 
-app.get('/signup', controllers.getSignup);
+// app.get('/manipulado/all', controllers.getAll);
 
-app.get('/login', controllers.getLogin);
+// app.post('/signup', validateSignup, controllers.postSignup);
 
-app.post('/signup', validateSignup, controllers.postSignup);
+// app.post('/login', validateLogin, controllers.postLogin);
 
-app.post('/login', validateLogin, controllers.postLogin);
+// app.post('/logout', controllers.postLogout);
 
-app.post('/logout', controllers.postLogout);
+// app.post('/pesquisa', controllers.postPesquisa);
 
-app.get('/manipulados', isAuth, controllers.getManipulados);
+// app.get('/arquivo', controllers.getArquivo);
 
-app.post('/editarManipulado', isAuth, controllers.postEditManipulado);
+// app.get('/editarManipulado', isAuth, controllers.getEditManipulado);
 
-app.get('/manipulado/:manipuladoId', isAuth, controllers.getViewManipulado);
+// app.post('/editarManipulado', isAuth, controllers.postEditManipulado);
 
-app.post(
-    '/deleteManipulado/:manipuladoId',
-    isAuth,
-    controllers.postDeleteManipulado
-);
+// app.get('/manipulado/:manipulado:id', isAuth, controllers.viewManipulado);
+
+// app.post('/deleteManipulado/:id', isAuth, controllers.postDeleteManipulado);
 
 module.exports = app;

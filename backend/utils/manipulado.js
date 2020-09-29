@@ -8,6 +8,7 @@ const matPrimReader = (matPrimArray) => {
     matPrimArray.forEach((matPrim) => {
         materiasPrimas.push(
             new MateriaPrima(
+                matPrim.id,
                 matPrim.nome,
                 matPrim.preco,
                 matPrim.qtd,
@@ -23,6 +24,7 @@ const matEmbReader = (matEmbArray) => {
     matEmbArray.forEach((matEmb) => {
         materiaisEmbalagem.push(
             new MaterialEmbalagem(
+                matEmb.id,
                 matEmb.nome,
                 matEmb.capacidade,
                 matEmb.preco,
@@ -37,57 +39,38 @@ const roundNumberToTwoDecimals = (num) => {
     return +num.toFixed(2);
 };
 
-class Manipulado {
+class Orcamento {
     constructor(
-        lote,
         nomeManipulado,
-        fatorF,
-        utenteNome,
-        utenteContacto,
-        prescritorNome,
-        prescritorContacto,
-        farmaceuticoNome,
-        farmaceuticoSupervisor,
-        preparacao,
-        conservacao,
-        validade,
         fFarmNome,
         fFarmQtd,
         materiasPrimas,
-        materiaisEmbalagem,
-        validacoes
+        materiaisEmbalagem
     ) {
-        this.lote = lote;
         this.nomeManipulado = nomeManipulado;
         this.fatorF = 4;
-        this.utenteNome = utenteNome;
-        this.utenteContacto = utenteContacto;
-        this.prescritorNome = prescritorNome;
-        this.prescritorContacto = prescritorContacto;
-        this.farmaceuticoNome = farmaceuticoNome;
-        this.farmaceuticoSupervisor = farmaceuticoSupervisor;
-        this.preparacao = preparacao;
-        this.conservacao = conservacao;
-        this.validade = validade;
         this.fFarmNome = fFarmNome;
         this.fFarmPrice;
         this.fFarmQtd = fFarmQtd;
         this.materiasPrimas = matPrimReader(materiasPrimas);
         this.materiaisEmbalagem = matEmbReader(materiaisEmbalagem);
-        this.validacoes = validacoes;
         this.matPrimTotalPrice;
         this.matEmbTotalPrice;
         this.IVA;
         this.totalPrice;
     }
 
-    calculateFFarmPrice(formasFarmaceuticas) {
+    calculateFFarmPrice() {
         let formaFarmaceuticaPrice;
         const qtd = this.fFarmQtd;
         const fatorF = this.fatorF;
-        const limite = +formasFarmaceuticas[this.fFarmNome][0];
-        const fatorNormal = +formasFarmaceuticas[this.fFarmNome][1];
-        const fatorSuplemento = +formasFarmaceuticas[this.fFarmNome][2];
+        const limite = +formasFarmaceuticas[this.fFarmNome.toLowerCase()][0];
+        const fatorNormal = +formasFarmaceuticas[
+            this.fFarmNome.toLowerCase()
+        ][1];
+        const fatorSuplemento = +formasFarmaceuticas[
+            this.fFarmNome.toLowerCase()
+        ][2];
         if (qtd <= limite) {
             formaFarmaceuticaPrice = fatorF * fatorNormal;
         } else {
@@ -101,7 +84,7 @@ class Manipulado {
         return formaFarmaceuticaPrice;
     }
 
-    calculateMatPrimasTotalPrice(fct) {
+    calculateMatPrimasTotalPrice() {
         let val = 0;
         for (let i = 0; i < this.materiasPrimas.length; i++) {
             val +=
@@ -178,4 +161,44 @@ class Manipulado {
     }
 }
 
-module.exports = Manipulado;
+class Manipulado extends Orcamento {
+    constructor(
+        lote,
+        nomeManipulado,
+        utenteNome,
+        utenteContacto,
+        prescritorNome,
+        prescritorContacto,
+        farmaceuticoNome,
+        farmaceuticoSupervisor,
+        preparacao,
+        conservacao,
+        validade,
+        fFarmNome,
+        fFarmQtd,
+        materiasPrimas,
+        materiaisEmbalagem,
+        validacoes
+    ) {
+        super(
+            nomeManipulado,
+            fFarmNome,
+            fFarmQtd,
+            materiasPrimas,
+            materiaisEmbalagem
+        );
+        this.lote = lote;
+        this.utenteNome = utenteNome;
+        this.utenteContacto = utenteContacto;
+        this.prescritorNome = prescritorNome;
+        this.prescritorContacto = prescritorContacto;
+        this.farmaceuticoNome = farmaceuticoNome;
+        this.farmaceuticoSupervisor = farmaceuticoSupervisor;
+        this.preparacao = preparacao;
+        this.conservacao = conservacao;
+        this.validade = validade;
+        this.validacoes = validacoes;
+    }
+}
+
+module.exports = { Orcamento, Manipulado };

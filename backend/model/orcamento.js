@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const orcamentoManipuladoSchema = new Schema(
+const Orcamento = new Schema(
     {
         nomeManipulado: { type: String, required: true },
         fatorF: { type: Number, required: true },
@@ -37,7 +37,4 @@ const orcamentoManipuladoSchema = new Schema(
     }
 );
 
-module.exports = mongoose.model(
-    'OrcamentoManipulado',
-    orcamentoManipuladoSchema
-);
+module.exports = mongoose.model('Orcamento', Orcamento);

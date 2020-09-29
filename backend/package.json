@@ -2,7 +2,7 @@
   "name": "manipulados",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "/backend/app.js",
   "scripts": {
     "test": "jest",
     "test:watch": "npm run test --watch",
