@@ -176,21 +176,23 @@ exports.postManipulado = async (req, res, next) => {
 //     });
 // };
 
-// exports.getAll = async (req, res, next) => {
-//     const searchItemType = req.body.searchItemType;
-//     const searchParameters = req.body.searchParameters;
-//     if (searchItemType === 'manipulado') {
-//         const manipulado = await Manipulado.find({ searchParameters });
-//         if (manipulado) {
-//             res.status(200).json(manipulado);
-//         }
-//     } else {
-//         const orcamento = await OrcamentoManipulado.find({ searchParameters });
-//         if (orcamento) {
-//             res.status(200).json(orcamento);
-//         }
-//     }
-// };
+exports.getOrcamento = async (req, res, next) => {
+    const orcamentoId = req.params.id;
+    try {
+        const orcamento = await OrcamentoManipulado.findById({ orcamentoId });
+        if (orcamento) {
+            res.status(200).json(orcamento);
+        } else {
+            res.status(400).json({
+                errorMessages: 'Orçamento não encontrado!'
+            });
+        }
+    } catch (err) {
+        res.status(400).json({
+            errorMessages: 'Orçamento não encontrado!'
+        });
+    }
+};
 
 // function escapeRegex(text) {
 //     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');

@@ -63,7 +63,7 @@ app.use(
 
 app.post('/manipulado', validateManipulado, controllers.postManipulado);
 
-// app.get('/orcamento/:orcamentoId', isAuth, controllers.getOrcamento);
+app.get('/orcamento/:orcamentoId', controllers.getOrcamento);
 
 app.post('/orcamento', validateOrcamento, controllers.postOrcamento);
 
