@@ -133,29 +133,83 @@ exports.postManipulado = async (req, res, next) => {
     }
 };
 
-// exports.getEditManipulado = (req, res, next) => {
-//     res.render('editarManipulado', { manipulado: undefined });
-// };
+exports.editManipulado = async (req, res, next) => {
+    const manipuladoID = req.query.manipuladoID;
+    const newManipulado = new ManipuladoModel({
+        lote: req.body.lote,
+        nomeManipulado: req.body.nomeManipulado,
+        fatorF: req.body.fatorF,
+        utenteNome: req.body.utenteNome,
+        utenteContacto: req.body.utenteContacto,
+        prescritorNome: req.body.prescritorNome,
+        prescritorContacto: req.body.prescritorContacto,
+        farmaceuticoNome: req.body.farmaceuticoNome,
+        farmaceuticoSupervisor: req.body.farmaceuticoSupervisor,
+        preparacao: req.body.preparacao,
+        conservacao: req.body.conservacao,
+        validade: req.body.validade,
+        fFarmNome: req.body.fFarmNome,
+        fFarmPrice: req.body.fFarmPrice,
+        fFarmQtd: req.body.fFarmQtd,
+        materiasPrimas: req.body.materiasPrimas,
+        materiasPrimasPrice: req.body.materiasPrimasPrice,
+        materiaisEmbalagem: req.body.materiaisEmbalagem,
+        materiaisEmbalagemPrice: req.body.materiaisEmbalagemPrice,
+        validacoes: req.body.validacoes,
+        IVA: req.body.IVA,
+        totalPrice: req.body.totalPrice
+    });
+    try {
+        const oldManipulado = await ManipuladoModel.findById(manipuladoID);
+        if (!oldManipulado) {
+            res.status(400).json({
+                errorMessage: 'Manipulado ID não encontrado! Interrompido!'
+            });
+        } else {
+            await newManipulado.save();
+            res.status(200).json(newManipulado);
+        }
+    } catch (err) {
+        res.status(400).json(err);
+    }
+};
 
-// exports.postEditManipulado = (req, res, next) => {
-//     let manipuladoID = req.query.manipuladoID;
+exports.editOrcamento = async (req, res, next) => {
+    const orcamentoID = req.query.orcamentoID;
+    const newOrcamento = new OrcamentoModel({
+        nomeManipulado: req.body.nomeManipulado,
+        fatorF: req.body.fatorF,
+        fFarmNome: req.body.fFarmNome,
+        fFarmPrice: req.body.fFarmPrice,
+        fFarmQtd: req.body.fFarmQtd,
+        materiasPrimas: req.body.materiasPrimas,
+        materiasPrimasPrice: req.body.materiasPrimasPrice,
+        materiaisEmbalagem: req.body.materiaisEmbalagem,
+        materiaisEmbalagemPrice: req.body.materiaisEmbalagemPrice,
+        IVA: req.body.IVA,
+        totalPrice: req.body.totalPrice
+    });
+    try {
+        const oldOrcamento = await OrcamentoModel.findById(orcamentoID);
+        if (!oldOrcamento) {
+            res.status(400).json({
+                errorMessage: 'Orcamento ID não encontrado! Interrompido!'
+            });
+        } else {
+            await newOrcamento.save();
+            res.status(200).json(newOrcamento);
+        }
+    } catch (err) {
+        res.status(400).json(err);
+    }
+};
+
+// exports.getManipulado = (req, res, next) => {
+//     const manipuladoID = req.query.manipuladoID;
 //     ManipuladoModel.findById(manipuladoID)
 //         .then((manipulado) => {
 //             if (manipulado) {
-//                 res.render('editarManipulado', {
-//                     manipulado
-//                 });
-//             }
-//         })
-//         .catch((err) => console.log(err));
-// };
-
-// exports.viewManipulado = (req, res, next) => {
-//     let manipuladoID = req.query.manipuladoID;
-//     ManipuladoModel.findById(manipuladoID)
-//         .then((manipulado) => {
-//             if (manipulado) {
-//                 res.render('ver-manipulado', {
+//                 res.json({
 //                     manipulado
 //                 });
 //             }
@@ -177,9 +231,9 @@ exports.postManipulado = async (req, res, next) => {
 // };
 
 exports.getOrcamento = async (req, res, next) => {
-    const orcamentoId = req.params.id;
+    const orcamentoId = req.params.orcamentoId;
     try {
-        const orcamento = await OrcamentoManipulado.findById({ orcamentoId });
+        const orcamento = await OrcamentoModel.findById(orcamentoId);
         if (orcamento) {
             res.status(200).json(orcamento);
         } else {
@@ -194,6 +248,23 @@ exports.getOrcamento = async (req, res, next) => {
     }
 };
 
+exports.getManipulado = async (req, res, next) => {
+    const manipuladoId = req.params.manipuladoId;
+    try {
+        const manipulado = await ManipuladoModel.findById(manipuladoId);
+        if (manipulado) {
+            res.status(200).json(manipulado);
+        } else {
+            res.status(400).json({
+                errorMessages: 'Manipulado não encontrado!'
+            });
+        }
+    } catch (err) {
+        res.status(400).json({
+            errorMessages: 'Manipulado não encontrado!'
+        });
+    }
+};
 // function escapeRegex(text) {
 //     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
 // }

@@ -7,13 +7,13 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 
 const controllers = require('./controllers');
-const isAuth = require('../middleware/is-auth');
+const isAuth = require('./middleware/is-auth');
 const {
     validateManipulado,
     validateOrcamento,
     validateLogin,
     validateSignup
-} = require('../middleware/validators');
+} = require('./middleware/validators');
 const MONGODB_URI = process.env.MONGODB_URI;
 const SESSION_SECRET = process.env.SESSION_SECRET;
 
@@ -61,11 +61,17 @@ app.use(
 
 // app.get('/novoManipulado', isAuth, controllers.getNovoManipulado);
 
+app.get('/manipulado/:manipuladoId', controllers.getManipulado);
+
 app.post('/manipulado', validateManipulado, controllers.postManipulado);
+
+app.put('/editarManipulado/:manipuladoId', controllers.editManipulado);
 
 app.get('/orcamento/:orcamentoId', controllers.getOrcamento);
 
 app.post('/orcamento', validateOrcamento, controllers.postOrcamento);
+
+app.put('/editarOrcamento/:orcamentoId', controllers.editOrcamento);
 
 // app.get('/manipulado/all', controllers.getAll);
 
@@ -74,16 +80,6 @@ app.post('/orcamento', validateOrcamento, controllers.postOrcamento);
 // app.post('/login', validateLogin, controllers.postLogin);
 
 // app.post('/logout', controllers.postLogout);
-
-// app.post('/pesquisa', controllers.postPesquisa);
-
-// app.get('/arquivo', controllers.getArquivo);
-
-// app.get('/editarManipulado', isAuth, controllers.getEditManipulado);
-
-// app.post('/editarManipulado', isAuth, controllers.postEditManipulado);
-
-// app.get('/manipulado/:manipulado:id', isAuth, controllers.viewManipulado);
 
 // app.post('/deleteManipulado/:id', isAuth, controllers.postDeleteManipulado);
 
