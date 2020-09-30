@@ -361,95 +361,101 @@ exports.manipuladoGetAll = async (req, res, next) => {
 //         .catch((err) => console.log(err));
 // };
 
-// exports.postSignup = (req, res, next) => {
-//     console.log('hello!!!');
-//     const { errors } = validationResult(req);
-//     const email = req.body.email;
-//     const password = req.body.password;
-//     const confirmPassword = req.body.confirmPassword;
-//     const primeiroNome = req.body.primeiroNome;
-//     const apelido = req.body.apelido;
-//     if (password !== confirmPassword) {
-//         return res.json({
-//             msg: 'A password e a confirmação não coincidem!'
-//         });
-//     }
-//     if (errors.length > 0) {
-//         let errorsArray = [];
-//         errors.forEach((error) => errorsArray.push(error.msg));
-//         res.render('signup', {
-//             errorMessages: errorsArray
-//         });
-//     } else {
-//         User.findOne({ email: email })
-//             .then((user) => {
-//                 if (user) {
-//                     console.log('user already exists!');
-//                     return res.json({ msg: 'User already exists!' });
-//                 } else {
-//                     return bcrypt
-//                         .hash(password, 12)
-//                         .then((hashedPassword) => {
-//                             const newUser = new User({
-//                                 primeiroNome: primeiroNome,
-//                                 apelido: apelido,
-//                                 email: email,
-//                                 password: hashedPassword
-//                             });
-//                             return newUser.save();
-//                         })
-//                         .then((result) => {
-//                             console.log('User successfully created!');
-//                             res.json({ msg: 'User successfully created!' });
-//                         });
-//                 }
-//             })
-//             .catch((err) => console.log(err));
-//     }
-// };
+exports.postSignup = (req, res, next) => {
+    const { errors } = validationResult(req);
+    const email = req.body.email;
+    const password = req.body.password;
+    const confirmPassword = req.body.confirmPassword;
+    const primeiroNome = req.body.primeiroNome;
+    const apelido = req.body.apelido;
+    if (password !== confirmPassword) {
+        return res.status(403).json({
+            errorMessages:
+                'Não autorizado! A password e a confirmação não coincidem!'
+        });
+    }
+    if (errors.length > 0) {
+        let errorsArray = [];
+        errors.forEach((error) => errorsArray.push(error.msg));
+        res.status(400).json({
+            errorMessages: errorsArray
+        });
+    } else {
+        User.findOne({ email })
+            .then((user) => {
+                if (user) {
+                    console.log('user already exists!');
+                    return res
+                        .status(403)
+                        .json({ errorMessages: 'User already exists!' });
+                } else {
+                    return bcrypt
+                        .hash(password, 12)
+                        .then((hashedPassword) => {
+                            const newUser = new User({
+                                primeiroNome: primeiroNome,
+                                apelido: apelido,
+                                email: email,
+                                password: hashedPassword
+                            });
+                            return newUser.save();
+                        })
+                        .then((result) => {
+                            console.log('User successfully created!');
+                            res.json({
+                                result,
+                                msg: 'User successfully created!'
+                            });
+                        });
+                }
+            })
+            .catch((err) => res.status(400).json(err));
+    }
+};
 
-// exports.postLogin = (req, res, next) => {
-//     const { errors } = validationResult(req);
-//     const email = req.body.email;
-//     const password = req.body.password;
-//     if (errors.length > 0) {
-//         let errorsArray = [];
-//         errors.forEach((error) => errorsArray.push(error.msg));
-//         res.render('login', {
-//             errorMessages: errorsArray
-//         });
-//     } else {
-//         User.findOne({ email: email })
-//             .then((user) => {
-//                 if (!user) {
-//                     console.log('Invalid email or password!');
-//                     return res.redirect('/login');
-//                 }
-//                 bcrypt
-//                     .compare(password, user.password)
-//                     .then((doMatch) => {
-//                         if (doMatch) {
-//                             req.session.isLoggedIn = true;
-//                             req.session.user = user;
-//                             return req.session.save((err) => {
-//                                 if (err) {
-//                                     console.log(err);
-//                                 }
-//                                 console.log('User logged in!');
-//                                 res.redirect('/');
-//                             });
-//                         }
-//                         console.log('Invalid email or password!');
-//                         return res.redirect('/login');
-//                     })
-//                     .catch((err) => {
-//                         console.log(err);
-//                         res.redirect('/login');
-//                     });
-//             })
-//             .catch((err) => console.log(err));
-//     }
-// };
+exports.postLogin = (req, res, next) => {
+    const { errors } = validationResult(req);
+    const email = req.body.email;
+    const password = req.body.password;
+    if (errors.length > 0) {
+        let errorsArray = [];
+        errors.forEach((error) => errorsArray.push(error.msg));
+        res.status(403).json({
+            errorMessages: errorsArray
+        });
+    } else {
+        User.findOne({ email: email })
+            .then((user) => {
+                if (!user) {
+                    console.log('Invalid email or password!');
+                    return res
+                        .status(403)
+                        .json({ errorMessages: 'Invalid email or password!' });
+                }
+                bcrypt
+                    .compare(password, user.password)
+                    .then((doMatch) => {
+                        if (doMatch) {
+                            req.session.isLoggedIn = true;
+                            req.session.user = user;
+                            return req.session.save((err) => {
+                                if (err) {
+                                    res.json(err);
+                                }
+                                res.status(200).json(user);
+                            });
+                        }
+                        res.status(403).json({
+                            errorMessages: 'Invalid email or password!'
+                        });
+                    })
+                    .catch((err) => {
+                        res.status(400).json(err);
+                    });
+            })
+            .catch((err) => res.status(400).json(err));
+    }
+};
 
 // exports.postLogout = (req, res, next) => {
 //     req.session.destroy((err) => {

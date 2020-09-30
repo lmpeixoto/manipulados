@@ -63,9 +63,9 @@ app.get('/manipulado/:manipuladoId', controllers.getManipulado);
 
 app.post('/manipulado', validateManipulado, controllers.postManipulado);
 
-app.get('/orcamento/all', controllers.orcamentoGetAll);
-
 app.put('/manipulado/edit/:manipuladoId', controllers.editManipulado);
+
+app.get('/orcamento/all', controllers.orcamentoGetAll);
 
 app.get('/orcamento/:orcamentoId', controllers.getOrcamento);
 
@@ -73,9 +73,9 @@ app.post('/orcamento', validateOrcamento, controllers.postOrcamento);
 
 app.put('/orcamento/edit/:orcamentoId', controllers.editOrcamento);
 
-// app.post('/signup', validateSignup, controllers.postSignup);
+app.post('/signup', validateSignup, controllers.postSignup);
 
-// app.post('/login', validateLogin, controllers.postLogin);
+app.post('/login', validateLogin, controllers.postLogin);
 
 // app.post('/logout', controllers.postLogout);
 
