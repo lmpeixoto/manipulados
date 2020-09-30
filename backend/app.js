@@ -45,33 +45,33 @@ app.use(
     })
 );
 
-// app.use(csrfProtection);
+app.use(csrfProtection);
 
-// app.use((req, res, next) => {
-//     res.locals.isAuthenticated = req.session.isLoggedIn;
-//     res.locals.csrfToken = req.csrfToken();
-//     next();
-// });
+app.use((req, res, next) => {
+    res.locals.isAuthenticated = req.session.isLoggedIn;
+    res.locals.csrfToken = req.csrfToken();
+    next();
+});
 
-// app.get('/formasFarmaceuticas', controllers.getFormasFarmaceuticas);
+app.get('/formasFarmaceuticas', controllers.getFormasFarmaceuticas);
 
-// app.get('/fatores', controllers.getFatores);
+app.get('/fatores', controllers.getFatores);
 
-app.get('/manipulado/all', controllers.manipuladoGetAll);
+app.get('/manipulado/all', isAuth, controllers.manipuladoGetAll);
 
-app.get('/manipulado/:manipuladoId', controllers.getManipulado);
+app.get('/manipulado/:manipuladoId', isAuth, controllers.getManipulado);
 
-app.post('/manipulado', validateManipulado, controllers.postManipulado);
+app.post('/manipulado', isAuth, validateManipulado, controllers.postManipulado);
 
-app.put('/manipulado/edit/:manipuladoId', controllers.editManipulado);
+app.put('/manipulado/edit/:manipuladoId', isAuth, controllers.editManipulado);
 
-app.get('/orcamento/all', controllers.orcamentoGetAll);
+app.get('/orcamento/all', isAuth, controllers.orcamentoGetAll);
 
-app.get('/orcamento/:orcamentoId', controllers.getOrcamento);
+app.get('/orcamento/:orcamentoId', isAuth, controllers.getOrcamento);
 
-app.post('/orcamento', validateOrcamento, controllers.postOrcamento);
+app.post('/orcamento', isAuth, validateOrcamento, controllers.postOrcamento);
 
-app.put('/orcamento/edit/:orcamentoId', controllers.editOrcamento);
+app.put('/orcamento/edit/:orcamentoId', isAuth, controllers.editOrcamento);
 
 app.post('/signup', validateSignup, controllers.postSignup);
 
@@ -79,6 +79,16 @@ app.post('/login', validateLogin, controllers.postLogin);
 
 // app.post('/logout', controllers.postLogout);
 
-// app.post('/deleteManipulado/:id', isAuth, controllers.postDeleteManipulado);
+app.post(
+    '/manipulado/delete/:manipuladoId',
+    isAuth,
+    controllers.postDeleteManipulado
+);
+
+app.post(
+    '/orcamento/delete/:orcamentoId',
+    isAuth,
+    controllers.postDeleteOrcamento
+);
 
 module.exports = app;

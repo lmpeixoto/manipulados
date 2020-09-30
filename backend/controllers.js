@@ -204,31 +204,27 @@ exports.editOrcamento = async (req, res, next) => {
     }
 };
 
-// exports.getManipulado = (req, res, next) => {
-//     const manipuladoID = req.query.manipuladoID;
-//     ManipuladoModel.findById(manipuladoID)
-//         .then((manipulado) => {
-//             if (manipulado) {
-//                 res.json({
-//                     manipulado
-//                 });
-//             }
-//         })
-//         .catch((err) => console.log(err));
-// };
+exports.postDeleteManipulado = (req, res, next) => {
+    let manipuladoId = req.params.manipuladoId;
+    ManipuladoModel.findByIdAndDelete(manipuladoId, (err, doc) => {
+        if (err) {
+            res.status(400).json(err);
+        } else {
+            res.status(200).json(doc);
+        }
+    });
+};
 
-// exports.postDeleteManipulado = (req, res, next) => {
-//     let manipuladoID = req.params.id;
-//     console.log(req.params);
-//     ManipuladoModel.findByIdAndDelete(manipuladoID, (err, doc) => {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             console.log('Manipulado apagado com sucesso!');
-//             res.redirect('/arquivo');
-//         }
-//     });
-// };
+exports.postDeleteOrcamento = (req, res, next) => {
+    let orcamentoId = req.params.orcamentoId;
+    ManipuladoModel.findByIdAndDelete(orcamentoId, (err, doc) => {
+        if (err) {
+            res.status(400).json(err);
+        } else {
+            res.status(200).json(doc);
+        }
+    });
+};
 
 exports.getOrcamento = async (req, res, next) => {
     const orcamentoId = req.params.orcamentoId;
@@ -457,17 +453,20 @@ exports.postLogin = (req, res, next) => {
     }
 };
 
-// exports.postLogout = (req, res, next) => {
-//     req.session.destroy((err) => {
-//         console.log(err);
-//         res.redirect('/');
-//     });
-// };
+exports.postLogout = (req, res, next) => {
+    req.session.destroy((err) => {
+        if (err) {
+            res.status(400).json(err);
+        } else {
+            res.status(200).json({ msg: 'Logout successfully!' });
+        }
+    });
+};
 
-// exports.getFormasFarmaceuticas = (req, res, next) => {
-//     res.send(formasFarmaceuticas);
-// };
+exports.getFormasFarmaceuticas = (req, res, next) => {
+    res.send(formasFarmaceuticas);
+};
 
-// exports.getFatores = (req, res, next) => {
-//     res.send(fatores);
-// };
+exports.getFatores = (req, res, next) => {
+    res.send(fatores);
+};
