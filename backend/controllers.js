@@ -248,6 +248,22 @@ exports.getOrcamento = async (req, res, next) => {
     }
 };
 
+exports.orcamentoGetAll = async (req, res, next) => {
+    try {
+        const results = await OrcamentoModel.find();
+        if (results.length === 0) {
+            res.json({
+                errorMessages:
+                    'Não foram encontrados orçamentos na base de dados!'
+            });
+        } else {
+            res.status(200).json(results);
+        }
+    } catch (err) {
+        res.status(400).json(err);
+    }
+};
+
 exports.getManipulado = async (req, res, next) => {
     const manipuladoId = req.params.manipuladoId;
     try {
@@ -265,6 +281,25 @@ exports.getManipulado = async (req, res, next) => {
         });
     }
 };
+
+exports.manipuladoGetAll = async (req, res, next) => {
+    console.log('here');
+    try {
+        const results = await ManipuladoModel.find({});
+        console.log(results);
+        if (results.length === 0) {
+            res.json({
+                errorMessages:
+                    'Não foram encontrados manipulados na base de dados!'
+            });
+        } else {
+            res.status(200).json(results);
+        }
+    } catch (err) {
+        res.status(400).json(err);
+    }
+};
+
 // function escapeRegex(text) {
 //     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
 // }

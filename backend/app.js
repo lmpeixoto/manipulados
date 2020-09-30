@@ -53,27 +53,25 @@ app.use(
 //     next();
 // });
 
-// app.get('/', controllers.getIndex);
-
 // app.get('/formasFarmaceuticas', controllers.getFormasFarmaceuticas);
 
 // app.get('/fatores', controllers.getFatores);
 
-// app.get('/novoManipulado', isAuth, controllers.getNovoManipulado);
+app.get('/manipulado/all', controllers.manipuladoGetAll);
 
 app.get('/manipulado/:manipuladoId', controllers.getManipulado);
 
 app.post('/manipulado', validateManipulado, controllers.postManipulado);
 
-app.put('/editarManipulado/:manipuladoId', controllers.editManipulado);
+app.get('/orcamento/all', controllers.orcamentoGetAll);
+
+app.put('/manipulado/edit/:manipuladoId', controllers.editManipulado);
 
 app.get('/orcamento/:orcamentoId', controllers.getOrcamento);
 
 app.post('/orcamento', validateOrcamento, controllers.postOrcamento);
 
-app.put('/editarOrcamento/:orcamentoId', controllers.editOrcamento);
-
-// app.get('/manipulado/all', controllers.getAll);
+app.put('/orcamento/edit/:orcamentoId', controllers.editOrcamento);
 
 // app.post('/signup', validateSignup, controllers.postSignup);
 
