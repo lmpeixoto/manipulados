@@ -2,12 +2,12 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const { body } = require('express-validator');
+const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 
 const controllers = require('./controllers');
-const isAuth = require('./middleware/is-auth');
 const {
     validateManipulado,
     validateOrcamento,
@@ -36,6 +36,8 @@ app.use(express.json());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// app.use(cookieParser);
+
 app.use(
     session({
         secret: SESSION_SECRET,
@@ -44,8 +46,6 @@ app.use(
         store: store
     })
 );
-
-app.use(csrfProtection);
 
 app.use((req, res, next) => {
     res.locals.isAuthenticated = req.session.isLoggedIn;
@@ -57,37 +57,52 @@ app.get('/formasFarmaceuticas', controllers.getFormasFarmaceuticas);
 
 app.get('/fatores', controllers.getFatores);
 
-app.get('/manipulado/all', isAuth, controllers.manipuladoGetAll);
+app.get('/manipulado/all', controllers.manipuladoGetAll);
 
-app.get('/manipulado/:manipuladoId', isAuth, controllers.getManipulado);
+app.get('/manipulado/:manipuladoId', controllers.getManipulado);
 
-app.post('/manipulado', isAuth, validateManipulado, controllers.postManipulado);
+app.post(
+    '/manipulado',
+    csrfProtection,
+    validateManipulado,
+    controllers.postManipulado
+);
 
-app.put('/manipulado/edit/:manipuladoId', isAuth, controllers.editManipulado);
+app.put(
+    '/manipulado/edit/:manipuladoId',
+    csrfProtection,
+    validateManipulado,
+    controllers.editManipulado
+);
 
-app.get('/orcamento/all', isAuth, controllers.orcamentoGetAll);
+app.get('/orcamento/all', controllers.orcamentoGetAll);
 
-app.get('/orcamento/:orcamentoId', isAuth, controllers.getOrcamento);
+app.get('/orcamento/:orcamentoId', controllers.getOrcamento);
 
-app.post('/orcamento', isAuth, validateOrcamento, controllers.postOrcamento);
+app.post(
+    '/orcamento',
+    csrfProtection,
+    validateOrcamento,
+    controllers.postOrcamento
+);
 
-app.put('/orcamento/edit/:orcamentoId', isAuth, controllers.editOrcamento);
+app.put(
+    '/orcamento/edit/:orcamentoId',
+    csrfProtection,
+    controllers.editOrcamento
+);
 
-app.post('/signup', validateSignup, controllers.postSignup);
-
-app.post('/login', validateLogin, controllers.postLogin);
-
-// app.post('/logout', controllers.postLogout);
+app.post('/logout', controllers.postLogout);
 
 app.post(
     '/manipulado/delete/:manipuladoId',
-    isAuth,
+    csrfProtection,
     controllers.postDeleteManipulado
 );
 
 app.post(
     '/orcamento/delete/:orcamentoId',
-    isAuth,
+    csrfProtection,
     controllers.postDeleteOrcamento
 );
 
