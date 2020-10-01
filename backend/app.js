@@ -1,19 +1,16 @@
+require('dotenv').config({ path: __dirname + '/config/dev.env' });
+const csrf = require('csurf');
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const { body } = require('express-validator');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
-const csrf = require('csurf');
 
 const authRoutes = require('./routes/auth');
-const controllers = require('./controllers');
-const isAuth = require('./middleware/isAuth');
-const {
-    validateManipulado,
-    validateOrcamento
-} = require('./middleware/validators');
+const manipuladosRoutes = require('./routes/manipulados');
+const orcamentosRoutes = require('./routes/orcamentos');
+const utilsRoutes = require('./routes/utils');
 const MONGODB_URI = process.env.MONGODB_URI;
 const SESSION_SECRET = process.env.SESSION_SECRET;
 
@@ -36,59 +33,25 @@ app.use(express.json());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(
+    session({
+        secret: SESSION_SECRET,
+        resave: false,
+        saveUninitialized: true,
+        store: store
+    })
+);
+
+app.use(cookieParser());
+
+// app.use(csrfProtection);
+
+app.use('/', utilsRoutes);
+
 app.use('/auth', authRoutes);
 
-app.get('/formasFarmaceuticas', controllers.getFormasFarmaceuticas);
+app.use('/manipulados', manipuladosRoutes);
 
-app.get('/fatores', controllers.getFatores);
-
-app.get('/manipulado/all', isAuth, controllers.manipuladoGetAll);
-
-app.get('/manipulado/:manipuladoId', controllers.getManipulado);
-
-app.post(
-    '/manipulado',
-    csrfProtection,
-    validateManipulado,
-    controllers.postManipulado
-);
-
-app.put(
-    '/manipulado/edit/:manipuladoId',
-    csrfProtection,
-    validateManipulado,
-    controllers.editManipulado
-);
-
-app.get('/orcamento/all', controllers.orcamentoGetAll);
-
-app.get('/orcamento/:orcamentoId', controllers.getOrcamento);
-
-app.post(
-    '/orcamento',
-    csrfProtection,
-    validateOrcamento,
-    controllers.postOrcamento
-);
-
-app.put(
-    '/orcamento/edit/:orcamentoId',
-    csrfProtection,
-    controllers.editOrcamento
-);
-
-app.post('/logout', controllers.postLogout);
-
-app.post(
-    '/manipulado/delete/:manipuladoId',
-    csrfProtection,
-    controllers.postDeleteManipulado
-);
-
-app.post(
-    '/orcamento/delete/:orcamentoId',
-    csrfProtection,
-    controllers.postDeleteOrcamento
-);
+app.use('/orcamentos', orcamentosRoutes);
 
 module.exports = app;

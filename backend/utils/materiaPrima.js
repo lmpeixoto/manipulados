@@ -1,4 +1,4 @@
-const fct = require('../model/unidades.json');
+const fct = require('../models/fatores.json');
 
 class MateriaPrima {
     constructor(id, nome, preco, qtd, fator) {

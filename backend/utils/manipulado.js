@@ -1,5 +1,5 @@
-const formasFarmaceuticas = require('../model/formas-farmaceuticas.json');
-const fct = require('../model/unidades.json');
+const formasFarmaceuticas = require('../models/formas-farmaceuticas.json');
+const fct = require('../models/fatores.json');
 const MateriaPrima = require('./materiaPrima');
 const MaterialEmbalagem = require('./materialEmbalagem');
 
