@@ -7,12 +7,12 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 
+const authRoutes = require('./routes/auth');
 const controllers = require('./controllers');
+const isAuth = require('./middleware/isAuth');
 const {
     validateManipulado,
-    validateOrcamento,
-    validateLogin,
-    validateSignup
+    validateOrcamento
 } = require('./middleware/validators');
 const MONGODB_URI = process.env.MONGODB_URI;
 const SESSION_SECRET = process.env.SESSION_SECRET;
@@ -36,28 +36,13 @@ app.use(express.json());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// app.use(cookieParser);
-
-app.use(
-    session({
-        secret: SESSION_SECRET,
-        resave: false,
-        saveUninitialized: false,
-        store: store
-    })
-);
-
-app.use((req, res, next) => {
-    res.locals.isAuthenticated = req.session.isLoggedIn;
-    res.locals.csrfToken = req.csrfToken();
-    next();
-});
+app.use('/auth', authRoutes);
 
 app.get('/formasFarmaceuticas', controllers.getFormasFarmaceuticas);
 
 app.get('/fatores', controllers.getFatores);
 
-app.get('/manipulado/all', controllers.manipuladoGetAll);
+app.get('/manipulado/all', isAuth, controllers.manipuladoGetAll);
 
 app.get('/manipulado/:manipuladoId', controllers.getManipulado);
 

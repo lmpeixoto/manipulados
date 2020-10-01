@@ -1,5 +1,7 @@
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const OrcamentoModel = require('./model/orcamento');
 const { Manipulado, Orcamento } = require('./utils/manipulado');
@@ -409,47 +411,40 @@ exports.postSignup = (req, res, next) => {
     }
 };
 
-exports.postLogin = (req, res, next) => {
+exports.postLogin = async (req, res, next) => {
     const { errors } = validationResult(req);
     const email = req.body.email;
     const password = req.body.password;
     if (errors.length > 0) {
         let errorsArray = [];
         errors.forEach((error) => errorsArray.push(error.msg));
-        res.status(403).json({
+        return res.status(403).json({
             errorMessages: errorsArray
         });
     } else {
-        User.findOne({ email: email })
-            .then((user) => {
-                if (!user) {
-                    console.log('Invalid email or password!');
-                    return res
-                        .status(403)
-                        .json({ errorMessages: 'Invalid email or password!' });
-                }
-                bcrypt
-                    .compare(password, user.password)
-                    .then((doMatch) => {
-                        if (doMatch) {
-                            req.session.isLoggedIn = true;
-                            req.session.user = user;
-                            return req.session.save((err) => {
-                                if (err) {
-                                    res.json(err);
-                                }
-                                res.status(200).json(user);
-                            });
-                        }
-                        res.status(403).json({
-                            errorMessages: 'Invalid email or password!'
-                        });
-                    })
-                    .catch((err) => {
-                        res.status(400).json(err);
-                    });
-            })
-            .catch((err) => res.status(400).json(err));
+        try {
+            const user = await User.findOne({ email: email });
+            if (!user) {
+                console.log('Invalid email!');
+                return res
+                    .status(403)
+                    .json({ errorMessages: 'Invalid email!' });
+            }
+            const passwordCheck = await bcrypt.compare(password, user.password);
+            if (passwordCheck) {
+                const token = jwt.sign(
+                    { _id: user.id },
+                    process.env.TOKEN_SECRET
+                );
+                res.header('auth-token', token);
+                return res.status(200).json(user);
+            }
+            return res.status(403).json({
+                errorMessages: 'Password is wrong!'
+            });
+        } catch (err) {
+            res.status(400).json(err);
+        }
     }
 };
 
