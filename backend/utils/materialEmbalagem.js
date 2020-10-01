@@ -1,11 +1,10 @@
-const fct = require('../model/unidades.json');
-
-class MateriaPrima {
-    constructor(nome, preco, qtd, fator) {
+class MaterialEmbalagem {
+    constructor(id, nome, capacidade, preco, qtd) {
+        this.id = id;
         this.nome = nome;
+        this.capacidade = capacidade;
         this.preco = preco;
         this.qtd = qtd;
-        this.fator = fator;
         this.valor;
     }
 
@@ -22,4 +21,4 @@ class MateriaPrima {
     }
 }
 
-module.exports = MateriaPrima;
+module.exports = MaterialEmbalagem;

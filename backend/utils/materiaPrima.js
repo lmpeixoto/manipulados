@@ -1,9 +1,12 @@
-class MaterialEmbalagem {
-    constructor(nome, capacidade, preco, qtd) {
+const fct = require('../models/fatores.json');
+
+class MateriaPrima {
+    constructor(id, nome, preco, qtd, fator) {
+        this.id = id;
         this.nome = nome;
-        this.capacidade = capacidade;
         this.preco = preco;
         this.qtd = qtd;
+        this.fator = fator;
         this.valor;
     }
 
@@ -20,4 +23,4 @@ class MaterialEmbalagem {
     }
 }
 
-module.exports = MaterialEmbalagem;
+module.exports = MateriaPrima;

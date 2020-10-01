@@ -1,7 +1,7 @@
 const Manipulado = require('./manipulado');
 
-const fct = require('../model/unidades.json');
-const formasFarmaceuticas = require('../model/formas-farmaceuticas.json');
+const fct = require('../models/fatores.json');
+const formasFarmaceuticas = require('../models/formas-farmaceuticas.json');
 
 describe('Simple manipulado with only one mat prima and mat emb', function () {
     const mockedManipuladoSimple1x1 = {
