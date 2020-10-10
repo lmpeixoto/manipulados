@@ -5,6 +5,10 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import FORMAS_FARMACEUTICAS from '../../data/formas-farmaceuticas.json';
+import MateriasPrimas from '../MateriasPrimas/MateriasPrimas';
+import MateriaisEmbalagem from '../MateriaisEmbalagem/MateriaisEmbalagem';
+
+import './Orcamento.css';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -34,31 +38,35 @@ const Orcamento = () => {
     };
 
     return (
-        <form className={classes.root} autoComplete="off">
-            <TextField id="standard-basic" label="Nome" />
-            <TextField id="standard-basic" label="Fator" />
-            <Select
-                labelId="demo-controlled-open-select-label"
-                id="demo-controlled-open-select"
-                open={open}
-                onClose={handleClose}
-                onOpen={handleOpen}
-                value={formaFarmaceutica}
-                onChange={handleChange}
-            >
-                {Object.keys(FORMAS_FARMACEUTICAS).map((formaFarmaceutica) => {
-                    return (
-                        <MenuItem value={formaFarmaceutica}>
-                            {formaFarmaceutica}
-                        </MenuItem>
-                    );
-                })}
-            </Select>
-            <TextField id="standard-basic" label="Quantidade" />
-            <TextField id="standard-basic" label="Preço" />
-            <TextField id="standard-basic" label="Standard" />
-            <TextField id="standard-basic" label="Standard" />
-        </form>
+        <div className="orcamento-container">
+            <h1>Orçamento</h1>
+            <form className={classes.root} autoComplete="off">
+                <TextField id="standard-basic" label="Nome" />
+                <TextField id="standard-basic" label="Fator" />
+                <Select
+                    labelId="demo-controlled-open-select-label"
+                    id="demo-controlled-open-select"
+                    open={open}
+                    onClose={handleClose}
+                    onOpen={handleOpen}
+                    value={formaFarmaceutica}
+                    onChange={handleChange}
+                >
+                    {Object.keys(FORMAS_FARMACEUTICAS).map(
+                        (formaFarmaceutica) => {
+                            return (
+                                <MenuItem value={formaFarmaceutica}>
+                                    {formaFarmaceutica}
+                                </MenuItem>
+                            );
+                        }
+                    )}
+                </Select>
+                <TextField id="standard-basic" label="Quantidade" />
+                <MateriasPrimas />
+                <MateriaisEmbalagem />
+            </form>
+        </div>
     );
 };
 
