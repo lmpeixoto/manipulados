@@ -7,6 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FORMAS_FARMACEUTICAS from '../../data/formas-farmaceuticas.json';
 import MateriasPrimas from '../MateriasPrimas/MateriasPrimas';
 import MateriaisEmbalagem from '../MateriaisEmbalagem/MateriaisEmbalagem';
+import Calculos from './Calculos/Calculos';
 
 import './Orcamento.css';
 
@@ -75,6 +76,10 @@ const Orcamento = () => {
                 <MateriaisEmbalagem
                     materiaisEmbalagem={materiaisEmbalagem}
                     setMateriaisEmbalagem={setMateriaisEmbalagem}
+                />
+                <Calculos
+                    materiasPrimas={materiasPrimas}
+                    materiaisEmbalagem={materiaisEmbalagem}
                 />
             </div>
         </div>
