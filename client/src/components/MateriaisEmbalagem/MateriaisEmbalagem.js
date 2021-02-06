@@ -1,36 +1,93 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
-import IconButton from '@material-ui/core/IconButton';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
 
 import './MateriaisEmbalagem.css';
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1),
-            width: '25ch'
-        }
-    }
-}));
-
 const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
-    const classes = useStyles();
+    const [materialEmbalagem, setMaterialEmbalagem] = useState({
+        nome: '',
+        preco: '',
+        quantidade: ''
+    });
+
+    const resetMateriaisEmbalagemValues = () => {
+        setMaterialEmbalagem({
+            nome: '',
+            preco: '',
+            quantidade: ''
+        });
+    };
+
+    const handleInputChange = (event) => {
+        const value = event.target.value;
+        setMaterialEmbalagem({
+            ...materialEmbalagem,
+            [event.target.name]: value
+        });
+    };
+
+    const handleMateriaisEmbalagemAdd = (event) => {
+        event.preventDefault();
+        setMateriaisEmbalagem([...materiaisEmbalagem, materialEmbalagem]);
+        resetMateriaisEmbalagemValues();
+    };
 
     return (
-        <div className="materiais-embalagem-container">
+        <form onChange={handleInputChange}>
             <h1>Materiais de Embalagem</h1>
-            <div className={classes.root} autoComplete="off">
-                <TextField id="nome" label="Nome" />
-                <TextField id="preco" label="Preço" />
-                <TextField id="quantidade" label="Quantidade" />
-                <IconButton aria-label="add">
-                    <AddCircleOutlineIcon />
-                </IconButton>
+            <div autoComplete="off">
+                <TextField
+                    id="nome"
+                    name="nome"
+                    label="Nome"
+                    value={materialEmbalagem.nome}
+                    required
+                />
+                <TextField
+                    id="preco"
+                    name="preco"
+                    label="Preço"
+                    value={materialEmbalagem.preco}
+                    required
+                />
+                <TextField
+                    id="quantidade"
+                    name="quantidade"
+                    label="Quantidade"
+                    value={materialEmbalagem.quantidade}
+                    required
+                />
+                <button
+                    type="button"
+                    aria-label="add"
+                    onClick={handleMateriaisEmbalagemAdd}
+                >
+                    Adicionar
+                </button>
             </div>
-            <div className="materiais-embalagem-summary"></div>
-        </div>
+            <div className="materiais-embalagem-summary">
+                {materiaisEmbalagem.map((matEmb) => {
+                    return (
+                        <Card>
+                            <CardContent>
+                                <Typography color="textSecondary" gutterBottom>
+                                    <span>Nome:</span> {matEmb.nome}
+                                </Typography>
+                                <Typography variant="h5" component="h2">
+                                    <span>Preço:</span> {matEmb.preco}
+                                </Typography>
+                                <Typography color="textSecondary">
+                                    <span>Qt.:</span> {matEmb.quantidade}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    );
+                })}
+            </div>
+        </form>
     );
 };
 
