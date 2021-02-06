@@ -23,6 +23,8 @@ const Orcamento = () => {
     const classes = useStyles();
 
     const [formaFarmaceutica, setFormaFarmaceutica] = React.useState('');
+    const [materiasPrimas, setMateriasPrimas] = React.useState([]);
+    const [materiaisEmbalagem, setMateriaisEmbalagem] = React.useState([]);
     const [open, setOpen] = React.useState(false);
 
     const handleChange = (event) => {
@@ -40,7 +42,7 @@ const Orcamento = () => {
     return (
         <div className="orcamento-container">
             <h1>Orçamento</h1>
-            <form className={classes.root} autoComplete="off">
+            <div className={classes.root} autoComplete="+off">
                 <TextField id="standard-basic" label="Nome" />
                 <TextField id="standard-basic" label="Fator" />
                 <Select
@@ -55,7 +57,10 @@ const Orcamento = () => {
                     {Object.keys(FORMAS_FARMACEUTICAS).map(
                         (formaFarmaceutica) => {
                             return (
-                                <MenuItem value={formaFarmaceutica}>
+                                <MenuItem
+                                    value={formaFarmaceutica}
+                                    key={formaFarmaceutica}
+                                >
                                     {formaFarmaceutica}
                                 </MenuItem>
                             );
@@ -63,9 +68,15 @@ const Orcamento = () => {
                     )}
                 </Select>
                 <TextField id="standard-basic" label="Quantidade" />
-                <MateriasPrimas />
-                <MateriaisEmbalagem />
-            </form>
+                <MateriasPrimas
+                    materiasPrimas={materiasPrimas}
+                    setMateriasPrimas={setMateriasPrimas}
+                />
+                <MateriaisEmbalagem
+                    materiaisEmbalagem={materiaisEmbalagem}
+                    setMateriaisEmbalagem={setMateriaisEmbalagem}
+                />
+            </div>
         </div>
     );
 };

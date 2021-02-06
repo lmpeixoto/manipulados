@@ -15,20 +15,20 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const MateriaisEmbalagem = () => {
+const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
     const classes = useStyles();
 
     return (
         <div className="materiais-embalagem-container">
             <h1>Materiais de Embalagem</h1>
-            <form className={classes.root} autoComplete="off">
+            <div className={classes.root} autoComplete="off">
                 <TextField id="nome" label="Nome" />
                 <TextField id="preco" label="Preço" />
                 <TextField id="quantidade" label="Quantidade" />
                 <IconButton aria-label="add">
                     <AddCircleOutlineIcon />
                 </IconButton>
-            </form>
+            </div>
             <div className="materiais-embalagem-summary"></div>
         </div>
     );

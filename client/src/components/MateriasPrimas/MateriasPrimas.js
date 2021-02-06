@@ -1,31 +1,38 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import IconButton from '@material-ui/core/IconButton';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
 
 import FATORES from '../../data/fatores.json';
 import './MateriasPrimas.css';
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1),
-            width: '25ch'
-        }
-    }
-}));
+const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
+    const [open, setOpen] = useState(false);
+    const [materiaPrima, setMateriaPrima] = useState({
+        nome: '',
+        preco: '',
+        quantidade: '',
+        fator: ''
+    });
 
-const MateriasPrimas = () => {
-    const classes = useStyles();
+    const resetMateriaPrimaValues = () => {
+        setMateriaPrima({
+            nome: '',
+            preco: '',
+            quantidade: '',
+            fator: ''
+        });
+    };
 
-    const [fator, setFator] = React.useState('');
-    const [open, setOpen] = React.useState(false);
-
-    const handleChange = (event) => {
-        setFator(event.target.value);
+    const handleSelectChange = (event) => {
+        setMateriaPrima({
+            ...materiaPrima,
+            fator: event.target.value
+        });
+        console.log(materiaPrima.fator);
     };
 
     const handleClose = () => {
@@ -36,32 +43,95 @@ const MateriasPrimas = () => {
         setOpen(true);
     };
 
+    const handleMateriaPrimaAdd = (event) => {
+        event.preventDefault();
+        setMateriasPrimas([...materiasPrimas, materiaPrima]);
+        resetMateriaPrimaValues();
+    };
+
+    const handleInputChange = (event) => {
+        const value = event.target.value;
+        setMateriaPrima({
+            ...materiaPrima,
+            [event.target.name]: value
+        });
+    };
+
     return (
-        <div className="materias-primas-container">
+        <form onChange={handleInputChange}>
             <h1>Matérias Primas</h1>
-            <form className={classes.root} autoComplete="off">
-                <TextField id="nome" label="Nome" />
-                <TextField id="preco" label="Preço" />
-                <TextField id="quantidade" label="Quantidade" />
-                <Select
-                    labelId="fator-select-label"
-                    id="fator-open-select"
-                    open={open}
-                    onClose={handleClose}
-                    onOpen={handleOpen}
-                    value={fator}
-                    onChange={handleChange}
-                >
-                    {Object.keys(FATORES).map((fator) => {
-                        return <MenuItem value={fator}>{fator}</MenuItem>;
-                    })}
-                </Select>
-                <IconButton aria-label="add">
-                    <AddCircleOutlineIcon />
-                </IconButton>
-            </form>
-            <div className="materias-primas-summary"></div>
-        </div>
+
+            <TextField
+                id="nome"
+                name="nome"
+                label="Nome"
+                value={materiaPrima.nome}
+                required
+            />
+            <TextField
+                id="preco"
+                name="preco"
+                label="Preço"
+                value={materiaPrima.preco}
+                required
+            />
+            <TextField
+                id="quantidade"
+                name="quantidade"
+                label="Quantidade"
+                value={materiaPrima.quantidade}
+                required
+            />
+            <Select
+                labelId="fator-select-label"
+                name="fator"
+                id="fator-open-select"
+                open={open}
+                onClose={handleClose}
+                onOpen={handleOpen}
+                value={materiaPrima.fator}
+                onChange={handleSelectChange}
+                required
+            >
+                {Object.keys(FATORES).map((fator) => {
+                    return (
+                        <MenuItem value={fator} key={fator}>
+                            {fator}
+                        </MenuItem>
+                    );
+                })}
+            </Select>
+            <button
+                type="button"
+                aria-label="add"
+                onClick={handleMateriaPrimaAdd}
+            >
+                Adicionar
+            </button>
+
+            <div className="materias-primas-summary">
+                {materiasPrimas.map((matPrim) => {
+                    return (
+                        <Card>
+                            <CardContent>
+                                <Typography color="textSecondary" gutterBottom>
+                                    <span>Nome:</span> {matPrim.nome}
+                                </Typography>
+                                <Typography variant="h5" component="h2">
+                                    <span>Preço:</span> {matPrim.preco}
+                                </Typography>
+                                <Typography color="textSecondary">
+                                    <span>Qt.:</span> {matPrim.quantidade}
+                                </Typography>
+                                <Typography variant="body2" component="p">
+                                    <span>Fator:</span> {matPrim.fator}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    );
+                })}
+            </div>
+        </form>
     );
 };
 
