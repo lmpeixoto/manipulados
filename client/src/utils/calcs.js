@@ -8,15 +8,15 @@ export const fetchFatores = () => {
     axios.get(URL_FATORES);
 };
 
-export const fetchFormasFarmaceuticas = () => {
-    axios.get(URL_FORMAS_FARMACEUTICAS);
+export const fetchFormasFarmaceuticas = async () => {
+    await axios.get(URL_FORMAS_FARMACEUTICAS);
 };
 
-export const calcMateriasPrimasTotal = (matPrimas) => {
+export const calcMateriasPrimasTotal = async (matPrimas) => {
     const total = 0;
-    const fatores = fetchFatores();
-    matPrimas.forEach((element) => {
-        const fator = +fatores[element.fator][1];
+    const fatores = await fetchFatores();
+    matPrimas.forEach(async (element) => {
+        const fator = await +fatores[element.fator][1];
         total +=
             parseFloat(element.preco) *
             parseFloat(element.quantidade) *
@@ -27,14 +27,15 @@ export const calcMateriasPrimasTotal = (matPrimas) => {
 
 export const calcMateriaisEmbalagemTotal = (matEmb) => {
     const total = 0;
-    matEmb.forEach((element) => {
-        total += parseFloat(element.preco) * parseFloat(element.quantidade);
+    matEmb.forEach(async (element) => {
+        total +=
+            (await parseFloat(element.preco)) * parseFloat(element.quantidade);
     });
     return total;
 };
 
-export const calcHonorarios = (formaFarmaceutica, quantidade) => {
-    const formasFarmaceuticas = fetchFormasFarmaceuticas();
+export const calcHonorarios = async (formaFarmaceutica, quantidade) => {
+    const formasFarmaceuticas = await fetchFormasFarmaceuticas();
     const total = 0;
     const limite = +formasFarmaceuticas[formaFarmaceutica][0];
     const fator = +formasFarmaceuticas[formaFarmaceutica][1];
@@ -51,12 +52,13 @@ export const calcHonorarios = (formaFarmaceutica, quantidade) => {
     return total;
 };
 
-export const calcOrcamentoTotal = (
+export const calcOrcamentoTotal = async (
     totalHonorarios,
     totalMatPrim,
     totalMatEmb
 ) => {
-    const incidenciaIVA = 1.3 * (totalHonorarios + totalMatPrim + totalMatEmb);
+    const incidenciaIVA =
+        (await 1.3) * (totalHonorarios + totalMatPrim + totalMatEmb);
     const IVA = 0.23 * incidenciaIVA;
     const total = incidenciaIVA + IVA;
     return [total, IVA];

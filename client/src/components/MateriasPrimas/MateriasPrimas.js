@@ -5,11 +5,24 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 
 import FATORES from '../../data/fatores.json';
 import './MateriasPrimas.css';
 
+const useStyles = makeStyles((theme) => ({
+    formControl: {
+        minWidth: 195
+    }
+}));
+
 const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
+    const classes = useStyles();
+
     const [open, setOpen] = useState(false);
     const [materiaPrima, setMateriaPrima] = useState({
         nome: '',
@@ -58,56 +71,80 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
     };
 
     return (
-        <form onChange={handleInputChange}>
-            <h1>Matérias Primas</h1>
-
-            <TextField
-                id="nome"
-                name="nome"
-                label="Nome"
-                value={materiaPrima.nome}
-                required
-            />
-            <TextField
-                id="preco"
-                name="preco"
-                label="Preço"
-                value={materiaPrima.preco}
-                required
-            />
-            <TextField
-                id="quantidade"
-                name="quantidade"
-                label="Quantidade"
-                value={materiaPrima.quantidade}
-                required
-            />
-            <Select
-                labelId="fator-select-label"
-                name="fator"
-                id="fator-open-select"
-                open={open}
-                onClose={handleClose}
-                onOpen={handleOpen}
-                value={materiaPrima.fator}
-                onChange={handleSelectChange}
-                required
+        <>
+            <div
+                className="materiasPrimasFormControl"
+                onChange={handleInputChange}
             >
-                {Object.keys(FATORES).map((fator) => {
-                    return (
-                        <MenuItem value={fator} key={fator}>
-                            {fator}
-                        </MenuItem>
-                    );
-                })}
-            </Select>
-            <button
-                type="button"
-                aria-label="add"
-                onClick={handleMateriaPrimaAdd}
-            >
-                Adicionar
-            </button>
+                <Grid container direction={'column'} spacing={1}>
+                    <Grid item>
+                        <Typography variant="h4">Matérias Primas</Typography>
+                    </Grid>
+                    <Grid item>
+                        <TextField
+                            id="nome"
+                            name="nome"
+                            label="Nome"
+                            value={materiaPrima.nome}
+                            required
+                        />
+                    </Grid>
+                    <Grid item>
+                        <TextField
+                            id="preco"
+                            name="preco"
+                            label="Preço"
+                            value={materiaPrima.preco}
+                            required
+                        />
+                    </Grid>
+                    <Grid item>
+                        <TextField
+                            id="quantidade"
+                            name="quantidade"
+                            label="Quantidade"
+                            value={materiaPrima.quantidade}
+                            required
+                        />
+                    </Grid>
+                    <Grid item>
+                        <FormControl className={classes.formControl}>
+                            <InputLabel id="fator-select-label">
+                                Unidade
+                            </InputLabel>
+                            <Select
+                                labelId="fator-select-label"
+                                name="fator"
+                                id="fator-open-select"
+                                open={open}
+                                onClose={handleClose}
+                                onOpen={handleOpen}
+                                value={materiaPrima.fator}
+                                onChange={handleSelectChange}
+                                required
+                            >
+                                {Object.keys(FATORES).map((fator) => {
+                                    return (
+                                        <MenuItem value={fator} key={fator}>
+                                            {fator}
+                                        </MenuItem>
+                                    );
+                                })}
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            size="small"
+                            onClick={handleMateriaPrimaAdd}
+                        >
+                            Adicionar
+                        </Button>
+                    </Grid>
+                </Grid>
+            </div>
 
             <div className="materias-primas-summary">
                 {materiasPrimas.map((matPrim) => {
@@ -131,7 +168,7 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
                     );
                 })}
             </div>
-        </form>
+        </>
     );
 };
 
