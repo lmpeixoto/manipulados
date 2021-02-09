@@ -15,41 +15,42 @@ export const fetchFormasFarmaceuticas = async () => {
 export const calcMateriasPrimasTotal = async (matPrimas) => {
     const total = 0;
     const fatores = await fetchFatores();
-    matPrimas.forEach(async (element) => {
-        const fator = await +fatores[element.fator][1];
-        total +=
-            parseFloat(element.preco) *
-            parseFloat(element.quantidade) *
-            parseFloat(fator);
-    });
-    return total;
+    console.log(fatores);
+    // matPrimas.forEach(async (element) => {
+    //     const fator = await +fatores[element.fator][1];
+    //     total +=
+    //         parseFloat(element.preco) *
+    //         parseFloat(element.quantidade) *
+    //         parseFloat(fator);
+    // });
+    // return total;
 };
 
 export const calcMateriaisEmbalagemTotal = (matEmb) => {
     const total = 0;
-    matEmb.forEach(async (element) => {
-        total +=
-            (await parseFloat(element.preco)) * parseFloat(element.quantidade);
+    matEmb.forEach((element) => {
+        total += parseFloat(element.preco) * parseFloat(element.quantidade);
     });
     return total;
 };
 
 export const calcHonorarios = async (formaFarmaceutica, quantidade) => {
     const formasFarmaceuticas = await fetchFormasFarmaceuticas();
-    const total = 0;
-    const limite = +formasFarmaceuticas[formaFarmaceutica][0];
-    const fator = +formasFarmaceuticas[formaFarmaceutica][1];
-    const excesso = +formasFarmaceuticas[formaFarmaceutica][2];
-    if (quantidade <= limite) {
-        total = FATOR_F * fator;
-    } else {
-        const valorNormal = FATOR_F * fator;
-        const quantidadeExtra = +quantidade - limite;
-        const valorExtra = quantidadeExtra * FATOR_F * excesso;
-        total = valorNormal + valorExtra;
-    }
+    console.log(formasFarmaceuticas);
+    // const total = 0;
+    // const limite = +formasFarmaceuticas[formaFarmaceutica][0];
+    // const fator = +formasFarmaceuticas[formaFarmaceutica][1];
+    // const excesso = +formasFarmaceuticas[formaFarmaceutica][2];
+    // if (quantidade <= limite) {
+    //     total = FATOR_F * fator;
+    // } else {
+    //     const valorNormal = FATOR_F * fator;
+    //     const quantidadeExtra = +quantidade - limite;
+    //     const valorExtra = quantidadeExtra * FATOR_F * excesso;
+    //     total = valorNormal + valorExtra;
+    // }
 
-    return total;
+    // return total;
 };
 
 export const calcOrcamentoTotal = async (

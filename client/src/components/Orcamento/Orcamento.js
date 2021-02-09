@@ -18,6 +18,13 @@ import './Orcamento.css';
 const useStyles = makeStyles((theme) => ({
     formControl: {
         minWidth: 195
+    },
+
+    gridContainer: {
+        marginTop: '2rem'
+    },
+    textInput: {
+        width: '30%'
     }
 }));
 
@@ -45,76 +52,83 @@ const Orcamento = () => {
     };
 
     return (
-        <div>
-            <Grid container direction={'column'} spacing={1}>
-                <Grid item>
-                    <Typography variant="h4">Orçamento</Typography>
-                </Grid>
-                <Grid item>
-                    <TextField
-                        id="standard-basic"
-                        label="Nome"
-                        onChange={(e) => setNomeOrcamento(e.target.value)}
-                    />
-                </Grid>
-                <Grid item>
-                    <FormControl className={classes.formControl}>
-                        <InputLabel id="forma-farmaceutica-select-label">
-                            Forma farmacêutica
-                        </InputLabel>
-                        <Select
-                            labelId="forma-farmaceutica-select-label"
-                            id="forma-farmaceutica-select"
-                            open={open}
-                            onClose={handleClose}
-                            onOpen={handleOpen}
-                            value={formaFarmaceutica}
-                            onChange={handleChange}
-                        >
-                            {Object.keys(FORMAS_FARMACEUTICAS).map(
-                                (formaFarmaceutica) => {
-                                    return (
-                                        <MenuItem
-                                            value={formaFarmaceutica}
-                                            key={formaFarmaceutica}
-                                        >
-                                            {formaFarmaceutica}
-                                        </MenuItem>
-                                    );
-                                }
-                            )}
-                        </Select>
-                    </FormControl>
-                </Grid>
-                <Grid item>
-                    <TextField
-                        id="standard-basic"
-                        label="Quantidade"
-                        onChange={(e) => setQuantidade(e.target.value)}
-                    />
-                </Grid>
-                <Grid item>
-                    <MateriasPrimas
-                        materiasPrimas={materiasPrimas}
-                        setMateriasPrimas={setMateriasPrimas}
-                    />
-                </Grid>
-                <Grid item>
-                    <MateriaisEmbalagem
-                        materiaisEmbalagem={materiaisEmbalagem}
-                        setMateriaisEmbalagem={setMateriaisEmbalagem}
-                    />
-                </Grid>
-                <Grid item>
-                    <Calculos
-                        formaFarmaceutica={formaFarmaceutica}
-                        materiasPrimas={materiasPrimas}
-                        materiaisEmbalagem={materiaisEmbalagem}
-                        quantidade={quantidade}
-                    />
-                </Grid>
+        <Grid
+            className={classes.gridContainer}
+            container
+            direction={'column'}
+            spacing={1}
+        >
+            <Grid item>
+                <Typography variant="h4">Orçamento</Typography>
             </Grid>
-        </div>
+            <Grid item>
+                <TextField
+                    id="standard-basic"
+                    label="Nome"
+                    onChange={(e) => setNomeOrcamento(e.target.value)}
+                    className={classes.textInput}
+                />
+            </Grid>
+            <Grid item>
+                <FormControl
+                    className={(classes.formControl, classes.textInput)}
+                >
+                    <InputLabel id="forma-farmaceutica-select-label">
+                        Forma farmacêutica
+                    </InputLabel>
+                    <Select
+                        labelId="forma-farmaceutica-select-label"
+                        id="forma-farmaceutica-select"
+                        open={open}
+                        onClose={handleClose}
+                        onOpen={handleOpen}
+                        value={formaFarmaceutica}
+                        onChange={handleChange}
+                    >
+                        {Object.keys(FORMAS_FARMACEUTICAS).map(
+                            (formaFarmaceutica) => {
+                                return (
+                                    <MenuItem
+                                        value={formaFarmaceutica}
+                                        key={formaFarmaceutica}
+                                    >
+                                        {formaFarmaceutica}
+                                    </MenuItem>
+                                );
+                            }
+                        )}
+                    </Select>
+                </FormControl>
+            </Grid>
+            <Grid item>
+                <TextField
+                    id="standard-basic"
+                    label="Quantidade"
+                    onChange={(e) => setQuantidade(e.target.value)}
+                    className={classes.textInput}
+                />
+            </Grid>
+            <Grid item className={classes.gridContainer}>
+                <MateriasPrimas
+                    materiasPrimas={materiasPrimas}
+                    setMateriasPrimas={setMateriasPrimas}
+                />
+            </Grid>
+            <Grid item className={classes.gridContainer}>
+                <MateriaisEmbalagem
+                    materiaisEmbalagem={materiaisEmbalagem}
+                    setMateriaisEmbalagem={setMateriaisEmbalagem}
+                />
+            </Grid>
+            <Grid item className={classes.gridContainer}>
+                <Calculos
+                    formaFarmaceutica={formaFarmaceutica}
+                    materiasPrimas={materiasPrimas}
+                    materiaisEmbalagem={materiaisEmbalagem}
+                    quantidade={quantidade}
+                />
+            </Grid>
+        </Grid>
     );
 };
 

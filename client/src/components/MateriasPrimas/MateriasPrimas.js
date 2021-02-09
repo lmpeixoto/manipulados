@@ -10,13 +10,37 @@ import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 import FATORES from '../../data/fatores.json';
 import './MateriasPrimas.css';
 
 const useStyles = makeStyles((theme) => ({
+    iconButton: {
+        margin: 0
+    },
+    button: {
+        marginTop: '1rem'
+    },
     formControl: {
         minWidth: 195
+    },
+    textInput: {
+        width: '30%'
+    },
+    cardsContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap'
+    },
+    cards: {
+        margin: '1rem 0.5rem',
+        width: '150px'
+    },
+    cardsIcons: {
+        float: 'right'
     }
 }));
 
@@ -70,6 +94,14 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
         });
     };
 
+    const removeItem = (event) => {
+        console.log(event.target);
+    };
+
+    const editItem = (event) => {
+        console.log(event.target);
+    };
+
     return (
         <>
             <div
@@ -86,6 +118,7 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
                             name="nome"
                             label="Nome"
                             value={materiaPrima.nome}
+                            className={classes.textInput}
                             required
                         />
                     </Grid>
@@ -95,6 +128,7 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
                             name="preco"
                             label="Preço"
                             value={materiaPrima.preco}
+                            className={classes.textInput}
                             required
                         />
                     </Grid>
@@ -104,11 +138,14 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
                             name="quantidade"
                             label="Quantidade"
                             value={materiaPrima.quantidade}
+                            className={classes.textInput}
                             required
                         />
                     </Grid>
                     <Grid item>
-                        <FormControl className={classes.formControl}>
+                        <FormControl
+                            className={(classes.formControl, classes.textInput)}
+                        >
                             <InputLabel id="fator-select-label">
                                 Unidade
                             </InputLabel>
@@ -133,7 +170,7 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item>
+                    <Grid item className={classes.button}>
                         <Button
                             variant="contained"
                             color="primary"
@@ -146,10 +183,10 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
                 </Grid>
             </div>
 
-            <div className="materias-primas-summary">
+            <div className={classes.cardsContainer}>
                 {materiasPrimas.map((matPrim) => {
                     return (
-                        <Card>
+                        <Card className={classes.cards}>
                             <CardContent>
                                 <Typography color="textSecondary" gutterBottom>
                                     <span>Nome:</span> {matPrim.nome}
@@ -163,6 +200,24 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
                                 <Typography variant="body2" component="p">
                                     <span>Fator:</span> {matPrim.fator}
                                 </Typography>
+                                <div className={classes.cardsIcons}>
+                                    <IconButton
+                                        className={classes.iconButton}
+                                        aria-label="edit"
+                                        color="primary"
+                                        onClick={removeItem}
+                                    >
+                                        <EditIcon />
+                                    </IconButton>
+                                    <IconButton
+                                        className={classes.iconButton}
+                                        aria-label="delete"
+                                        color="secondary"
+                                        onClick={editItem}
+                                    >
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </div>
                             </CardContent>
                         </Card>
                     );

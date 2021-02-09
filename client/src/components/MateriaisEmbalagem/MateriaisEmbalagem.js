@@ -5,11 +5,36 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import nextId from 'react-id-generator';
+import { makeStyles } from '@material-ui/core/styles';
 
 import './MateriaisEmbalagem.css';
 
+const useStyles = makeStyles((theme) => ({
+    button: {
+        marginTop: '1rem'
+    },
+    formControl: {
+        minWidth: 195
+    },
+    textInput: {
+        width: '30%'
+    },
+    cardsContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap'
+    },
+    cards: {
+        margin: '1rem 0.5rem',
+        width: '200px'
+    }
+}));
+
 const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
+    const classes = useStyles();
     const [materialEmbalagem, setMaterialEmbalagem] = useState({
+        id: '',
         nome: '',
         preco: '',
         quantidade: ''
@@ -17,6 +42,7 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
 
     const resetMateriaisEmbalagemValues = () => {
         setMaterialEmbalagem({
+            id: '',
             nome: '',
             preco: '',
             quantidade: ''
@@ -33,7 +59,11 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
 
     const handleMateriaisEmbalagemAdd = (event) => {
         event.preventDefault();
-        setMateriaisEmbalagem([...materiaisEmbalagem, materialEmbalagem]);
+        const newId = nextId();
+        setMateriaisEmbalagem([
+            ...materiaisEmbalagem,
+            { ...materialEmbalagem, id: newId }
+        ]);
         resetMateriaisEmbalagemValues();
     };
 
@@ -55,6 +85,7 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
                             name="nome"
                             label="Nome"
                             value={materialEmbalagem.nome}
+                            className={classes.textInput}
                             required
                         />
                     </Grid>
@@ -64,6 +95,7 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
                             name="preco"
                             label="Preço"
                             value={materialEmbalagem.preco}
+                            className={classes.textInput}
                             required
                         />
                     </Grid>
@@ -73,10 +105,11 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
                             name="quantidade"
                             label="Quantidade"
                             value={materialEmbalagem.quantidade}
+                            className={classes.textInput}
                             required
                         />
                     </Grid>
-                    <Grid item>
+                    <Grid item className={classes.button}>
                         <Button
                             variant="contained"
                             color="primary"
@@ -88,10 +121,10 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
                     </Grid>
                 </Grid>
             </div>
-            <div className="materiais-embalagem-summary">
+            <div className={classes.cardsContainer}>
                 {materiaisEmbalagem.map((matEmb) => {
                     return (
-                        <Card>
+                        <Card id={matEmb.id} className={classes.cards}>
                             <CardContent>
                                 <Typography color="textSecondary" gutterBottom>
                                     <span>Nome:</span> {matEmb.nome}
