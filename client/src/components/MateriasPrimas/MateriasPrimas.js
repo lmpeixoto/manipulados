@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import nextId from 'react-id-generator';
 
 import FATORES from '../../data/fatores.json';
 import './MateriasPrimas.css';
@@ -49,6 +50,7 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
 
     const [open, setOpen] = useState(false);
     const [materiaPrima, setMateriaPrima] = useState({
+        id: '',
         nome: '',
         preco: '',
         quantidade: '',
@@ -57,6 +59,7 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
 
     const resetMateriaPrimaValues = () => {
         setMateriaPrima({
+            id: '',
             nome: '',
             preco: '',
             quantidade: '',
@@ -81,8 +84,10 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
     };
 
     const handleMateriaPrimaAdd = (event) => {
-        event.preventDefault();
-        setMateriasPrimas([...materiasPrimas, materiaPrima]);
+        setMateriasPrimas([
+            ...materiasPrimas,
+            { ...materiaPrima, id: nextId() }
+        ]);
         resetMateriaPrimaValues();
     };
 
@@ -94,12 +99,15 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
         });
     };
 
-    const removeItem = (event) => {
-        console.log(event.target);
+    const removeItem = (i) => {
+        const matPrims = materiasPrimas.filter((element) => element.id !== i);
+        setMateriasPrimas(matPrims);
     };
 
-    const editItem = (event) => {
-        console.log(event.target);
+    const editItem = (i) => {
+        const matPrim = materiasPrimas.filter((element) => element.id === i);
+        console.log(matPrim);
+        setMateriaPrima(matPrim);
     };
 
     return (
@@ -186,7 +194,7 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
             <div className={classes.cardsContainer}>
                 {materiasPrimas.map((matPrim) => {
                     return (
-                        <Card className={classes.cards}>
+                        <Card className={classes.cards} key={matPrim.id}>
                             <CardContent>
                                 <Typography color="textSecondary" gutterBottom>
                                     <span>Nome:</span> {matPrim.nome}
@@ -205,7 +213,7 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
                                         className={classes.iconButton}
                                         aria-label="edit"
                                         color="primary"
-                                        onClick={removeItem}
+                                        onClick={() => editItem(matPrim.id)}
                                     >
                                         <EditIcon />
                                     </IconButton>
@@ -213,7 +221,7 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
                                         className={classes.iconButton}
                                         aria-label="delete"
                                         color="secondary"
-                                        onClick={editItem}
+                                        onClick={() => removeItem(matPrim.id)}
                                     >
                                         <DeleteIcon />
                                     </IconButton>
