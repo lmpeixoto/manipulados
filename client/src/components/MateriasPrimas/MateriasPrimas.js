@@ -41,7 +41,8 @@ const useStyles = makeStyles((theme) => ({
         width: '150px'
     },
     cardsIcons: {
-        float: 'right'
+        display: 'flex',
+        justifyContent: 'flex-end'
     }
 }));
 
@@ -49,6 +50,7 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
     const classes = useStyles();
 
     const [open, setOpen] = useState(false);
+    const [editForm, setEditForm] = useState(false);
     const [materiaPrima, setMateriaPrima] = useState({
         id: '',
         nome: '',
@@ -83,7 +85,7 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
         setOpen(true);
     };
 
-    const handleMateriaPrimaAdd = (event) => {
+    const handleMateriaPrimaAdd = () => {
         setMateriasPrimas([
             ...materiasPrimas,
             { ...materiaPrima, id: nextId() }
@@ -99,15 +101,24 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
         });
     };
 
-    const removeItem = (i) => {
+    const handleRemoveItem = (i) => {
         const matPrims = materiasPrimas.filter((element) => element.id !== i);
         setMateriasPrimas(matPrims);
     };
 
-    const editItem = (i) => {
-        const matPrim = materiasPrimas.filter((element) => element.id === i);
-        console.log(matPrim);
+    const handleEditItem = (i) => {
+        const [matPrim] = materiasPrimas.filter((element) => element.id === i);
         setMateriaPrima(matPrim);
+        setEditForm(true);
+    };
+
+    const handleEditSave = () => {
+        const newMateriasPrimas = materiasPrimas.filter(
+            (element) => element.id !== materiaPrima.id
+        );
+        setMateriasPrimas([...newMateriasPrimas, materiaPrima]);
+        setEditForm(false);
+        resetMateriaPrimaValues();
     };
 
     return (
@@ -179,14 +190,24 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
                         </FormControl>
                     </Grid>
                     <Grid item className={classes.button}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            size="small"
-                            onClick={handleMateriaPrimaAdd}
-                        >
-                            Adicionar
-                        </Button>
+                        {editForm ? (
+                            <Button
+                                variant="contained"
+                                size="small"
+                                onClick={handleEditSave}
+                            >
+                                Guardar
+                            </Button>
+                        ) : (
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                size="small"
+                                onClick={handleMateriaPrimaAdd}
+                            >
+                                Adicionar
+                            </Button>
+                        )}
                     </Grid>
                 </Grid>
             </div>
@@ -208,25 +229,25 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
                                 <Typography variant="body2" component="p">
                                     <span>Fator:</span> {matPrim.fator}
                                 </Typography>
-                                <div className={classes.cardsIcons}>
-                                    <IconButton
-                                        className={classes.iconButton}
-                                        aria-label="edit"
-                                        color="primary"
-                                        onClick={() => editItem(matPrim.id)}
-                                    >
-                                        <EditIcon />
-                                    </IconButton>
-                                    <IconButton
-                                        className={classes.iconButton}
-                                        aria-label="delete"
-                                        color="secondary"
-                                        onClick={() => removeItem(matPrim.id)}
-                                    >
-                                        <DeleteIcon />
-                                    </IconButton>
-                                </div>
                             </CardContent>
+                            <div className={classes.cardsIcons}>
+                                <IconButton
+                                    className={classes.iconButton}
+                                    aria-label="edit"
+                                    color="primary"
+                                    onClick={() => handleEditItem(matPrim.id)}
+                                >
+                                    <EditIcon />
+                                </IconButton>
+                                <IconButton
+                                    className={classes.iconButton}
+                                    aria-label="delete"
+                                    color="secondary"
+                                    onClick={() => handleRemoveItem(matPrim.id)}
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
+                            </div>
                         </Card>
                     );
                 })}
