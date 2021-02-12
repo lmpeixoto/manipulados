@@ -7,10 +7,16 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import nextId from 'react-id-generator';
 import { makeStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 import './MateriaisEmbalagem.css';
 
 const useStyles = makeStyles((theme) => ({
+    iconButton: {
+        margin: 0
+    },
     button: {
         marginTop: '1rem'
     },
@@ -27,12 +33,18 @@ const useStyles = makeStyles((theme) => ({
     },
     cards: {
         margin: '1rem 0.5rem',
-        width: '200px'
+        width: '150px'
+    },
+    cardsIcons: {
+        display: 'flex',
+        justifyContent: 'flex-end'
     }
 }));
 
 const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
     const classes = useStyles();
+
+    const [editForm, setEditForm] = useState(false);
     const [materialEmbalagem, setMaterialEmbalagem] = useState({
         id: '',
         nome: '',
@@ -57,13 +69,35 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
         });
     };
 
-    const handleMateriaisEmbalagemAdd = (event) => {
-        event.preventDefault();
-        const newId = nextId();
+    const handleMateriaisEmbalagemAdd = () => {
         setMateriaisEmbalagem([
             ...materiaisEmbalagem,
-            { ...materialEmbalagem, id: newId }
+            { ...materialEmbalagem, id: nextId() }
         ]);
+        resetMateriaisEmbalagemValues();
+    };
+
+    const handleRemoveItem = (i) => {
+        const matEmbs = materiaisEmbalagem.filter(
+            (element) => element.id !== i
+        );
+        setMateriaisEmbalagem(matEmbs);
+    };
+
+    const handleEditItem = (i) => {
+        const [matEmb] = materiaisEmbalagem.filter(
+            (element) => element.id === i
+        );
+        setMaterialEmbalagem(matEmb);
+        setEditForm(true);
+    };
+
+    const handleEditSave = () => {
+        const newMateriaisEmbalagem = materiaisEmbalagem.filter(
+            (element) => element.id !== materialEmbalagem.id
+        );
+        setMateriaisEmbalagem([...newMateriaisEmbalagem, materialEmbalagem]);
+        setEditForm(false);
         resetMateriaisEmbalagemValues();
     };
 
@@ -110,21 +144,31 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
                         />
                     </Grid>
                     <Grid item className={classes.button}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            size="small"
-                            onClick={handleMateriaisEmbalagemAdd}
-                        >
-                            Adicionar
-                        </Button>
+                        {editForm ? (
+                            <Button
+                                variant="contained"
+                                size="small"
+                                onClick={handleEditSave}
+                            >
+                                Guardar
+                            </Button>
+                        ) : (
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                size="small"
+                                onClick={handleMateriaisEmbalagemAdd}
+                            >
+                                Adicionar
+                            </Button>
+                        )}
                     </Grid>
                 </Grid>
             </div>
             <div className={classes.cardsContainer}>
                 {materiaisEmbalagem.map((matEmb) => {
                     return (
-                        <Card id={matEmb.id} className={classes.cards}>
+                        <Card className={classes.cards} key={matEmb.id}>
                             <CardContent>
                                 <Typography color="textSecondary" gutterBottom>
                                     <span>Nome:</span> {matEmb.nome}
@@ -136,6 +180,24 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
                                     <span>Qt.:</span> {matEmb.quantidade}
                                 </Typography>
                             </CardContent>
+                            <div className={classes.cardsIcons}>
+                                <IconButton
+                                    className={classes.iconButton}
+                                    aria-label="edit"
+                                    color="primary"
+                                    onClick={() => handleEditItem(matEmb.id)}
+                                >
+                                    <EditIcon />
+                                </IconButton>
+                                <IconButton
+                                    className={classes.iconButton}
+                                    aria-label="delete"
+                                    color="secondary"
+                                    onClick={() => handleRemoveItem(matEmb.id)}
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
+                            </div>
                         </Card>
                     );
                 })}
