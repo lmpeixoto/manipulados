@@ -23,6 +23,7 @@ export const calcMateriasPrimasTotal = (matPrimas, fatores) => {
             parseFloat(element.quantidade) *
             parseFloat(fator);
     });
+    total = parseFloat(total.toFixed(2));
     return total;
 };
 
@@ -31,6 +32,7 @@ export const calcMateriaisEmbalagemTotal = (matEmb) => {
     matEmb.forEach((element) => {
         total += parseFloat(element.preco) * parseFloat(element.quantidade);
     });
+    total = parseFloat(total.toFixed(2));
     return total;
 };
 
@@ -51,7 +53,7 @@ export const calcHonorarios = async (
         let valorExtra = quantidadeExtra * FATOR_F * excesso;
         total = valorNormal + valorExtra;
     }
-    console.log(total);
+    total = parseFloat(total.toFixed(2));
     return total;
 };
 
@@ -65,5 +67,7 @@ export const calcOrcamentoTotal = (
     let total = +incidenciaIVA + IVA;
     console.log(total);
     console.log(IVA);
+    total = parseFloat(total.toFixed(2));
+    IVA = parseFloat(IVA.toFixed(2));
     return [total, IVA];
 };

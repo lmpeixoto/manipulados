@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import './Calculos.css';
 import {
     fetchFatores,
     fetchFormasFarmaceuticas,
@@ -74,17 +75,17 @@ const Calculos = ({
 
     return (
         <div>
-            CALCULOS
-            {loading && <p>Loading...</p>}
+            Preço:
+            {loading && <p>Em carregamento...</p>}
             {formaFarmaceutica &&
             materiasPrimas &&
             materiaisEmbalagem &&
             quantidade ? (
-                <div>
-                    <h1>Total:</h1>
-                    <p>{totais[0]}</p>
-                    <h1>IVA:</h1>
-                    <p>{totais[1]}</p>
+                <div className={'precoTotaisContainer'}>
+                    <h5>Total:</h5>
+                    <span>{totais[0]} €</span>
+                    <h5>IVA:</h5>
+                    <span>{totais[1]} €</span>
                 </div>
             ) : null}
         </div>
