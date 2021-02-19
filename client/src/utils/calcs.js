@@ -1,6 +1,7 @@
 const URL_FATORES = 'http://localhost:5000/fatores';
 const URL_FORMAS_FARMACEUTICAS = 'http://localhost:5000/formasFarmaceuticas';
-const FATOR_F = 5.03;
+
+export const FATOR_F = 5.03;
 
 export const fetchFatores = async () => {
     const fatoresResponse = await fetch(URL_FATORES);

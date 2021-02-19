@@ -14,6 +14,7 @@ import MateriaisEmbalagem from '../MateriaisEmbalagem/MateriaisEmbalagem';
 import Calculos from './Calculos/Calculos';
 
 import './Orcamento.css';
+import { FATOR_F } from '../../utils/calcs';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -34,9 +35,17 @@ const Orcamento = () => {
     const [nomeOrcamento, setNomeOrcamento] = React.useState('');
     const [quantidade, setQuantidade] = React.useState('');
     const [formaFarmaceutica, setFormaFarmaceutica] = React.useState('');
+    const [formaFarmaceuticaPreco, setFormaFarmaceuticaPreco] = React.useState(
+        ''
+    );
     const [materiasPrimas, setMateriasPrimas] = React.useState([]);
+    const [materiasPrimasPreco, setMateriasPrimasPreco] = React.useState('');
     const [materiaisEmbalagem, setMateriaisEmbalagem] = React.useState([]);
-    const [preco, setPreco] = React.useState({});
+    const [
+        materiaisEmbalagemPreco,
+        setMateriaisEmbalagemPreco
+    ] = React.useState('');
+    const [totais, setTotais] = React.useState([]);
     const [open, setOpen] = React.useState(false);
 
     const handleChange = (event) => {
@@ -49,6 +58,32 @@ const Orcamento = () => {
 
     const handleOpen = () => {
         setOpen(true);
+    };
+
+    const handleSaveButton = () => {
+        let databody = {
+            fatorF: FATOR_F,
+            fFarmPreco: formaFarmaceuticaPreco,
+            nomeManipulado: nomeOrcamento,
+            fFarmNome: formaFarmaceutica,
+            fFarmQtd: quantidade,
+            materiasPrimas: materiasPrimas,
+            materiasPrimasPrice: materiasPrimasPreco,
+            materiaisEmbalagem: materiaisEmbalagem,
+            materiaisEmbalagemPrice: materiaisEmbalagemPreco,
+            IVA: totais[1],
+            totalPrice: totais[0]
+        };
+
+        fetch('http://localhost:5000/orcamentos/novo', {
+            method: 'POST',
+            body: JSON.stringify(databody),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => res.json())
+            .then((data) => console.log(data));
     };
 
     return (
@@ -123,9 +158,19 @@ const Orcamento = () => {
             <Grid item className={classes.gridContainer}>
                 <Calculos
                     formaFarmaceutica={formaFarmaceutica}
+                    formaFarmaceuticaPreco={formaFarmaceuticaPreco}
+                    setFormaFarmaceuticaPreco={setFormaFarmaceuticaPreco}
                     materiasPrimas={materiasPrimas}
+                    materiasPrimasPreco={materiasPrimasPreco}
+                    setMateriasPrimasPreco={setMateriasPrimasPreco}
                     materiaisEmbalagem={materiaisEmbalagem}
+                    materiaisEmbalagemPreco={materiaisEmbalagemPreco}
+                    setMateriaisEmbalagemPreco={setMateriaisEmbalagemPreco}
                     quantidade={quantidade}
+                    nomeOrcamento={nomeOrcamento}
+                    handleSaveButton={handleSaveButton}
+                    totais={totais}
+                    setTotais={setTotais}
                 />
             </Grid>
         </Grid>

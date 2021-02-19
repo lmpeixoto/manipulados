@@ -40,6 +40,7 @@ exports.getOrcamento = async (req, res, next) => {
 
 exports.postOrcamento = async (req, res, next) => {
     const { errors } = validationResult(req);
+    console.log(req.body);
     let orcamento = new Orcamento(
         req.body.nomeManipulado,
         req.body.fFarmNome,
