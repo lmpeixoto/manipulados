@@ -48,16 +48,20 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
     const [materialEmbalagem, setMaterialEmbalagem] = useState({
         id: '',
         nome: '',
+        capacidade: '',
         preco: '',
-        quantidade: ''
+        quantidade: '',
+        valor: ''
     });
 
     const resetMateriaisEmbalagemValues = () => {
         setMaterialEmbalagem({
             id: '',
             nome: '',
+            capacidade: '',
             preco: '',
-            quantidade: ''
+            quantidade: '',
+            valor: ''
         });
     };
 
@@ -72,7 +76,7 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
     const handleMateriaisEmbalagemAdd = () => {
         setMateriaisEmbalagem([
             ...materiaisEmbalagem,
-            { ...materialEmbalagem, id: nextId() }
+            { ...materialEmbalagem, id: nextId(), valor: calculateValor() }
         ]);
         resetMateriaisEmbalagemValues();
     };
@@ -90,6 +94,13 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
         );
         setMaterialEmbalagem(matEmb);
         setEditForm(true);
+    };
+
+    const calculateValor = () => {
+        const valor = parseFloat(
+            materialEmbalagem.preco * materialEmbalagem.quantidade
+        ).toFixed(2);
+        return valor;
     };
 
     const handleEditSave = () => {
@@ -119,6 +130,16 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
                             name="nome"
                             label="Nome"
                             value={materialEmbalagem.nome}
+                            className={classes.textInput}
+                            required
+                        />
+                    </Grid>
+                    <Grid item>
+                        <TextField
+                            id="capacidade"
+                            name="capacidade"
+                            label="Capacidade"
+                            value={materialEmbalagem.capacidade}
                             className={classes.textInput}
                             required
                         />
@@ -173,11 +194,17 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
                                 <Typography color="textSecondary" gutterBottom>
                                     <span>Nome:</span> {matEmb.nome}
                                 </Typography>
+                                <Typography color="textSecondary">
+                                    <span>Capacidade:</span> {matEmb.capacidade}
+                                </Typography>
                                 <Typography variant="h5" component="h2">
                                     <span>Preço:</span> {matEmb.preco}
                                 </Typography>
                                 <Typography color="textSecondary">
                                     <span>Qt.:</span> {matEmb.quantidade}
+                                </Typography>
+                                <Typography color="textSecondary">
+                                    <span>Valor:</span> {matEmb.valor}
                                 </Typography>
                             </CardContent>
                             <div className={classes.cardsIcons}>

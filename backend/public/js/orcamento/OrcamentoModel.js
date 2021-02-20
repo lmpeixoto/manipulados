@@ -18,7 +18,7 @@ export const OrcamentoModel = (function () {
             fatorF: fatorF,
             fFarmNome: formaFarmaceutica.nome,
             fFarmQtd: formaFarmaceutica.qtd,
-            fFarmPreco: formaFarmaceutica.preco,
+            fFarmPrice: formaFarmaceutica.preco,
             materiasPrimas: MatPrimaCtrl.getMatPrimas(),
             materiasPrimasPrice: matPrimasPrice,
             materiaisEmbalagem: MatEmbCtrl.getMatEmb(),

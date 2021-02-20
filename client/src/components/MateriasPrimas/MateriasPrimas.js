@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
+const MateriasPrimas = ({ fatores, materiasPrimas, setMateriasPrimas }) => {
     const classes = useStyles();
 
     const [open, setOpen] = useState(false);
@@ -56,7 +56,8 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
         nome: '',
         preco: '',
         quantidade: '',
-        fator: ''
+        fator: '',
+        valor: ''
     });
 
     const resetMateriaPrimaValues = () => {
@@ -65,7 +66,8 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
             nome: '',
             preco: '',
             quantidade: '',
-            fator: ''
+            fator: '',
+            valor: ''
         });
     };
 
@@ -88,7 +90,7 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
     const handleMateriaPrimaAdd = () => {
         setMateriasPrimas([
             ...materiasPrimas,
-            { ...materiaPrima, id: nextId() }
+            { ...materiaPrima, id: nextId(), valor: calculateValor() }
         ]);
         resetMateriaPrimaValues();
     };
@@ -119,6 +121,13 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
         setMateriasPrimas([...newMateriasPrimas, materiaPrima]);
         setEditForm(false);
         resetMateriaPrimaValues();
+    };
+
+    const calculateValor = () => {
+        const valor = parseFloat(
+            materiaPrima.preco * materiaPrima.quantidade
+        ).toFixed(2);
+        return valor;
     };
 
     return (
@@ -228,6 +237,9 @@ const MateriasPrimas = ({ materiasPrimas, setMateriasPrimas }) => {
                                 </Typography>
                                 <Typography variant="body2" component="p">
                                     <span>Fator:</span> {matPrim.fator}
+                                </Typography>
+                                <Typography variant="body2" component="p">
+                                    <span>Valor:</span> {matPrim.valor}
                                 </Typography>
                             </CardContent>
                             <div className={classes.cardsIcons}>

@@ -4,22 +4,25 @@ const MateriaPrima = require('./materiaPrima');
 const MaterialEmbalagem = require('./materialEmbalagem');
 
 const matPrimReader = (matPrimArray) => {
+    console.log(matPrimArray);
     let materiasPrimas = [];
-    matPrimArray.forEach((matPrim) => {
+    for (matPrim of matPrimArray) {
         materiasPrimas.push(
             new MateriaPrima(
                 matPrim.id,
                 matPrim.nome,
                 matPrim.preco,
                 matPrim.qtd,
-                matPrim.fator
+                matPrim.fator,
+                matPrim.valor
             )
         );
-    });
+    }
     return materiasPrimas;
 };
 
 const matEmbReader = (matEmbArray) => {
+    console.log(matEmbArray);
     let materiaisEmbalagem = [];
     matEmbArray.forEach((matEmb) => {
         materiaisEmbalagem.push(
@@ -28,7 +31,8 @@ const matEmbReader = (matEmbArray) => {
                 matEmb.nome,
                 matEmb.capacidade,
                 matEmb.preco,
-                matEmb.qtd
+                matEmb.qtd,
+                matEmb.valor
             )
         );
     });

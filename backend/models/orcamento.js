@@ -15,7 +15,8 @@ const Orcamento = new Schema(
                 nome: { type: String, required: true },
                 preco: { type: Number, required: true },
                 qtd: { type: Number, required: true },
-                fator: { type: String, required: true }
+                fator: { type: String, required: true },
+                valor: { type: Number, required: true }
             }
         ],
         materiasPrimasPrice: { type: Number, required: true },
@@ -25,7 +26,8 @@ const Orcamento = new Schema(
                 nome: { type: String, required: true },
                 capacidade: { type: String, required: true },
                 preco: { type: Number, required: true },
-                qtd: { type: Number, required: true }
+                qtd: { type: Number, required: true },
+                valor: { type: Number, required: true }
             }
         ],
         materiaisEmbalagemPrice: { type: Number, required: true },

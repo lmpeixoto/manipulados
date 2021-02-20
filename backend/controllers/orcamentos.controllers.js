@@ -43,9 +43,9 @@ exports.postOrcamento = async (req, res, next) => {
     console.log(req.body);
     let orcamento = new Orcamento(
         req.body.nomeManipulado,
+        req.body.fatorF,
         req.body.fFarmNome,
         req.body.fFarmQtd,
-        req.body.materiasPrimas,
         req.body.materiaisEmbalagem
     );
     orcamento = calcularTotaisOjecto(orcamento);

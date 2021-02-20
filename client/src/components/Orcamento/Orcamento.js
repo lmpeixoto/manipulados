@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -14,7 +14,11 @@ import MateriaisEmbalagem from '../MateriaisEmbalagem/MateriaisEmbalagem';
 import Calculos from './Calculos/Calculos';
 
 import './Orcamento.css';
-import { FATOR_F } from '../../utils/calcs';
+import {
+    FATOR_F,
+    fetchFatores,
+    fetchFormasFarmaceuticas
+} from '../../utils/calcs';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -32,21 +36,31 @@ const useStyles = makeStyles((theme) => ({
 const Orcamento = () => {
     const classes = useStyles();
 
-    const [nomeOrcamento, setNomeOrcamento] = React.useState('');
-    const [quantidade, setQuantidade] = React.useState('');
-    const [formaFarmaceutica, setFormaFarmaceutica] = React.useState('');
-    const [formaFarmaceuticaPreco, setFormaFarmaceuticaPreco] = React.useState(
-        ''
-    );
-    const [materiasPrimas, setMateriasPrimas] = React.useState([]);
-    const [materiasPrimasPreco, setMateriasPrimasPreco] = React.useState('');
-    const [materiaisEmbalagem, setMateriaisEmbalagem] = React.useState([]);
-    const [
-        materiaisEmbalagemPreco,
-        setMateriaisEmbalagemPreco
-    ] = React.useState('');
-    const [totais, setTotais] = React.useState([]);
-    const [open, setOpen] = React.useState(false);
+    useEffect(() => {
+        const fetchData = async () => {
+            const fatoresData = await fetchFatores();
+            setFatores(fatoresData);
+            const formasFarmaceuticasData = await fetchFormasFarmaceuticas();
+            setFormasFarmaceuticas(formasFarmaceuticasData);
+        };
+
+        fetchData();
+        setLoading(false);
+    }, []);
+
+    const [nomeOrcamento, setNomeOrcamento] = useState('');
+    const [quantidade, setQuantidade] = useState('');
+    const [formaFarmaceutica, setFormaFarmaceutica] = useState('');
+    const [formaFarmaceuticaPreco, setFormaFarmaceuticaPreco] = useState('');
+    const [materiasPrimas, setMateriasPrimas] = useState([]);
+    const [materiasPrimasPreco, setMateriasPrimasPreco] = useState('');
+    const [materiaisEmbalagem, setMateriaisEmbalagem] = useState([]);
+    const [materiaisEmbalagemPreco, setMateriaisEmbalagemPreco] = useState('');
+    const [totais, setTotais] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [fatores, setFatores] = useState({});
+    const [formasFarmaceuticas, setFormasFarmaceuticas] = useState({});
+    const [loading, setLoading] = useState(true);
 
     const handleChange = (event) => {
         setFormaFarmaceutica(event.target.value);
@@ -63,7 +77,7 @@ const Orcamento = () => {
     const handleSaveButton = () => {
         let databody = {
             fatorF: FATOR_F,
-            fFarmPreco: formaFarmaceuticaPreco,
+            fFarmPrice: formaFarmaceuticaPreco,
             nomeManipulado: nomeOrcamento,
             fFarmNome: formaFarmaceutica,
             fFarmQtd: quantidade,
@@ -145,6 +159,7 @@ const Orcamento = () => {
             </Grid>
             <Grid item className={classes.gridContainer}>
                 <MateriasPrimas
+                    fatores={fatores}
                     materiasPrimas={materiasPrimas}
                     setMateriasPrimas={setMateriasPrimas}
                 />
@@ -157,6 +172,12 @@ const Orcamento = () => {
             </Grid>
             <Grid item className={classes.gridContainer}>
                 <Calculos
+                    fatores={fatores}
+                    setFatores={setFatores}
+                    formasFarmaceuticas={formasFarmaceuticas}
+                    setFormasFarmaceuticas={setFormasFarmaceuticas}
+                    loading={loading}
+                    setLoading={setLoading}
                     formaFarmaceutica={formaFarmaceutica}
                     formaFarmaceuticaPreco={formaFarmaceuticaPreco}
                     setFormaFarmaceuticaPreco={setFormaFarmaceuticaPreco}

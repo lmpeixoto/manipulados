@@ -8,15 +8,15 @@ class MaterialEmbalagem {
         this.valor;
     }
 
-    calculateMatPrimaPrice() {
-        return +(this.preco * this.qtd * fct[this.fator][1]).toFixed(2);
+    calculateMatEmbPrice() {
+        return +(this.preco * this.qtd).toFixed(2);
     }
 
-    setMatPrimaValor(valor) {
+    setMatEmbValor(valor) {
         this.valor = valor;
     }
 
-    getMatPrimaValor() {
+    getMatEmbValor() {
         return this.valor;
     }
 }

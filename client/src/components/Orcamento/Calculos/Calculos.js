@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
@@ -9,8 +9,6 @@ import SaveIcon from '@material-ui/icons/Save';
 
 import './Calculos.css';
 import {
-    fetchFatores,
-    fetchFormasFarmaceuticas,
     calcHonorarios,
     calcMateriasPrimasTotal,
     calcMateriaisEmbalagemTotal,
@@ -46,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Calculos = ({
+    formasFarmaceuticas,
+    fatores,
+    loading,
     formaFarmaceutica,
     setFormaFarmaceuticaPreco,
     materiasPrimas,
@@ -57,22 +58,6 @@ const Calculos = ({
     totais,
     setTotais
 }) => {
-    const [fatores, setFatores] = useState({});
-    const [formasFarmaceuticas, setFormasFarmaceuticas] = useState({});
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const fatoresData = await fetchFatores();
-            setFatores(fatoresData);
-            const formasFarmaceuticasData = await fetchFormasFarmaceuticas();
-            setFormasFarmaceuticas(formasFarmaceuticasData);
-        };
-
-        fetchData();
-        setLoading(false);
-    }, []);
-
     useEffect(() => {
         const calculateTotals = async () => {
             if (

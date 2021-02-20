@@ -265,7 +265,7 @@ exports.validateOrcamento = [
             'Nome da forma farmacêutica tem de ter no mínimo 3 caracteres!'
         )
         .bail(),
-    check('fFarmPreco')
+    check('fFarmPrice')
         .trim()
         .escape()
         .isNumeric()
