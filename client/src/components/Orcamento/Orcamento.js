@@ -18,7 +18,8 @@ import {
     FATOR_F,
     fetchFatores,
     fetchFormasFarmaceuticas
-} from '../../utils/calcs';
+} from '../../utils/api';
+import { postOrcamento } from '../../utils/api';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -75,7 +76,7 @@ const Orcamento = () => {
     };
 
     const handleSaveButton = () => {
-        let databody = {
+        let dataBody = {
             fatorF: FATOR_F,
             fFarmPrice: formaFarmaceuticaPreco,
             nomeManipulado: nomeOrcamento,
@@ -89,15 +90,7 @@ const Orcamento = () => {
             totalPrice: totais[0]
         };
 
-        fetch('http://localhost:5000/orcamentos/novo', {
-            method: 'POST',
-            body: JSON.stringify(databody),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((res) => res.json())
-            .then((data) => console.log(data));
+        postOrcamento(dataBody);
     };
 
     return (
@@ -112,7 +105,7 @@ const Orcamento = () => {
             </Grid>
             <Grid item>
                 <TextField
-                    id="standard-basic"
+                    id="nome-orcamento"
                     label="Nome"
                     onChange={(e) => setNomeOrcamento(e.target.value)}
                     className={classes.textInput}
@@ -151,7 +144,7 @@ const Orcamento = () => {
             </Grid>
             <Grid item>
                 <TextField
-                    id="standard-basic"
+                    id="quantidade-orcamento"
                     label="Quantidade"
                     onChange={(e) => setQuantidade(e.target.value)}
                     className={classes.textInput}

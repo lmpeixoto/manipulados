@@ -126,7 +126,7 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
                     </Grid>
                     <Grid item>
                         <TextField
-                            id="nome"
+                            id="nome-mat-emb"
                             name="nome"
                             label="Nome"
                             value={materialEmbalagem.nome}
@@ -146,7 +146,7 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
                     </Grid>
                     <Grid item>
                         <TextField
-                            id="preco"
+                            id="preco-mat-emb"
                             name="preco"
                             label="Preço"
                             value={materialEmbalagem.preco}
@@ -156,7 +156,7 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
                     </Grid>
                     <Grid item>
                         <TextField
-                            id="quantidade"
+                            id="quantidade-mat-emb"
                             name="quantidade"
                             label="Quantidade"
                             value={materialEmbalagem.quantidade}

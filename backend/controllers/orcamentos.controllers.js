@@ -7,6 +7,7 @@ const calcularTotaisOjecto = require('../utils/calcs');
 exports.orcamentoGetAll = async (req, res, next) => {
     try {
         const results = await OrcamentoModel.find();
+        console.log(results);
         if (results.length === 0) {
             res.json({
                 errorMessages:

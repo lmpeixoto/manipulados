@@ -1,19 +1,4 @@
-const URL_FATORES = 'http://localhost:5000/fatores';
-const URL_FORMAS_FARMACEUTICAS = 'http://localhost:5000/formasFarmaceuticas';
-
 export const FATOR_F = 5.03;
-
-export const fetchFatores = async () => {
-    const fatoresResponse = await fetch(URL_FATORES);
-    const fatoresData = await fatoresResponse.json();
-    return fatoresData;
-};
-
-export const fetchFormasFarmaceuticas = async () => {
-    const formasFarmaceuticasResponse = await fetch(URL_FORMAS_FARMACEUTICAS);
-    const formasFarmaceuticasData = await formasFarmaceuticasResponse.json();
-    return formasFarmaceuticasData;
-};
 
 export const calcMateriasPrimasTotal = (matPrimas, fatores) => {
     let total = 0;

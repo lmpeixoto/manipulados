@@ -142,7 +142,7 @@ const MateriasPrimas = ({ fatores, materiasPrimas, setMateriasPrimas }) => {
                     </Grid>
                     <Grid item>
                         <TextField
-                            id="nome"
+                            id="nome-mat-prim"
                             name="nome"
                             label="Nome"
                             value={materiaPrima.nome}
@@ -152,7 +152,7 @@ const MateriasPrimas = ({ fatores, materiasPrimas, setMateriasPrimas }) => {
                     </Grid>
                     <Grid item>
                         <TextField
-                            id="preco"
+                            id="preco-mat-prim"
                             name="preco"
                             label="Preço"
                             value={materiaPrima.preco}
@@ -162,7 +162,7 @@ const MateriasPrimas = ({ fatores, materiasPrimas, setMateriasPrimas }) => {
                     </Grid>
                     <Grid item>
                         <TextField
-                            id="quantidade"
+                            id="quantidade-mat-prim"
                             name="quantidade"
                             label="Quantidade"
                             value={materiaPrima.quantidade}
