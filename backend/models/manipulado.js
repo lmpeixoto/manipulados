@@ -23,7 +23,6 @@ const ManipuladoSchema = new Schema(
         fFarmQtd: { type: Number, required: true },
         materiasPrimas: [
             {
-                id: { type: Number, required: true },
                 nome: { type: String, required: true },
                 preco: { type: Number, required: true },
                 qtd: { type: Number, required: true },
@@ -34,7 +33,6 @@ const ManipuladoSchema = new Schema(
         materiasPrimasPrice: { type: Number, required: true },
         materiaisEmbalagem: [
             {
-                id: { type: Number, required: true },
                 nome: { type: String, required: true },
                 capacidade: { type: String, required: true },
                 preco: { type: Number, required: true },
@@ -45,7 +43,6 @@ const ManipuladoSchema = new Schema(
         materiaisEmbalagemPrice: { type: Number, required: true },
         validacoes: [
             {
-                id: { type: Number, required: true },
                 nomeEnsaio: { type: String, required: true },
                 especificacao: { type: String, required: true },
                 resultado: { type: String, required: true }

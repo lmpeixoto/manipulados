@@ -1,11 +1,10 @@
 class MaterialEmbalagem {
-    constructor(id, nome, capacidade, preco, qtd) {
-        this.id = id;
+    constructor(nome, capacidade, preco, qtd, valor) {
         this.nome = nome;
         this.capacidade = capacidade;
         this.preco = preco;
         this.qtd = qtd;
-        this.valor;
+        this.valor = valor;
     }
 
     calculateMatEmbPrice() {

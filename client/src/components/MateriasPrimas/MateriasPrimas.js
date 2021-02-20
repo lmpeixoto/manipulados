@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     },
     cards: {
         margin: '1rem 0.5rem',
-        width: '150px'
+        width: '200px'
     },
     cardsIcons: {
         display: 'flex',
@@ -226,19 +226,19 @@ const MateriasPrimas = ({ fatores, materiasPrimas, setMateriasPrimas }) => {
                     return (
                         <Card className={classes.cards} key={matPrim.id}>
                             <CardContent>
-                                <Typography color="textSecondary" gutterBottom>
+                                <Typography variant="h5" component="h1">
                                     <span>Nome:</span> {matPrim.nome}
                                 </Typography>
-                                <Typography variant="h5" component="h2">
+                                <Typography color="textSecondary">
                                     <span>Preço:</span> {matPrim.preco}
                                 </Typography>
                                 <Typography color="textSecondary">
                                     <span>Qt.:</span> {matPrim.quantidade}
                                 </Typography>
-                                <Typography variant="body2" component="p">
+                                <Typography color="textSecondary">
                                     <span>Fator:</span> {matPrim.fator}
                                 </Typography>
-                                <Typography variant="body2" component="p">
+                                <Typography variant="h6" component="h2">
                                     <span>Valor:</span> {matPrim.valor}
                                 </Typography>
                             </CardContent>

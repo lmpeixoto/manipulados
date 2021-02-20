@@ -6,18 +6,17 @@ const MaterialEmbalagem = require('./materialEmbalagem');
 const matPrimReader = (matPrimArray) => {
     console.log(matPrimArray);
     let materiasPrimas = [];
-    for (matPrim of matPrimArray) {
+    matPrimArray.forEach((matPrim) => {
         materiasPrimas.push(
             new MateriaPrima(
-                matPrim.id,
                 matPrim.nome,
                 matPrim.preco,
-                matPrim.qtd,
+                matPrim.quantidade,
                 matPrim.fator,
                 matPrim.valor
             )
         );
-    }
+    });
     return materiasPrimas;
 };
 
@@ -27,11 +26,10 @@ const matEmbReader = (matEmbArray) => {
     matEmbArray.forEach((matEmb) => {
         materiaisEmbalagem.push(
             new MaterialEmbalagem(
-                matEmb.id,
                 matEmb.nome,
                 matEmb.capacidade,
                 matEmb.preco,
-                matEmb.qtd,
+                matEmb.quantidade,
                 matEmb.valor
             )
         );
@@ -48,11 +46,12 @@ class Orcamento {
         nomeManipulado,
         fFarmNome,
         fFarmQtd,
+        fatorF,
         materiasPrimas,
         materiaisEmbalagem
     ) {
         this.nomeManipulado = nomeManipulado;
-        this.fatorF = 4;
+        this.fatorF = fatorF;
         this.fFarmNome = fFarmNome;
         this.fFarmPrice;
         this.fFarmQtd = fFarmQtd;

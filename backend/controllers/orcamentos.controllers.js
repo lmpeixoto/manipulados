@@ -40,12 +40,12 @@ exports.getOrcamento = async (req, res, next) => {
 
 exports.postOrcamento = async (req, res, next) => {
     const { errors } = validationResult(req);
-    console.log(req.body);
     let orcamento = new Orcamento(
         req.body.nomeManipulado,
-        req.body.fatorF,
         req.body.fFarmNome,
         req.body.fFarmQtd,
+        req.body.fatorF,
+        req.body.materiasPrimas,
         req.body.materiaisEmbalagem
     );
     orcamento = calcularTotaisOjecto(orcamento);
@@ -73,16 +73,15 @@ exports.postOrcamento = async (req, res, next) => {
     } else {
         try {
             const newOrcamento = await orcamentoToSave.save();
+            console.log(newOrcamento);
             res.json({
-                manipulado: newOrcamento,
-                errorMessages: ''
+                manipulado: newOrcamento
             });
         } catch (err) {
+            console.log(err);
             res.json({
                 manipulado: orcamentoToSave,
-                errorMessages: [
-                    'Ocorreu um erro a gravar para a base de dados!'
-                ]
+                errorMessages: err
             });
         }
     }

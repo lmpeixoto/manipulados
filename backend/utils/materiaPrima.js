@@ -1,13 +1,12 @@
 const fct = require('../models/fatores.json');
 
 class MateriaPrima {
-    constructor(id, nome, preco, qtd, fator) {
-        this.id = id;
+    constructor(nome, preco, qtd, fator, valor) {
         this.nome = nome;
         this.preco = preco;
         this.qtd = qtd;
         this.fator = fator;
-        this.valor;
+        this.valor = valor;
     }
 
     calculateMatPrimaPrice() {

@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     },
     cards: {
         margin: '1rem 0.5rem',
-        width: '150px'
+        width: '200px'
     },
     cardsIcons: {
         display: 'flex',
@@ -191,19 +191,19 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
                     return (
                         <Card className={classes.cards} key={matEmb.id}>
                             <CardContent>
-                                <Typography color="textSecondary" gutterBottom>
+                                <Typography variant="h5" component="h1">
                                     <span>Nome:</span> {matEmb.nome}
                                 </Typography>
                                 <Typography color="textSecondary">
                                     <span>Capacidade:</span> {matEmb.capacidade}
                                 </Typography>
-                                <Typography variant="h5" component="h2">
+                                <Typography color="textSecondary">
                                     <span>Preço:</span> {matEmb.preco}
                                 </Typography>
                                 <Typography color="textSecondary">
                                     <span>Qt.:</span> {matEmb.quantidade}
                                 </Typography>
-                                <Typography color="textSecondary">
+                                <Typography variant="h6" component="h2">
                                     <span>Valor:</span> {matEmb.valor}
                                 </Typography>
                             </CardContent>
