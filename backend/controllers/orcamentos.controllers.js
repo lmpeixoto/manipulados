@@ -120,7 +120,7 @@ exports.editOrcamento = async (req, res, next) => {
 
 exports.postDeleteOrcamento = (req, res, next) => {
     let orcamentoId = req.params.orcamentoId;
-    ManipuladoModel.findByIdAndDelete(orcamentoId, (err, doc) => {
+    OrcamentoModel.findByIdAndDelete(orcamentoId, (err, doc) => {
         if (err) {
             res.status(400).json(err);
         } else {

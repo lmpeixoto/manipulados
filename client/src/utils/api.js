@@ -2,6 +2,7 @@ const URL_FATORES = 'http://localhost:5000/fatores';
 const URL_FORMAS_FARMACEUTICAS = 'http://localhost:5000/formasFarmaceuticas';
 const URL_POST_NOVO_ORCAMENTO = 'http://localhost:5000/orcamentos/novo';
 const URL_GET_ORCAMENTOS = 'http://localhost:5000/orcamentos/all';
+const URL_DEL_ORCAMENTO = 'http://localhost:5000/orcamentos/delete/';
 
 export const FATOR_F = 5.03;
 
@@ -49,6 +50,21 @@ export const getOrcamentoAll = async () => {
         const data = await response.json();
         console.log(data);
         return data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const deleteOrcamento = async (id) => {
+    try {
+        const response = await fetch(URL_DEL_ORCAMENTO + id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        console.log(data);
     } catch (error) {
         console.log(error);
     }
