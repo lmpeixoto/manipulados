@@ -7,8 +7,11 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import { Redirect } from 'react-router-dom';
 
 import { getOrcamentoAll, deleteOrcamento } from '../../utils/api';
+import ItemArquivo from './ItemArquivo/ItemArquivo';
+import Orcamento from '../Orcamento/Orcamento';
 
 const useStyles = makeStyles((theme) => ({
     gridContainer: {
@@ -27,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 const Arquivo = () => {
     const classes = useStyles();
 
+    const [editing, setEditing] = useState(false);
     const [orcamentos, setOrcamentos] = useState([]);
 
     useEffect(() => {
@@ -38,7 +42,9 @@ const Arquivo = () => {
         getOrcamentos();
     }, []);
 
-    const handleEditItem = (id) => {};
+    const handleEditItem = (id) => {
+        setEditing(true);
+    };
 
     const handleRemoveItem = (id) => {
         deleteOrcamento(id);
@@ -55,40 +61,15 @@ const Arquivo = () => {
             direction={'column'}
             spacing={1}
         >
-            <Grid item>
-                <Typography variant="h4">Arquivo:</Typography>
-            </Grid>
-
-            {orcamentos.map((orcamento) => {
-                return (
-                    <Card key={orcamento._id} className={classes.cards}>
-                        <CardContent>
-                            <Typography variant="h5" component="h2">
-                                <span>Nome:</span> {orcamento.nomeManipulado}
-                            </Typography>
-                            <Typography color="textSecondary" gutterBottom>
-                                <span>Preço:</span> {orcamento.totalPrice}
-                            </Typography>
-                        </CardContent>
-                        <Grid item className={classes.cardsIcons}>
-                            <IconButton
-                                aria-label="edit"
-                                color="primary"
-                                onClick={() => handleEditItem(orcamento._id)}
-                            >
-                                <EditIcon />
-                            </IconButton>
-                            <IconButton
-                                aria-label="delete"
-                                color="secondary"
-                                onClick={() => handleRemoveItem(orcamento._id)}
-                            >
-                                <DeleteIcon />
-                            </IconButton>
-                        </Grid>
-                    </Card>
-                );
-            })}
+            {editing ? (
+                <Orcamento />
+            ) : (
+                <ItemArquivo
+                    orcamentos={orcamentos}
+                    handleEditItem={handleEditItem}
+                    handleRemoveItem={handleRemoveItem}
+                />
+            )}
         </Grid>
     );
 };
