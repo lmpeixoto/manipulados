@@ -32,6 +32,7 @@ const Arquivo = () => {
 
     const [editing, setEditing] = useState(false);
     const [orcamentos, setOrcamentos] = useState([]);
+    const [loadedOrcamento, setLoadedOrcamento] = useState({});
 
     useEffect(() => {
         const getOrcamentos = async () => {
@@ -43,6 +44,10 @@ const Arquivo = () => {
     }, []);
 
     const handleEditItem = (id) => {
+        const [orcamentoToEdit] = orcamentos.filter(
+            (orcamento) => orcamento._id === id
+        );
+        setLoadedOrcamento(orcamentoToEdit);
         setEditing(true);
     };
 
@@ -62,7 +67,7 @@ const Arquivo = () => {
             spacing={1}
         >
             {editing ? (
-                <Orcamento />
+                <Orcamento loadedOrcamento={loadedOrcamento} />
             ) : (
                 <ItemArquivo
                     orcamentos={orcamentos}

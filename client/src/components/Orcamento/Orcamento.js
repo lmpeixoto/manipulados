@@ -34,20 +34,8 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Orcamento = () => {
+const Orcamento = ({ loadedOrcamento }) => {
     const classes = useStyles();
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const fatoresData = await fetchFatores();
-            setFatores(fatoresData);
-            const formasFarmaceuticasData = await fetchFormasFarmaceuticas();
-            setFormasFarmaceuticas(formasFarmaceuticasData);
-        };
-
-        fetchData();
-        setLoading(false);
-    }, []);
 
     const [nomeOrcamento, setNomeOrcamento] = useState('');
     const [quantidade, setQuantidade] = useState('');
@@ -62,6 +50,38 @@ const Orcamento = () => {
     const [fatores, setFatores] = useState({});
     const [formasFarmaceuticas, setFormasFarmaceuticas] = useState({});
     const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const fatoresData = await fetchFatores();
+            setFatores(fatoresData);
+            const formasFarmaceuticasData = await fetchFormasFarmaceuticas();
+            setFormasFarmaceuticas(formasFarmaceuticasData);
+        };
+
+        fetchData();
+        setLoading(false);
+    }, []);
+
+    useEffect(() => {
+        const populateOrcamentoEdit = () => {
+            if (loadedOrcamento && formasFarmaceuticas && fatores) {
+                setNomeOrcamento(loadedOrcamento.nomeManipulado);
+                setQuantidade(loadedOrcamento.fFarmQtd);
+                setFormaFarmaceutica(loadedOrcamento.fFarmNome);
+                setFormaFarmaceuticaPreco(loadedOrcamento.fFarmPrice);
+                // setMateriasPrimas(loadedOrcamento.materiasPrimas);
+                setMateriasPrimasPreco(loadedOrcamento.materiasPrimasPrice);
+                // setMateriaisEmbalagem(loadedOrcamento.MateriaisEmbalagem);
+                setMateriaisEmbalagemPreco(
+                    loadedOrcamento.materiaisEmbalagemPrice
+                );
+                setTotais([loadedOrcamento.totalPrice, loadedOrcamento.IVA]);
+            }
+        };
+
+        populateOrcamentoEdit();
+    }, [setFormasFarmaceuticas, setFatores]);
 
     const handleChange = (event) => {
         setFormaFarmaceutica(event.target.value);
@@ -109,6 +129,7 @@ const Orcamento = () => {
                     label="Nome"
                     onChange={(e) => setNomeOrcamento(e.target.value)}
                     className={classes.textInput}
+                    value={nomeOrcamento}
                 />
             </Grid>
             <Grid item>
@@ -148,6 +169,7 @@ const Orcamento = () => {
                     label="Quantidade"
                     onChange={(e) => setQuantidade(e.target.value)}
                     className={classes.textInput}
+                    value={quantidade}
                 />
             </Grid>
             <Grid item className={classes.gridContainer}>
