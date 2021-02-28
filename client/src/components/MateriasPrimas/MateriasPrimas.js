@@ -55,7 +55,7 @@ const MateriasPrimas = ({ fatores, materiasPrimas, setMateriasPrimas }) => {
         id: '',
         nome: '',
         preco: '',
-        quantidade: '',
+        qtd: '',
         fator: '',
         valor: ''
     });
@@ -65,7 +65,7 @@ const MateriasPrimas = ({ fatores, materiasPrimas, setMateriasPrimas }) => {
             id: '',
             nome: '',
             preco: '',
-            quantidade: '',
+            qtd: '',
             fator: '',
             valor: ''
         });
@@ -124,9 +124,9 @@ const MateriasPrimas = ({ fatores, materiasPrimas, setMateriasPrimas }) => {
     };
 
     const calculateValor = () => {
-        const valor = parseFloat(
-            materiaPrima.preco * materiaPrima.quantidade
-        ).toFixed(2);
+        const valor = parseFloat(materiaPrima.preco * materiaPrima.qtd).toFixed(
+            2
+        );
         return valor;
     };
 
@@ -165,7 +165,7 @@ const MateriasPrimas = ({ fatores, materiasPrimas, setMateriasPrimas }) => {
                             id="quantidade-mat-prim"
                             name="quantidade"
                             label="Quantidade"
-                            value={materiaPrima.quantidade}
+                            value={materiaPrima.qtd}
                             className={classes.textInput}
                             required
                         />
@@ -233,7 +233,7 @@ const MateriasPrimas = ({ fatores, materiasPrimas, setMateriasPrimas }) => {
                                     <span>Preço:</span> {matPrim.preco}
                                 </Typography>
                                 <Typography color="textSecondary">
-                                    <span>Qt.:</span> {matPrim.quantidade}
+                                    <span>Qt.:</span> {matPrim.qtd}
                                 </Typography>
                                 <Typography color="textSecondary">
                                     <span>Fator:</span> {matPrim.fator}

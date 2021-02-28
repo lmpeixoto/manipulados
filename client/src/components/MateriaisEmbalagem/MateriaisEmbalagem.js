@@ -50,7 +50,7 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
         nome: '',
         capacidade: '',
         preco: '',
-        quantidade: '',
+        qtd: '',
         valor: ''
     });
 
@@ -60,7 +60,7 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
             nome: '',
             capacidade: '',
             preco: '',
-            quantidade: '',
+            qtd: '',
             valor: ''
         });
     };
@@ -98,7 +98,7 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
 
     const calculateValor = () => {
         const valor = parseFloat(
-            materialEmbalagem.preco * materialEmbalagem.quantidade
+            materialEmbalagem.preco * materialEmbalagem.qtd
         ).toFixed(2);
         return valor;
     };
@@ -159,7 +159,7 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
                             id="quantidade-mat-emb"
                             name="quantidade"
                             label="Quantidade"
-                            value={materialEmbalagem.quantidade}
+                            value={materialEmbalagem.qtd}
                             className={classes.textInput}
                             required
                         />
@@ -188,6 +188,7 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
             </div>
             <div className={classes.cardsContainer}>
                 {materiaisEmbalagem.map((matEmb) => {
+                    console.log(materiaisEmbalagem);
                     return (
                         <Card className={classes.cards} key={matEmb.id}>
                             <CardContent>
@@ -201,7 +202,7 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
                                     <span>Preço:</span> {matEmb.preco}
                                 </Typography>
                                 <Typography color="textSecondary">
-                                    <span>Qt.:</span> {matEmb.quantidade}
+                                    <span>Qt.:</span> {matEmb.qtd}
                                 </Typography>
                                 <Typography variant="h6" component="h2">
                                     <span>Valor:</span> {matEmb.valor}

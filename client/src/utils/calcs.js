@@ -1,12 +1,15 @@
+import { fatores } from './fatores';
+import { formasFarmaceuticas } from './formas-farmaceuticas';
+
 export const FATOR_F = 5.03;
 
-export const calcMateriasPrimasTotal = (matPrimas, fatores) => {
+export const calcMateriasPrimasTotal = (matPrimas) => {
     let total = 0;
     matPrimas.forEach((element) => {
         const fator = +fatores[element.fator][1];
         total +=
             parseFloat(element.preco) *
-            parseFloat(element.quantidade) *
+            parseFloat(element.qtd) *
             parseFloat(fator);
     });
     total = parseFloat(total.toFixed(2));
@@ -16,17 +19,13 @@ export const calcMateriasPrimasTotal = (matPrimas, fatores) => {
 export const calcMateriaisEmbalagemTotal = (matEmb) => {
     let total = 0;
     matEmb.forEach((element) => {
-        total += parseFloat(element.preco) * parseFloat(element.quantidade);
+        total += parseFloat(element.preco) * parseFloat(element.qtd);
     });
     total = parseFloat(total.toFixed(2));
     return total;
 };
 
-export const calcHonorarios = async (
-    formaFarmaceutica,
-    quantidade,
-    formasFarmaceuticas
-) => {
+export const calcHonorarios = async (formaFarmaceutica, quantidade) => {
     let total = 0;
     const limite = await formasFarmaceuticas[formaFarmaceutica][0];
     const fator = await formasFarmaceuticas[formaFarmaceutica][1];

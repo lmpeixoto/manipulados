@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import { Redirect } from 'react-router-dom';
 
 import { getOrcamentoAll, deleteOrcamento } from '../../utils/api';
 import ItemArquivo from './ItemArquivo/ItemArquivo';
@@ -67,7 +60,10 @@ const Arquivo = () => {
             spacing={1}
         >
             {editing ? (
-                <Orcamento loadedOrcamento={loadedOrcamento} />
+                <Orcamento
+                    loadedOrcamento={loadedOrcamento}
+                    editing={editing}
+                />
             ) : (
                 <ItemArquivo
                     orcamentos={orcamentos}

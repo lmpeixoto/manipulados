@@ -14,11 +14,7 @@ import MateriaisEmbalagem from '../MateriaisEmbalagem/MateriaisEmbalagem';
 import Calculos from './Calculos/Calculos';
 
 import './Orcamento.css';
-import {
-    FATOR_F,
-    fetchFatores,
-    fetchFormasFarmaceuticas
-} from '../../utils/api';
+import { FATOR_F } from '../../utils/api';
 import { postOrcamento } from '../../utils/api';
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Orcamento = ({ loadedOrcamento }) => {
+const Orcamento = ({ editing, loadedOrcamento }) => {
     const classes = useStyles();
 
     const [nomeOrcamento, setNomeOrcamento] = useState('');
@@ -47,41 +43,22 @@ const Orcamento = ({ loadedOrcamento }) => {
     const [materiaisEmbalagemPreco, setMateriaisEmbalagemPreco] = useState('');
     const [totais, setTotais] = useState([]);
     const [open, setOpen] = useState(false);
-    const [fatores, setFatores] = useState({});
-    const [formasFarmaceuticas, setFormasFarmaceuticas] = useState({});
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchData = async () => {
-            const fatoresData = await fetchFatores();
-            setFatores(fatoresData);
-            const formasFarmaceuticasData = await fetchFormasFarmaceuticas();
-            setFormasFarmaceuticas(formasFarmaceuticasData);
-        };
-
-        fetchData();
-        setLoading(false);
-    }, []);
-
-    useEffect(() => {
         const populateOrcamentoEdit = () => {
-            if (loadedOrcamento && formasFarmaceuticas && fatores) {
+            if (loadedOrcamento && editing) {
                 setNomeOrcamento(loadedOrcamento.nomeManipulado);
                 setQuantidade(loadedOrcamento.fFarmQtd);
-                setFormaFarmaceutica(loadedOrcamento.fFarmNome);
-                setFormaFarmaceuticaPreco(loadedOrcamento.fFarmPrice);
-                // setMateriasPrimas(loadedOrcamento.materiasPrimas);
-                setMateriasPrimasPreco(loadedOrcamento.materiasPrimasPrice);
-                // setMateriaisEmbalagem(loadedOrcamento.MateriaisEmbalagem);
-                setMateriaisEmbalagemPreco(
-                    loadedOrcamento.materiaisEmbalagemPrice
-                );
-                setTotais([loadedOrcamento.totalPrice, loadedOrcamento.IVA]);
+                setFormaFarmaceutica(loadedOrcamento.fFarmNome.toLowerCase());
+                setMateriasPrimas(loadedOrcamento.materiasPrimas);
+                setMateriaisEmbalagem(loadedOrcamento.materiaisEmbalagem);
             }
         };
 
         populateOrcamentoEdit();
-    }, [setFormasFarmaceuticas, setFatores]);
+        setLoading(false);
+    }, []);
 
     const handleChange = (event) => {
         setFormaFarmaceutica(event.target.value);
@@ -94,6 +71,8 @@ const Orcamento = ({ loadedOrcamento }) => {
     const handleOpen = () => {
         setOpen(true);
     };
+
+    const handleEditSaveButton = () => {};
 
     const handleSaveButton = () => {
         let dataBody = {
@@ -174,7 +153,6 @@ const Orcamento = ({ loadedOrcamento }) => {
             </Grid>
             <Grid item className={classes.gridContainer}>
                 <MateriasPrimas
-                    fatores={fatores}
                     materiasPrimas={materiasPrimas}
                     setMateriasPrimas={setMateriasPrimas}
                 />
@@ -187,10 +165,6 @@ const Orcamento = ({ loadedOrcamento }) => {
             </Grid>
             <Grid item className={classes.gridContainer}>
                 <Calculos
-                    fatores={fatores}
-                    setFatores={setFatores}
-                    formasFarmaceuticas={formasFarmaceuticas}
-                    setFormasFarmaceuticas={setFormasFarmaceuticas}
                     loading={loading}
                     setLoading={setLoading}
                     formaFarmaceutica={formaFarmaceutica}
@@ -204,6 +178,7 @@ const Orcamento = ({ loadedOrcamento }) => {
                     setMateriaisEmbalagemPreco={setMateriaisEmbalagemPreco}
                     quantidade={quantidade}
                     nomeOrcamento={nomeOrcamento}
+                    handleEditSaveButton={handleEditSaveButton}
                     handleSaveButton={handleSaveButton}
                     totais={totais}
                     setTotais={setTotais}

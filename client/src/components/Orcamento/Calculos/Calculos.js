@@ -44,8 +44,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Calculos = ({
-    formasFarmaceuticas,
-    fatores,
     loading,
     formaFarmaceutica,
     setFormaFarmaceuticaPreco,
@@ -66,10 +64,7 @@ const Calculos = ({
                 materiaisEmbalagem &&
                 quantidade
             ) {
-                const matPrimTotal = calcMateriasPrimasTotal(
-                    materiasPrimas,
-                    fatores
-                );
+                const matPrimTotal = calcMateriasPrimasTotal(materiasPrimas);
                 setMateriasPrimasPreco(matPrimTotal);
                 const matEmbTotal = calcMateriaisEmbalagemTotal(
                     materiaisEmbalagem
@@ -77,8 +72,7 @@ const Calculos = ({
                 setMateriaisEmbalagemPreco(matEmbTotal);
                 const calcHonorTotal = await calcHonorarios(
                     formaFarmaceutica,
-                    quantidade,
-                    formasFarmaceuticas
+                    quantidade
                 );
                 setFormaFarmaceuticaPreco(calcHonorTotal);
                 const orcamentoTotal = calcOrcamentoTotal(
@@ -93,13 +87,7 @@ const Calculos = ({
         };
 
         calculateTotals();
-    }, [
-        formaFarmaceutica,
-        formasFarmaceuticas,
-        quantidade,
-        materiasPrimas,
-        materiaisEmbalagem
-    ]);
+    }, [formaFarmaceutica, quantidade, materiasPrimas, materiaisEmbalagem]);
 
     const classes = useStyles();
 
@@ -109,7 +97,8 @@ const Calculos = ({
             {formaFarmaceutica &&
             materiasPrimas &&
             materiaisEmbalagem &&
-            quantidade ? (
+            quantidade &&
+            totais ? (
                 <Grid container direction={'column'} spacing={1}>
                     <Grid item>
                         <Typography variant="h4">Preço</Typography>

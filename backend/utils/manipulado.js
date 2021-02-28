@@ -11,7 +11,7 @@ const matPrimReader = (matPrimArray) => {
             new MateriaPrima(
                 matPrim.nome,
                 matPrim.preco,
-                matPrim.quantidade,
+                matPrim.qtd,
                 matPrim.fator,
                 matPrim.valor
             )
@@ -29,7 +29,7 @@ const matEmbReader = (matEmbArray) => {
                 matEmb.nome,
                 matEmb.capacidade,
                 matEmb.preco,
-                matEmb.quantidade,
+                matEmb.qtd,
                 matEmb.valor
             )
         );

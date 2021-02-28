@@ -1,15 +1,6 @@
 import React from 'react';
 
-import {
-    Navigator,
-    Authentication,
-    MainContent,
-    Footer,
-    Home,
-    Orcamento,
-    Manipulado,
-    Arquivo
-} from './components';
+import { Navigator } from './components';
 
 const App = () => (
     <div>
