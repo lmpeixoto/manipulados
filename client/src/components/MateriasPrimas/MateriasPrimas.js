@@ -163,7 +163,7 @@ const MateriasPrimas = ({ fatores, materiasPrimas, setMateriasPrimas }) => {
                     <Grid item>
                         <TextField
                             id="quantidade-mat-prim"
-                            name="quantidade"
+                            name="qtd"
                             label="Quantidade"
                             value={materiaPrima.qtd}
                             className={classes.textInput}

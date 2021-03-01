@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -14,8 +15,8 @@ import MateriaisEmbalagem from '../MateriaisEmbalagem/MateriaisEmbalagem';
 import Calculos from './Calculos/Calculos';
 
 import './Orcamento.css';
-import { FATOR_F } from '../../utils/api';
-import { postOrcamento } from '../../utils/api';
+import { FATOR_F, patchOrcamento, postOrcamento } from '../../utils/api';
+import { matEmbReader, matPrimReader } from '../../utils/readers';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -30,9 +31,8 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Orcamento = ({ editing, loadedOrcamento }) => {
+const Orcamento = ({ editing, setEditing, loadedOrcamento }) => {
     const classes = useStyles();
-
     const [nomeOrcamento, setNomeOrcamento] = useState('');
     const [quantidade, setQuantidade] = useState('');
     const [formaFarmaceutica, setFormaFarmaceutica] = useState('');
@@ -44,6 +44,7 @@ const Orcamento = ({ editing, loadedOrcamento }) => {
     const [totais, setTotais] = useState([]);
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [orcamentoId, setOrcamentoID] = useState('');
 
     useEffect(() => {
         const populateOrcamentoEdit = () => {
@@ -51,14 +52,21 @@ const Orcamento = ({ editing, loadedOrcamento }) => {
                 setNomeOrcamento(loadedOrcamento.nomeManipulado);
                 setQuantidade(loadedOrcamento.fFarmQtd);
                 setFormaFarmaceutica(loadedOrcamento.fFarmNome.toLowerCase());
-                setMateriasPrimas(loadedOrcamento.materiasPrimas);
-                setMateriaisEmbalagem(loadedOrcamento.materiaisEmbalagem);
+                setMateriasPrimas(
+                    matPrimReader(loadedOrcamento.materiasPrimas)
+                );
+                setMateriaisEmbalagem(
+                    matEmbReader(loadedOrcamento.materiaisEmbalagem)
+                );
+                setOrcamentoID(loadedOrcamento._id);
             }
         };
 
         populateOrcamentoEdit();
         setLoading(false);
     }, []);
+
+    let history = useHistory();
 
     const handleChange = (event) => {
         setFormaFarmaceutica(event.target.value);
@@ -72,7 +80,24 @@ const Orcamento = ({ editing, loadedOrcamento }) => {
         setOpen(true);
     };
 
-    const handleEditSaveButton = () => {};
+    const handleEditSaveButton = () => {
+        let dataBody = {
+            fatorF: FATOR_F,
+            fFarmPrice: formaFarmaceuticaPreco,
+            nomeManipulado: nomeOrcamento,
+            fFarmNome: formaFarmaceutica,
+            fFarmQtd: quantidade,
+            materiasPrimas: materiasPrimas,
+            materiasPrimasPrice: materiasPrimasPreco,
+            materiaisEmbalagem: materiaisEmbalagem,
+            materiaisEmbalagemPrice: materiaisEmbalagemPreco,
+            IVA: totais[1],
+            totalPrice: totais[0]
+        };
+        patchOrcamento(orcamentoId, dataBody);
+        setEditing(false);
+        history.push('/arquivo');
+    };
 
     const handleSaveButton = () => {
         let dataBody = {
@@ -182,6 +207,8 @@ const Orcamento = ({ editing, loadedOrcamento }) => {
                     handleSaveButton={handleSaveButton}
                     totais={totais}
                     setTotais={setTotais}
+                    editing={editing}
+                    handleEditSaveButton={handleEditSaveButton}
                 />
             </Grid>
         </Grid>

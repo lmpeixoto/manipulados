@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Calculos = ({
+    editing,
     loading,
     formaFarmaceutica,
     setFormaFarmaceuticaPreco,
@@ -52,6 +53,7 @@ const Calculos = ({
     materiaisEmbalagem,
     setMateriaisEmbalagemPreco,
     quantidade,
+    handleEditSaveButton,
     handleSaveButton,
     totais,
     setTotais
@@ -113,13 +115,23 @@ const Calculos = ({
                             </Typography>
                         </CardContent>
                         <div className={classes.cardsIcons}>
-                            <IconButton
-                                className={classes.iconButton}
-                                aria-label="edit"
-                                onClick={handleSaveButton}
-                            >
-                                Guardar <SaveIcon />
-                            </IconButton>
+                            {editing ? (
+                                <IconButton
+                                    className={classes.iconButton}
+                                    aria-label="edit"
+                                    onClick={handleEditSaveButton}
+                                >
+                                    Atualizar <SaveIcon />
+                                </IconButton>
+                            ) : (
+                                <IconButton
+                                    className={classes.iconButton}
+                                    aria-label="edit"
+                                    onClick={handleSaveButton}
+                                >
+                                    Guardar <SaveIcon />
+                                </IconButton>
+                            )}
                         </div>
                     </Card>
                 </Grid>

@@ -34,7 +34,7 @@ const Arquivo = () => {
         };
 
         getOrcamentos();
-    }, []);
+    }, [editing]);
 
     const handleEditItem = (id) => {
         const [orcamentoToEdit] = orcamentos.filter(
@@ -63,6 +63,7 @@ const Arquivo = () => {
                 <Orcamento
                     loadedOrcamento={loadedOrcamento}
                     editing={editing}
+                    setEditing={setEditing}
                 />
             ) : (
                 <ItemArquivo

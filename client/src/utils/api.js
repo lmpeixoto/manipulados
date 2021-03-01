@@ -3,6 +3,7 @@ const URL_FORMAS_FARMACEUTICAS = 'http://localhost:5000/formasFarmaceuticas';
 const URL_POST_NOVO_ORCAMENTO = 'http://localhost:5000/orcamentos/novo';
 const URL_GET_ORCAMENTOS = 'http://localhost:5000/orcamentos/all';
 const URL_DEL_ORCAMENTO = 'http://localhost:5000/orcamentos/delete/';
+const URL_PUT_ORCAMENTO = 'http://localhost:5000/orcamentos/edit/';
 
 export const FATOR_F = 5.03;
 
@@ -32,6 +33,24 @@ export const postOrcamento = async (dataBody) => {
     try {
         const response = await fetch(URL_POST_NOVO_ORCAMENTO, {
             method: 'POST',
+            body: JSON.stringify(dataBody),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const patchOrcamento = async (id, dataBody) => {
+    console.log(dataBody);
+    const url = URL_PUT_ORCAMENTO + id;
+    try {
+        const response = await fetch(url, {
+            method: 'PUT',
             body: JSON.stringify(dataBody),
             headers: {
                 'Content-Type': 'application/json'

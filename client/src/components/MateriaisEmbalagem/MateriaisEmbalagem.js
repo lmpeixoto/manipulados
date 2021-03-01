@@ -157,7 +157,7 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
                     <Grid item>
                         <TextField
                             id="quantidade-mat-emb"
-                            name="quantidade"
+                            name="qtd"
                             label="Quantidade"
                             value={materialEmbalagem.qtd}
                             className={classes.textInput}

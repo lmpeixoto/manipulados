@@ -1,4 +1,5 @@
 const { validationResult } = require('express-validator');
+const mongoose = require('mongoose');
 
 const OrcamentoModel = require('../models/orcamento');
 const { Orcamento } = require('../utils/manipulado');
@@ -89,36 +90,46 @@ exports.postOrcamento = async (req, res, next) => {
 };
 
 exports.editOrcamento = async (req, res, next) => {
-    const orcamentoID = req.query.orcamentoID;
-    const newOrcamento = new OrcamentoModel({
-        nomeManipulado: req.body.nomeManipulado,
-        fatorF: req.body.fatorF,
-        fFarmNome: req.body.fFarmNome,
-        fFarmPrice: req.body.fFarmPrice,
-        fFarmQtd: req.body.fFarmQtd,
-        materiasPrimas: req.body.materiasPrimas,
-        materiasPrimasPrice: req.body.materiasPrimasPrice,
-        materiaisEmbalagem: req.body.materiaisEmbalagem,
-        materiaisEmbalagemPrice: req.body.materiaisEmbalagemPrice,
-        IVA: req.body.IVA,
-        totalPrice: req.body.totalPrice
-    });
-    try {
-        const oldOrcamento = await OrcamentoModel.findById(orcamentoID);
-        if (!oldOrcamento) {
-            res.status(400).json({
-                errorMessage: 'Orcamento ID não encontrado! Interrompido!'
-            });
-        } else {
-            await newOrcamento.save();
-            res.status(200).json(newOrcamento);
+    const { orcamentoId } = req.params;
+    const { errors } = validationResult(req);
+    let orcamento = new Orcamento(
+        req.body.nomeManipulado,
+        req.body.fFarmNome,
+        req.body.fFarmQtd,
+        req.body.fatorF,
+        req.body.materiasPrimas,
+        req.body.materiaisEmbalagem
+    );
+    orcamento = calcularTotaisOjecto(orcamento);
+    if (errors.length > 0) {
+        let errorsArray = [];
+        errors.forEach((error) => errorsArray.push(error.msg));
+        res.json({
+            manipulado: orcamentoToSave,
+            errorMessages: errorsArray
+        });
+    } else {
+        try {
+            const oldOrcamento = await OrcamentoModel.findById(orcamentoId);
+            if (!oldOrcamento) {
+                res.status(400).json({
+                    errorMessage: 'Orcamento ID não encontrado! Interrompido!'
+                });
+            } else {
+                const filter = { _id: orcamentoId };
+                console.log(orcamento);
+                await OrcamentoModel.findByIdAndUpdate(filter, orcamento, {
+                    new: true
+                });
+                res.status(200).json(orcamento);
+            }
+        } catch (err) {
+            res.status(400).json(err);
         }
-    } catch (err) {
-        res.status(400).json(err);
     }
 };
 
-exports.postDeleteOrcamento = (req, res, next) => {
+exports.postDeleteOrcamento = (req, res) => {
     let orcamentoId = req.params.orcamentoId;
     OrcamentoModel.findByIdAndDelete(orcamentoId, (err, doc) => {
         if (err) {
