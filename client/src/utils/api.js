@@ -4,6 +4,10 @@ const URL_POST_NOVO_ORCAMENTO = 'http://localhost:5000/orcamentos/novo';
 const URL_GET_ORCAMENTOS = 'http://localhost:5000/orcamentos/all';
 const URL_DEL_ORCAMENTO = 'http://localhost:5000/orcamentos/delete/';
 const URL_PUT_ORCAMENTO = 'http://localhost:5000/orcamentos/edit/';
+const URL_POST_NOVO_MANIPULADO = 'http://localhost:5000/manipulados/novo';
+const URL_GET_MANIPULADOS = 'http://localhost:5000/manipulados/all';
+const URL_DEL_MANIPULADO = 'http://localhost:5000/manipulados/delete/';
+const URL_PUT_MANIPULADO = 'http://localhost:5000/manipulados/edit/';
 
 export const FATOR_F = 5.03;
 
@@ -46,7 +50,6 @@ export const postOrcamento = async (dataBody) => {
 };
 
 export const patchOrcamento = async (id, dataBody) => {
-    console.log(dataBody);
     const url = URL_PUT_ORCAMENTO + id;
     try {
         const response = await fetch(url, {
@@ -77,6 +80,65 @@ export const getOrcamentoAll = async () => {
 export const deleteOrcamento = async (id) => {
     try {
         const response = await fetch(URL_DEL_ORCAMENTO + id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const postManipulado = async (dataBody) => {
+    try {
+        const response = await fetch(URL_POST_NOVO_MANIPULADO, {
+            method: 'POST',
+            body: JSON.stringify(dataBody),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const patchManipulado = async (id, dataBody) => {
+    const url = URL_PUT_MANIPULADO + id;
+    try {
+        const response = await fetch(url, {
+            method: 'PUT',
+            body: JSON.stringify(dataBody),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const getManipuladoAll = async () => {
+    try {
+        const response = await fetch(URL_GET_MANIPULADOS);
+        const data = await response.json();
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const deleteManipulado = async (id) => {
+    try {
+        const response = await fetch(URL_DEL_MANIPULADO + id, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

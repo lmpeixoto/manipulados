@@ -12,7 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import FORMAS_FARMACEUTICAS from '../../data/formas-farmaceuticas.json';
 import MateriasPrimas from '../MateriasPrimas/MateriasPrimas';
 import MateriaisEmbalagem from '../MateriaisEmbalagem/MateriaisEmbalagem';
-import Calculos from './Calculos/Calculos';
+import Calculos from '../Calculos/Calculos';
 
 import './Orcamento.css';
 import { FATOR_F, patchOrcamento, postOrcamento } from '../../utils/api';
@@ -130,7 +130,7 @@ const Orcamento = ({ editing, setEditing, loadedOrcamento }) => {
             <Grid item>
                 <TextField
                     id="nome-orcamento"
-                    label="Nome"
+                    label="Nome do Manipulado"
                     onChange={(e) => setNomeOrcamento(e.target.value)}
                     className={classes.textInput}
                     value={nomeOrcamento}
@@ -141,7 +141,7 @@ const Orcamento = ({ editing, setEditing, loadedOrcamento }) => {
                     className={(classes.formControl, classes.textInput)}
                 >
                     <InputLabel id="forma-farmaceutica-select-label">
-                        Forma farmacêutica
+                        Forma Farmacêutica
                     </InputLabel>
                     <Select
                         labelId="forma-farmaceutica-select-label"

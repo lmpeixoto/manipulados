@@ -13,7 +13,7 @@ import {
     calcMateriasPrimasTotal,
     calcMateriaisEmbalagemTotal,
     calcOrcamentoTotal
-} from '../../../utils/calcs';
+} from '../../utils/calcs';
 
 const useStyles = makeStyles((theme) => ({
     iconButton: {
