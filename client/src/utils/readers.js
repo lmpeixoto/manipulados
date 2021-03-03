@@ -31,3 +31,17 @@ export const matEmbReader = (matEmbArray) => {
     });
     return materiaisEmbalagem;
 };
+
+export const validacoesReader = (validArray) => {
+    console.log(validArray);
+    let validacoes = [];
+    validArray.forEach((valid) => {
+        validacoes.push({
+            id: nextId(),
+            nomeEnsaio: valid.nomeEnsaio,
+            especificacao: valid.especificacao,
+            resultado: valid.resultado
+        });
+    });
+    return validacoes;
+};

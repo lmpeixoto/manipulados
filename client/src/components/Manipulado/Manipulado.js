@@ -22,7 +22,11 @@ import Validacoes from '../Validacoes/Validacoes';
 import Calculos from '../Calculos/Calculos';
 
 import { FATOR_F, patchManipulado, postManipulado } from '../../utils/api';
-import { matEmbReader, matPrimReader } from '../../utils/readers';
+import {
+    matEmbReader,
+    matPrimReader,
+    validacoesReader
+} from '../../utils/readers';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -76,6 +80,16 @@ const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
         const populateManipuladoEdit = () => {
             if (loadedManipulado && editing) {
                 setNomeManipulado(loadedManipulado.nomeManipulado);
+                setLoteManipulado(loadedManipulado.lote);
+                setUtenteNome(loadedManipulado.utenteNome);
+                setUtenteContacto(loadedManipulado.utenteContacto);
+                setPrescritorNome(loadedManipulado.prescritorNome);
+                setPrescritorContacto(loadedManipulado.prescritorContacto);
+                setFarmaceutico(loadedManipulado.farmaceutico);
+                setSupervisor(loadedManipulado.supervisor);
+                setConservacao(loadedManipulado.conservacao);
+                setValidade(loadedManipulado.validade);
+                setPreparacao(loadedManipulado.preparacao);
                 setQuantidade(loadedManipulado.fFarmQtd);
                 setFormaFarmaceutica(loadedManipulado.fFarmNome.toLowerCase());
                 setMateriasPrimas(
@@ -84,6 +98,7 @@ const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
                 setMateriaisEmbalagem(
                     matEmbReader(loadedManipulado.materiaisEmbalagem)
                 );
+                setValidacoes(validacoesReader(loadedManipulado.validacoes));
                 setManipuladoID(loadedManipulado._id);
             }
         };
@@ -127,6 +142,7 @@ const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
             materiasPrimasPrice: materiasPrimasPreco,
             materiaisEmbalagem,
             materiaisEmbalagemPrice: materiaisEmbalagemPreco,
+            validacoes,
             IVA: totais[1],
             totalPrice: totais[0]
         };

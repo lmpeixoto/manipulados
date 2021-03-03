@@ -149,7 +149,7 @@ const Validacoes = ({ validacoes, setValidacoes }) => {
                     </Grid>
                     <Grid item>
                         <InputLabel id="aprovacao-select-label">
-                            Aprovação
+                            Resultado
                         </InputLabel>
                         <Select
                             className={classes.textInput}
@@ -162,11 +162,11 @@ const Validacoes = ({ validacoes, setValidacoes }) => {
                             value={validacao.resultado}
                             onChange={handleSelectChange}
                         >
-                            <MenuItem key={1} value="aprovado">
-                                Aprovado
+                            <MenuItem key={1} value="conforme">
+                                Conforme
                             </MenuItem>
-                            <MenuItem key={0} value="não aprovado">
-                                Não Aprovado
+                            <MenuItem key={0} value="não conforme">
+                                Não Conforme
                             </MenuItem>
                         </Select>
                     </Grid>
@@ -206,7 +206,7 @@ const Validacoes = ({ validacoes, setValidacoes }) => {
                                     {valid.especificacao}
                                 </Typography>
                                 <Typography color="textSecondary">
-                                    <span>Aprovação:</span> {valid.resultado}
+                                    <span>Resultado:</span> {valid.resultado}
                                 </Typography>
                             </CardContent>
                             <div className={classes.cardsIcons}>

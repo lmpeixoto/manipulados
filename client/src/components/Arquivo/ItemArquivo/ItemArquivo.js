@@ -22,39 +22,92 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const ItemArquivo = ({ orcamentos, handleEditItem, handleRemoveItem }) => {
+const ItemArquivo = ({
+    orcamentos,
+    handleEditOrcamento,
+    handleRemoveOrcamento,
+    handleEditManipulado,
+    handleRemoveManipulado,
+    manipulados,
+    toggleManip
+}) => {
     const classes = useStyles();
 
     return (
         <div>
-            {orcamentos.map((orcamento) => (
-                <Card key={orcamento._id} className={classes.cards}>
-                    <CardContent>
-                        <Typography variant="h5" component="h2">
-                            <span>Nome:</span> {orcamento.nomeManipulado}
-                        </Typography>
-                        <Typography color="textSecondary" gutterBottom>
-                            <span>Preço:</span> {orcamento.totalPrice}
-                        </Typography>
-                    </CardContent>
-                    <Grid item className={classes.cardsIcons}>
-                        <IconButton
-                            aria-label="edit"
-                            color="primary"
-                            onClick={() => handleEditItem(orcamento._id)}
-                        >
-                            <EditIcon />
-                        </IconButton>
-                        <IconButton
-                            aria-label="delete"
-                            color="secondary"
-                            onClick={() => handleRemoveItem(orcamento._id)}
-                        >
-                            <DeleteIcon />
-                        </IconButton>
-                    </Grid>
-                </Card>
-            ))}
+            {toggleManip ? (
+                <>
+                    {manipulados.map((manipulado) => (
+                        <Card key={manipulado._id} className={classes.cards}>
+                            <CardContent>
+                                <Typography variant="h5" component="h2">
+                                    <span>Nome:</span>{' '}
+                                    {manipulado.nomeManipulado}
+                                </Typography>
+                                <Typography color="textSecondary" gutterBottom>
+                                    <span>Preço:</span> {manipulado.totalPrice}
+                                </Typography>
+                            </CardContent>
+                            <Grid item className={classes.cardsIcons}>
+                                <IconButton
+                                    aria-label="edit"
+                                    color="primary"
+                                    onClick={() =>
+                                        handleEditManipulado(manipulado._id)
+                                    }
+                                >
+                                    <EditIcon />
+                                </IconButton>
+                                <IconButton
+                                    aria-label="delete"
+                                    color="secondary"
+                                    onClick={() =>
+                                        handleRemoveManipulado(manipulado._id)
+                                    }
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
+                            </Grid>
+                        </Card>
+                    ))}
+                </>
+            ) : (
+                <>
+                    {orcamentos.map((orcamento) => (
+                        <Card key={orcamento._id} className={classes.cards}>
+                            <CardContent>
+                                <Typography variant="h5" component="h2">
+                                    <span>Nome:</span>{' '}
+                                    {orcamento.nomeManipulado}
+                                </Typography>
+                                <Typography color="textSecondary" gutterBottom>
+                                    <span>Preço:</span> {orcamento.totalPrice}
+                                </Typography>
+                            </CardContent>
+                            <Grid item className={classes.cardsIcons}>
+                                <IconButton
+                                    aria-label="edit"
+                                    color="primary"
+                                    onClick={() =>
+                                        handleEditOrcamento(orcamento._id)
+                                    }
+                                >
+                                    <EditIcon />
+                                </IconButton>
+                                <IconButton
+                                    aria-label="delete"
+                                    color="secondary"
+                                    onClick={() =>
+                                        handleRemoveOrcamento(orcamento._id)
+                                    }
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
+                            </Grid>
+                        </Card>
+                    ))}
+                </>
+            )}
         </div>
     );
 };
