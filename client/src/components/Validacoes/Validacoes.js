@@ -55,10 +55,9 @@ const Validacoes = ({ validacoes, setValidacoes }) => {
     const [editForm, setEditForm] = useState(false);
     const [validacao, setValidacao] = useState({
         id: '',
-        nome: '',
-        descricao: '',
-        aprovacao: '',
-        farmaceutico: ''
+        nomeEnsaio: '',
+        especificacao: '',
+        resultado: ''
     });
 
     const [open, setOpen] = useState(false);
@@ -66,10 +65,9 @@ const Validacoes = ({ validacoes, setValidacoes }) => {
     const resetValidacaoValues = () => {
         setValidacao({
             id: '',
-            nome: '',
-            descricao: '',
-            aprovacao: '',
-            farmaceutico: ''
+            nomeEnsaio: '',
+            especificacao: '',
+            resultado: ''
         });
     };
 
@@ -131,9 +129,9 @@ const Validacoes = ({ validacoes, setValidacoes }) => {
                     <Grid item>
                         <TextField
                             id="nome-valid"
-                            name="nome"
-                            label="Nome"
-                            value={validacao.nome}
+                            name="nomeEnsaio"
+                            label="Nome do ensaio"
+                            value={validacao.nomeEnsaio}
                             className={classes.textInput}
                             required
                         />
@@ -141,12 +139,12 @@ const Validacoes = ({ validacoes, setValidacoes }) => {
                     <Grid item>
                         <TextareaAutosize
                             className={classes.textArea}
-                            id="descricao"
-                            name="descricao"
-                            label="Descrição"
+                            id="especificacao"
+                            name="especificacao"
+                            label="Especificação"
                             rowsMin={3}
-                            placeholder="Descrição"
-                            value={validacao.descricao}
+                            placeholder="Especificação"
+                            value={validacao.especificacao}
                         />
                     </Grid>
                     <Grid item>
@@ -161,7 +159,7 @@ const Validacoes = ({ validacoes, setValidacoes }) => {
                             open={open}
                             onClose={handleClose}
                             onOpen={handleOpen}
-                            value={validacao.aprovacao}
+                            value={validacao.resultado}
                             onChange={handleSelectChange}
                         >
                             <MenuItem key={1} value="aprovado">
@@ -201,13 +199,14 @@ const Validacoes = ({ validacoes, setValidacoes }) => {
                         <Card className={classes.cards} key={valid.id}>
                             <CardContent>
                                 <Typography variant="h5" component="h1">
-                                    <span>Nome:</span> {valid.nome}
+                                    <span>Nome:</span> {valid.nomeEnsaio}
                                 </Typography>
                                 <Typography color="textSecondary">
-                                    <span>Descrição:</span> {valid.descricao}
+                                    <span>Descrição:</span>{' '}
+                                    {valid.especificacao}
                                 </Typography>
                                 <Typography color="textSecondary">
-                                    <span>Aprovação:</span> {valid.aprovacao}
+                                    <span>Aprovação:</span> {valid.resultado}
                                 </Typography>
                             </CardContent>
                             <div className={classes.cardsIcons}>

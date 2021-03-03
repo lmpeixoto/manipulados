@@ -3,46 +3,23 @@ const fct = require('../models/fatores.json');
 const {
     matPrimReader,
     matEmbReader,
-    validacoesReader,
     roundNumberToTwoDecimals
 } = require('./utils');
 
-class Manipulado {
+class Orcamento {
     constructor(
-        lote,
         nomeManipulado,
-        utenteNome,
-        utenteContacto,
-        prescritorNome,
-        prescritorContacto,
-        farmaceutico,
-        supervisor,
-        preparacao,
-        conservacao,
-        validade,
         fFarmNome,
         fFarmQtd,
         fatorF,
         materiasPrimas,
-        materiaisEmbalagem,
-        validacoes
+        materiaisEmbalagem
     ) {
         this.nomeManipulado = nomeManipulado;
         this.fatorF = fatorF;
         this.fFarmNome = fFarmNome;
         this.fFarmPrice;
         this.fFarmQtd = fFarmQtd;
-        this.lote = lote;
-        this.utenteNome = utenteNome;
-        this.utenteContacto = utenteContacto;
-        this.prescritorNome = prescritorNome;
-        this.prescritorContacto = prescritorContacto;
-        this.farmaceutico = farmaceutico;
-        this.supervisor = supervisor;
-        this.preparacao = preparacao;
-        this.conservacao = conservacao;
-        this.validade = validade;
-        this.validacoes = validacoesReader(validacoes);
         this.materiasPrimas = matPrimReader(materiasPrimas);
         this.materiaisEmbalagem = matEmbReader(materiaisEmbalagem);
         this.matPrimTotalPrice;
@@ -152,4 +129,4 @@ class Manipulado {
     }
 }
 
-module.exports = { Manipulado };
+module.exports = { Orcamento };

@@ -108,14 +108,24 @@ const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
 
     const handleEditSaveButton = () => {
         let dataBody = {
+            lote: loteManipulado,
+            utenteNome,
+            utenteContacto,
+            prescritorNome,
+            prescritorContacto,
+            farmaceutico,
+            supervisor,
+            preparacao,
+            conservacao,
+            validade,
             fatorF: FATOR_F,
             fFarmPrice: formaFarmaceuticaPreco,
             nomeManipulado: nomeManipulado,
             fFarmNome: formaFarmaceutica,
             fFarmQtd: quantidade,
-            materiasPrimas: materiasPrimas,
+            materiasPrimas,
             materiasPrimasPrice: materiasPrimasPreco,
-            materiaisEmbalagem: materiaisEmbalagem,
+            materiaisEmbalagem,
             materiaisEmbalagemPrice: materiaisEmbalagemPreco,
             IVA: totais[1],
             totalPrice: totais[0]
@@ -146,6 +156,7 @@ const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
             materiasPrimasPrice: materiasPrimasPreco,
             materiaisEmbalagem,
             materiaisEmbalagemPrice: materiaisEmbalagemPreco,
+            validacoes,
             IVA: totais[1],
             totalPrice: totais[0]
         };
@@ -359,7 +370,6 @@ const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
                     totais={totais}
                     setTotais={setTotais}
                     editing={editing}
-                    handleEditSaveButton={handleEditSaveButton}
                 />
             </Grid>
         </Grid>

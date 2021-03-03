@@ -78,7 +78,7 @@ exports.validateManipulado = [
         .isLength({ min: 9 })
         .withMessage('Contacto do prescritor tem de ter no mínimo 9 números!')
         .bail(),
-    check('farmaceuticoNome')
+    check('farmaceutico')
         .trim()
         .escape()
         .not()
@@ -88,7 +88,7 @@ exports.validateManipulado = [
         .isLength({ min: 3 })
         .withMessage('Nome do farmacêutico tem de ter no mínimo 3 caracteres!')
         .bail(),
-    check('farmaceuticoSupervisor')
+    check('supervisor')
         .trim()
         .escape()
         .not()

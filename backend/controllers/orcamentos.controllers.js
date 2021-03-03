@@ -1,9 +1,8 @@
 const { validationResult } = require('express-validator');
-const mongoose = require('mongoose');
 
 const OrcamentoModel = require('../models/orcamento');
-const { Orcamento } = require('../utils/manipulado');
-const calcularTotaisOjecto = require('../utils/calcs');
+const { Orcamento } = require('../utils/orcamento');
+const { calcularTotaisOjecto } = require('../utils/utils');
 
 exports.orcamentoGetAll = async (req, res, next) => {
     try {

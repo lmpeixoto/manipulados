@@ -2,7 +2,7 @@ const { validationResult } = require('express-validator');
 
 const { Manipulado } = require('../utils/manipulado');
 const ManipuladoModel = require('../models/manipulado');
-const calcularTotaisOjecto = require('../utils/calcs');
+const { calcularTotaisOjecto } = require('../utils/utils');
 
 exports.manipuladoGetAll = async (req, res, next) => {
     console.log('here');
@@ -42,7 +42,7 @@ exports.getManipulado = async (req, res, next) => {
 
 exports.postManipulado = async (req, res, next) => {
     const { errors } = validationResult(req);
-
+    console.log(req.body);
     let manipulado = new Manipulado(
         req.body.lote,
         req.body.nomeManipulado,
@@ -50,13 +50,14 @@ exports.postManipulado = async (req, res, next) => {
         req.body.utenteContacto,
         req.body.prescritorNome,
         req.body.prescritorContacto,
-        req.body.farmaceuticoNome,
-        req.body.farmaceuticoSupervisor,
+        req.body.farmaceutico,
+        req.body.supervisor,
         req.body.preparacao,
         req.body.conservacao,
         req.body.validade,
         req.body.fFarmNome,
         req.body.fFarmQtd,
+        req.body.fatorF,
         req.body.materiasPrimas,
         req.body.materiaisEmbalagem,
         req.body.validacoes
@@ -71,8 +72,8 @@ exports.postManipulado = async (req, res, next) => {
         utenteContacto: req.body.utenteContacto,
         prescritorNome: req.body.prescritorNome,
         prescritorContacto: req.body.prescritorContacto,
-        farmaceuticoNome: req.body.farmaceuticoNome,
-        farmaceuticoSupervisor: req.body.farmaceuticoSupervisor,
+        farmaceutico: req.body.farmaceutico,
+        supervisor: req.body.supervisor,
         preparacao: req.body.preparacao,
         conservacao: req.body.conservacao,
         validade: req.body.validade,
