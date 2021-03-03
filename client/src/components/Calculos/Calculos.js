@@ -89,7 +89,16 @@ const Calculos = ({
         };
 
         calculateTotals();
-    }, [formaFarmaceutica, quantidade, materiasPrimas, materiaisEmbalagem]);
+    }, [
+        formaFarmaceutica,
+        quantidade,
+        materiasPrimas,
+        materiaisEmbalagem,
+        setFormaFarmaceuticaPreco,
+        setMateriaisEmbalagemPreco,
+        setMateriasPrimasPreco,
+        setTotais
+    ]);
 
     const classes = useStyles();
 

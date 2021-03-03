@@ -47,7 +47,7 @@ const Arquivo = () => {
             setManipulados(manipuladosData);
         };
         toggleManip ? getManipulados() : getOrcamentos();
-    }, [editing, toggleManip]);
+    }, [editing, toggleManip, setManipulados, setOrcamentos]);
 
     const handleEditOrcamento = (id) => {
         const [orcamentoToEdit] = orcamentos.filter(
@@ -103,6 +103,7 @@ const Arquivo = () => {
                 </Grid>
                 <Grid item>Manipulado</Grid>
             </Grid>
+
             {editing ? (
                 <>
                     {toggleManip ? (
