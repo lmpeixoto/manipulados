@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
@@ -30,7 +30,8 @@ const Calculos = ({
     handleEditSaveButton,
     handleSaveButton,
     totais,
-    setTotais
+    setTotais,
+    completed
 }) => {
     useEffect(() => {
         const calculateTotals = async () => {
@@ -114,6 +115,7 @@ const Calculos = ({
                                     className={classes.iconButton}
                                     aria-label="edit"
                                     onClick={handleSaveButton}
+                                    disabled={!completed}
                                 >
                                     Guardar <SaveIcon />
                                 </IconButton>

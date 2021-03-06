@@ -33,6 +33,7 @@ const Orcamento = ({ editing, setEditing, loadedOrcamento }) => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const [orcamentoId, setOrcamentoID] = useState('');
+    const [completed, setCompleted] = useState(false);
 
     useEffect(() => {
         const populateOrcamentoEdit = () => {
@@ -53,6 +54,31 @@ const Orcamento = ({ editing, setEditing, loadedOrcamento }) => {
         populateOrcamentoEdit();
         setLoading(false);
     }, []);
+
+    useEffect(() => {
+        const checkCompletedForm = () => {
+            if (
+                nomeOrcamento &&
+                quantidade &&
+                formaFarmaceutica &&
+                materiasPrimas.length > 0 &&
+                materiaisEmbalagem.length > 0
+            ) {
+                console.log('updated State!!!');
+                setCompleted(true);
+            }
+        };
+
+        checkCompletedForm();
+    }, [
+        nomeOrcamento,
+        quantidade,
+        formaFarmaceutica,
+        materiasPrimas,
+        setMateriasPrimas,
+        materiaisEmbalagem,
+        setMateriaisEmbalagem
+    ]);
 
     let history = useHistory();
 
@@ -202,6 +228,8 @@ const Orcamento = ({ editing, setEditing, loadedOrcamento }) => {
                     setTotais={setTotais}
                     editing={editing}
                     handleEditSaveButton={handleEditSaveButton}
+                    completed={completed}
+                    setCompleted={setCompleted}
                 />
             </Grid>
         </Grid>
