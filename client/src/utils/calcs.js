@@ -6,22 +6,20 @@ export const FATOR_F = 5.03;
 export const calcMateriasPrimasTotal = (matPrimas) => {
     let total = 0;
     matPrimas.forEach((element) => {
-        const fator = +fatores[element.fator][1];
+        const fator = roundTwoDecimals(fatores[element.fator][1]);
         total +=
-            parseFloat(element.preco) *
-            parseFloat(element.qtd) *
-            parseFloat(fator);
+            roundTwoDecimals(element.preco) * parseFloat(element.qtd) * fator;
     });
-    total = parseFloat(total.toFixed(2));
+    total = roundTwoDecimals(total);
     return total;
 };
 
 export const calcMateriaisEmbalagemTotal = (matEmb) => {
     let total = 0;
     matEmb.forEach((element) => {
-        total += parseFloat(element.preco) * parseFloat(element.qtd);
+        total += roundTwoDecimals(element.preco) * parseFloat(element.qtd);
     });
-    total = parseFloat(total.toFixed(2));
+    total = roundTwoDecimals(total);
     return total;
 };
 
@@ -33,12 +31,12 @@ export const calcHonorarios = async (formaFarmaceutica, quantidade) => {
     if (quantidade <= limite) {
         total = FATOR_F * fator;
     } else {
-        let valorNormal = FATOR_F * fator;
-        let quantidadeExtra = +quantidade - limite;
-        let valorExtra = quantidadeExtra * FATOR_F * excesso;
-        total = valorNormal + valorExtra;
+        let valorNormal = roundTwoDecimals(FATOR_F * fator);
+        let quantidadeExtra = roundTwoDecimals(+quantidade - limite);
+        let valorExtra = roundTwoDecimals(quantidadeExtra * FATOR_F * excesso);
+        total = roundTwoDecimals(valorNormal + valorExtra);
     }
-    total = parseFloat(total.toFixed(2));
+    total = roundTwoDecimals(total);
     return total;
 };
 
@@ -47,12 +45,16 @@ export const calcOrcamentoTotal = (
     totalMatPrim,
     totalMatEmb
 ) => {
-    let incidenciaIVA = 1.3 * (+totalHonorarios + totalMatPrim + totalMatEmb);
-    let IVA = 0.23 * incidenciaIVA;
-    let total = +incidenciaIVA + IVA;
-    console.log(total);
-    console.log(IVA);
-    total = parseFloat(total.toFixed(2));
-    IVA = parseFloat(IVA.toFixed(2));
+    let incidenciaIVA = roundTwoDecimals(
+        1.3 * roundTwoDecimals(+totalHonorarios + totalMatPrim + totalMatEmb)
+    );
+    let IVA = roundTwoDecimals(0.23 * incidenciaIVA);
+    let total = roundTwoDecimals(+incidenciaIVA + IVA);
+    total = roundTwoDecimals(total);
+    IVA = roundTwoDecimals(IVA);
     return [total, IVA];
+};
+
+const roundTwoDecimals = (num) => {
+    return parseFloat(num).toFixed(2);
 };
