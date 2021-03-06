@@ -52,7 +52,7 @@ exports.validacoesReader = (validsArray) => {
 };
 
 exports.roundNumberToTwoDecimals = (num) => {
-    return +num.toFixed(2);
+    return Math.round((num + Number.EPSILON) * 100) / 100;
 };
 
 exports.calcularTotaisOjecto = (objecto) => {

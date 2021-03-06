@@ -71,17 +71,20 @@ const Calculos = ({
                 const matEmbTotal = calcMateriaisEmbalagemTotal(
                     materiaisEmbalagem
                 );
+
                 setMateriaisEmbalagemPreco(matEmbTotal);
-                const calcHonorTotal = await calcHonorarios(
+                const calcHonorTotal = calcHonorarios(
                     formaFarmaceutica,
                     quantidade
                 );
+
                 setFormaFarmaceuticaPreco(calcHonorTotal);
                 const orcamentoTotal = calcOrcamentoTotal(
                     calcHonorTotal,
                     matPrimTotal,
                     matEmbTotal
                 );
+
                 setTotais(orcamentoTotal);
             } else {
                 setTotais([0, 0]);

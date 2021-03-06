@@ -29,55 +29,53 @@ class Orcamento {
     }
 
     calculateFFarmPrice() {
-        let formaFarmaceuticaPrice;
-        const qtd = this.fFarmQtd;
-        const fatorF = this.fatorF;
+        let total = 0;
+        const qtd = +this.fFarmQtd;
+        const FATOR_F = +this.fatorF;
         const limite = +formasFarmaceuticas[this.fFarmNome.toLowerCase()][0];
-        const fatorNormal = +formasFarmaceuticas[
-            this.fFarmNome.toLowerCase()
-        ][1];
-        const fatorSuplemento = +formasFarmaceuticas[
-            this.fFarmNome.toLowerCase()
-        ][2];
+        const fator = +formasFarmaceuticas[this.fFarmNome.toLowerCase()][1];
+        const excesso = +formasFarmaceuticas[this.fFarmNome.toLowerCase()][2];
         if (qtd <= limite) {
-            formaFarmaceuticaPrice = fatorF * fatorNormal;
+            total = FATOR_F * fator;
         } else {
-            let excesso = qtd - limite;
-            formaFarmaceuticaPrice =
-                fatorF * fatorNormal + excesso * fatorSuplemento;
+            let valorNormal = roundNumberToTwoDecimals(FATOR_F * fator);
+            let quantidadeExtra = roundNumberToTwoDecimals(qtd - limite);
+            let valorExtra = roundNumberToTwoDecimals(
+                quantidadeExtra * FATOR_F * excesso
+            );
+            total = roundNumberToTwoDecimals(valorNormal + valorExtra);
         }
-        formaFarmaceuticaPrice = roundNumberToTwoDecimals(
-            formaFarmaceuticaPrice
-        );
-        return formaFarmaceuticaPrice;
+        total = roundNumberToTwoDecimals(total);
+        return total;
     }
 
     calculateMatPrimasTotalPrice() {
-        let val = 0;
+        let total = 0;
         for (let i = 0; i < this.materiasPrimas.length; i++) {
-            val +=
+            total += roundNumberToTwoDecimals(
                 +this.materiasPrimas[i].preco *
-                +this.materiasPrimas[i].qtd *
-                +fct[this.materiasPrimas[i].fator][1];
+                    +this.materiasPrimas[i].qtd *
+                    +fct[this.materiasPrimas[i].fator][1]
+            );
         }
-        return roundNumberToTwoDecimals(val);
+        return roundNumberToTwoDecimals(total);
     }
 
     calculateMatEmbTotalPrice() {
-        let valor = 0;
-
+        let total = 0;
         for (let i = 0; i < this.materiaisEmbalagem.length; i++) {
-            valor +=
+            total += roundNumberToTwoDecimals(
                 +this.materiaisEmbalagem[i].preco *
-                +this.materiaisEmbalagem[i].qtd;
+                    +this.materiaisEmbalagem[i].qtd
+            );
         }
-        return roundNumberToTwoDecimals(valor);
+        return roundNumberToTwoDecimals(total);
     }
 
     calculateTotalPrice() {
         this.calculateIVA();
         let finalPrice = roundNumberToTwoDecimals(
-            this.calculateSemiTotalPrice() + this.IVA
+            this.calculateSemiTotalPrice() + +this.IVA
         );
         this.setTotalPrice(finalPrice);
         return finalPrice;
@@ -97,9 +95,11 @@ class Orcamento {
         this.setMatEmbTotalPrice(this.calculateMatEmbTotalPrice());
         let semiTotalPrice = roundNumberToTwoDecimals(
             1.3 *
-                (this.fFarmPrice +
-                    this.matPrimTotalPrice +
-                    this.matEmbTotalPrice)
+                roundNumberToTwoDecimals(
+                    this.fFarmPrice +
+                        this.matPrimTotalPrice +
+                        this.matEmbTotalPrice
+                )
         );
         return semiTotalPrice;
     }

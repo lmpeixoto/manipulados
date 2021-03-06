@@ -7,8 +7,9 @@ export const calcMateriasPrimasTotal = (matPrimas) => {
     let total = 0;
     matPrimas.forEach((element) => {
         const fator = roundTwoDecimals(fatores[element.fator][1]);
-        total +=
-            roundTwoDecimals(element.preco) * parseFloat(element.qtd) * fator;
+        total += roundTwoDecimals(
+            element.preco * parseFloat(element.qtd) * fator
+        );
     });
     total = roundTwoDecimals(total);
     return total;
@@ -23,11 +24,11 @@ export const calcMateriaisEmbalagemTotal = (matEmb) => {
     return total;
 };
 
-export const calcHonorarios = async (formaFarmaceutica, quantidade) => {
+export const calcHonorarios = (formaFarmaceutica, quantidade) => {
     let total = 0;
-    const limite = await formasFarmaceuticas[formaFarmaceutica][0];
-    const fator = await formasFarmaceuticas[formaFarmaceutica][1];
-    const excesso = await formasFarmaceuticas[formaFarmaceutica][2];
+    const limite = +formasFarmaceuticas[formaFarmaceutica][0];
+    const fator = +formasFarmaceuticas[formaFarmaceutica][1];
+    const excesso = +formasFarmaceuticas[formaFarmaceutica][2];
     if (quantidade <= limite) {
         total = FATOR_F * fator;
     } else {
@@ -46,15 +47,14 @@ export const calcOrcamentoTotal = (
     totalMatEmb
 ) => {
     let incidenciaIVA = roundTwoDecimals(
-        1.3 * roundTwoDecimals(+totalHonorarios + totalMatPrim + totalMatEmb)
+        1.3 * (totalHonorarios + totalMatPrim + totalMatEmb)
     );
     let IVA = roundTwoDecimals(0.23 * incidenciaIVA);
     let total = roundTwoDecimals(+incidenciaIVA + IVA);
     total = roundTwoDecimals(total);
-    IVA = roundTwoDecimals(IVA);
     return [total, IVA];
 };
 
 const roundTwoDecimals = (num) => {
-    return parseFloat(num).toFixed(2);
+    return Math.round((num + Number.EPSILON) * 100) / 100;
 };
