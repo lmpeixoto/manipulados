@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import SaveIcon from '@material-ui/icons/Save';
 
-import './Calculos.css';
+import { styles } from './styles.js';
 import {
     calcHonorarios,
     calcMateriasPrimasTotal,
@@ -15,33 +15,7 @@ import {
     calcOrcamentoTotal
 } from '../../utils/calcs';
 
-const useStyles = makeStyles((theme) => ({
-    iconButton: {
-        margin: 0
-    },
-    button: {
-        marginTop: '1rem'
-    },
-    formControl: {
-        minWidth: 195
-    },
-    textInput: {
-        width: '30%'
-    },
-    cardsContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap'
-    },
-    cards: {
-        margin: '1rem 0.5rem',
-        width: '400px'
-    },
-    cardsIcons: {
-        display: 'flex',
-        justifyContent: 'flex-end'
-    }
-}));
+const useStyles = makeStyles((theme) => styles);
 
 const Calculos = ({
     editing,

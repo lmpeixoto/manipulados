@@ -15,39 +15,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
-const useStyles = makeStyles((theme) => ({
-    iconButton: {
-        margin: 0
-    },
-    button: {
-        marginTop: '1rem'
-    },
-    formControl: {
-        minWidth: 195
-    },
-    textInput: {
-        width: '30%'
-    },
-    textArea: {
-        width: '30%',
-        marginTop: '15px',
-        fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-        fontSize: '1rem'
-    },
-    cardsContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap'
-    },
-    cards: {
-        margin: '1rem 0.5rem',
-        width: '200px'
-    },
-    cardsIcons: {
-        display: 'flex',
-        justifyContent: 'flex-end'
-    }
-}));
+import { styles } from './styles';
+
+const useStyles = makeStyles((theme) => styles);
 
 const Validacoes = ({ validacoes, setValidacoes }) => {
     const classes = useStyles();
@@ -131,6 +101,7 @@ const Validacoes = ({ validacoes, setValidacoes }) => {
                             id="nome-valid"
                             name="nomeEnsaio"
                             label="Nome do ensaio"
+                            type="text"
                             value={validacao.nomeEnsaio}
                             className={classes.textInput}
                             required
@@ -142,9 +113,11 @@ const Validacoes = ({ validacoes, setValidacoes }) => {
                             id="especificacao"
                             name="especificacao"
                             label="Especificação"
+                            type="text"
                             rowsMin={3}
                             placeholder="Especificação"
                             value={validacao.especificacao}
+                            required
                         />
                     </Grid>
                     <Grid item>
@@ -161,6 +134,7 @@ const Validacoes = ({ validacoes, setValidacoes }) => {
                             onOpen={handleOpen}
                             value={validacao.resultado}
                             onChange={handleSelectChange}
+                            required
                         >
                             <MenuItem key={1} value="conforme">
                                 Conforme

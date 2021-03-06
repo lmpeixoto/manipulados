@@ -12,20 +12,9 @@ import {
 import ItemArquivo from './ItemArquivo/ItemArquivo';
 import Orcamento from '../Orcamento/Orcamento';
 import Manipulado from '../Manipulado/Manipulado';
+import { styles } from './styles';
 
-const useStyles = makeStyles((theme) => ({
-    gridContainer: {
-        marginTop: '2rem'
-    },
-    cards: {
-        margin: '1rem 0.5rem',
-        width: '400px'
-    },
-    cardsIcons: {
-        display: 'flex',
-        justifyContent: 'flex-end'
-    }
-}));
+const useStyles = makeStyles((theme) => styles);
 
 const Arquivo = () => {
     const classes = useStyles();

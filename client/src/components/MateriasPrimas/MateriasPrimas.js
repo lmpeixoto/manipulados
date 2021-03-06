@@ -16,35 +16,9 @@ import EditIcon from '@material-ui/icons/Edit';
 import nextId from 'react-id-generator';
 
 import FATORES from '../../data/fatores.json';
-import './MateriasPrimas.css';
+import { styles } from './styles.js';
 
-const useStyles = makeStyles((theme) => ({
-    iconButton: {
-        margin: 0
-    },
-    button: {
-        marginTop: '1rem'
-    },
-    formControl: {
-        minWidth: 195
-    },
-    textInput: {
-        width: '30%'
-    },
-    cardsContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap'
-    },
-    cards: {
-        margin: '1rem 0.5rem',
-        width: '200px'
-    },
-    cardsIcons: {
-        display: 'flex',
-        justifyContent: 'flex-end'
-    }
-}));
+const useStyles = makeStyles((theme) => styles);
 
 const MateriasPrimas = ({ fatores, materiasPrimas, setMateriasPrimas }) => {
     const classes = useStyles();
@@ -145,6 +119,7 @@ const MateriasPrimas = ({ fatores, materiasPrimas, setMateriasPrimas }) => {
                             id="nome-mat-prim"
                             name="nome"
                             label="Nome"
+                            type="text"
                             value={materiaPrima.nome}
                             className={classes.textInput}
                             required
@@ -155,6 +130,7 @@ const MateriasPrimas = ({ fatores, materiasPrimas, setMateriasPrimas }) => {
                             id="preco-mat-prim"
                             name="preco"
                             label="Preço"
+                            type="number"
                             value={materiaPrima.preco}
                             className={classes.textInput}
                             required
@@ -165,6 +141,7 @@ const MateriasPrimas = ({ fatores, materiasPrimas, setMateriasPrimas }) => {
                             id="quantidade-mat-prim"
                             name="qtd"
                             label="Quantidade"
+                            type="number"
                             value={materiaPrima.qtd}
                             className={classes.textInput}
                             required

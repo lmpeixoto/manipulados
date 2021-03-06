@@ -13,23 +13,11 @@ import FORMAS_FARMACEUTICAS from '../../data/formas-farmaceuticas.json';
 import MateriasPrimas from '../MateriasPrimas/MateriasPrimas';
 import MateriaisEmbalagem from '../MateriaisEmbalagem/MateriaisEmbalagem';
 import Calculos from '../Calculos/Calculos';
-
-import './Orcamento.css';
+import { styles } from './styles';
 import { FATOR_F, patchOrcamento, postOrcamento } from '../../utils/api';
 import { matEmbReader, matPrimReader } from '../../utils/readers';
 
-const useStyles = makeStyles((theme) => ({
-    formControl: {
-        minWidth: 195
-    },
-
-    gridContainer: {
-        marginTop: '2rem'
-    },
-    textInput: {
-        width: '30%'
-    }
-}));
+const useStyles = makeStyles((theme) => styles);
 
 const Orcamento = ({ editing, setEditing, loadedOrcamento }) => {
     const classes = useStyles();
@@ -130,10 +118,12 @@ const Orcamento = ({ editing, setEditing, loadedOrcamento }) => {
             <Grid item>
                 <TextField
                     id="nome-orcamento"
-                    label="Nome do Manipulado"
+                    label="Nome do Orçamento"
                     onChange={(e) => setNomeOrcamento(e.target.value)}
                     className={classes.textInput}
                     value={nomeOrcamento}
+                    type="text"
+                    required
                 />
             </Grid>
             <Grid item>
@@ -151,6 +141,7 @@ const Orcamento = ({ editing, setEditing, loadedOrcamento }) => {
                         onOpen={handleOpen}
                         value={formaFarmaceutica}
                         onChange={handleChange}
+                        required
                     >
                         {Object.keys(FORMAS_FARMACEUTICAS).map(
                             (formaFarmaceutica) => {
@@ -171,9 +162,11 @@ const Orcamento = ({ editing, setEditing, loadedOrcamento }) => {
                 <TextField
                     id="quantidade-orcamento"
                     label="Quantidade"
+                    type="number"
                     onChange={(e) => setQuantidade(e.target.value)}
                     className={classes.textInput}
                     value={quantidade}
+                    required
                 />
             </Grid>
             <Grid item className={classes.gridContainer}>

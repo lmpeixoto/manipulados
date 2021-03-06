@@ -11,35 +11,9 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
-import './MateriaisEmbalagem.css';
+import { styles } from './styles.js';
 
-const useStyles = makeStyles((theme) => ({
-    iconButton: {
-        margin: 0
-    },
-    button: {
-        marginTop: '1rem'
-    },
-    formControl: {
-        minWidth: 195
-    },
-    textInput: {
-        width: '30%'
-    },
-    cardsContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap'
-    },
-    cards: {
-        margin: '1rem 0.5rem',
-        width: '200px'
-    },
-    cardsIcons: {
-        display: 'flex',
-        justifyContent: 'flex-end'
-    }
-}));
+const useStyles = makeStyles((theme) => styles);
 
 const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
     const classes = useStyles();
@@ -129,6 +103,7 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
                             id="nome-mat-emb"
                             name="nome"
                             label="Nome"
+                            type="text"
                             value={materialEmbalagem.nome}
                             className={classes.textInput}
                             required
@@ -139,6 +114,7 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
                             id="capacidade"
                             name="capacidade"
                             label="Capacidade"
+                            type="number"
                             value={materialEmbalagem.capacidade}
                             className={classes.textInput}
                             required
@@ -149,6 +125,7 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
                             id="preco-mat-emb"
                             name="preco"
                             label="Preço"
+                            type="number"
                             value={materialEmbalagem.preco}
                             className={classes.textInput}
                             required
@@ -159,6 +136,7 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
                             id="quantidade-mat-emb"
                             name="qtd"
                             label="Quantidade"
+                            type="number"
                             value={materialEmbalagem.qtd}
                             className={classes.textInput}
                             required

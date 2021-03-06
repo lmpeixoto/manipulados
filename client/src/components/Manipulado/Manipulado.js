@@ -20,7 +20,7 @@ import MateriasPrimas from '../MateriasPrimas/MateriasPrimas';
 import MateriaisEmbalagem from '../MateriaisEmbalagem/MateriaisEmbalagem';
 import Validacoes from '../Validacoes/Validacoes';
 import Calculos from '../Calculos/Calculos';
-
+import { styles } from './styles';
 import { FATOR_F, patchManipulado, postManipulado } from '../../utils/api';
 import {
     matEmbReader,
@@ -28,27 +28,7 @@ import {
     validacoesReader
 } from '../../utils/readers';
 
-const useStyles = makeStyles((theme) => ({
-    formControl: {
-        minWidth: 195
-    },
-
-    gridContainer: {
-        marginTop: '2rem'
-    },
-    titles: {
-        marginTop: '2rem'
-    },
-    textInput: {
-        width: '30%'
-    },
-    textArea: {
-        width: '30%',
-        marginTop: '15px',
-        fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-        fontSize: '1rem'
-    }
-}));
+const useStyles = makeStyles((theme) => styles);
 
 const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
     const classes = useStyles();
@@ -197,33 +177,40 @@ const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
                 <TextField
                     id="nome-manipulado"
                     label="Nome do Manipulado"
+                    type="text"
                     onChange={(e) => setNomeManipulado(e.target.value)}
                     className={classes.textInput}
                     value={nomeManipulado}
+                    required
                 />
             </Grid>
             <Grid item>
                 <TextField
                     id="lote"
                     label="Lote"
+                    type="text"
                     onChange={(e) => setLoteManipulado(e.target.value)}
                     className={classes.textInput}
                     value={loteManipulado}
+                    required
                 />
             </Grid>
             <Grid item>
                 <TextField
                     id="utenteNome"
                     label="Nome do Utente"
+                    type="text"
                     onChange={(e) => setUtenteNome(e.target.value)}
                     className={classes.textInput}
                     value={utenteNome}
+                    required
                 />
             </Grid>
             <Grid item>
                 <TextField
                     id="utenteContacto"
                     label="Contacto do Utente"
+                    type="number"
                     onChange={(e) => setUtenteContacto(e.target.value)}
                     className={classes.textInput}
                     value={utenteContacto}
@@ -233,15 +220,18 @@ const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
                 <TextField
                     id="prescritorNome"
                     label="Nome do Prescritor"
+                    type="text"
                     onChange={(e) => setPrescritorNome(e.target.value)}
                     className={classes.textInput}
                     value={prescritorNome}
+                    required
                 />
             </Grid>
             <Grid item>
                 <TextField
                     id="prescritorContacto"
                     label="Contacto do Prescritor"
+                    type="number"
                     onChange={(e) => setPrescritorContacto(e.target.value)}
                     className={classes.textInput}
                     value={prescritorContacto}
@@ -251,18 +241,22 @@ const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
                 <TextField
                     id="farmaceutico"
                     label="Farmacêutico Preparador"
+                    type="text"
                     onChange={(e) => setFarmaceutico(e.target.value)}
                     className={classes.textInput}
                     value={farmaceutico}
+                    required
                 />
             </Grid>
             <Grid item>
                 <TextField
                     id="supervisor"
                     label="Farmacêutico Supervisor"
+                    type="text"
                     onChange={(e) => setSupervisor(e.target.value)}
                     className={classes.textInput}
                     value={supervisor}
+                    required
                 />
             </Grid>
             <Grid item className={classes.titles}>
@@ -283,6 +277,7 @@ const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
                         onOpen={handleOpen}
                         value={formaFarmaceutica}
                         onChange={handleChange}
+                        required
                     >
                         {Object.keys(FORMAS_FARMACEUTICAS).map(
                             (formaFarmaceutica) => {
@@ -303,9 +298,11 @@ const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
                 <TextField
                     id="quantidade-manipulado"
                     label="Quantidade"
+                    type="number"
                     onChange={(e) => setQuantidade(e.target.value)}
                     className={classes.textInput}
                     value={quantidade}
+                    required
                 />
             </Grid>
             <Grid item>
@@ -313,10 +310,12 @@ const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
                     className={classes.textArea}
                     id="preparacao"
                     label="Preparação"
+                    type="text"
                     rowsMin={6}
                     placeholder="Preparação"
                     onChange={(e) => setPreparacao(e.target.value)}
                     value={preparacao}
+                    required
                 />
             </Grid>
             <Grid item>
@@ -324,10 +323,12 @@ const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
                     className={classes.textArea}
                     id="conservacao"
                     label="Conservação"
+                    type="text"
                     rowsMin={3}
                     placeholder="Conservação"
                     onChange={(e) => setConservacao(e.target.value)}
                     value={conservacao}
+                    required
                 />
             </Grid>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
