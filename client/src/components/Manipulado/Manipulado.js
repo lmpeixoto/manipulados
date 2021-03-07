@@ -50,11 +50,51 @@ const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
     const [materiasPrimasPreco, setMateriasPrimasPreco] = useState('');
     const [materiaisEmbalagem, setMateriaisEmbalagem] = useState([]);
     const [materiaisEmbalagemPreco, setMateriaisEmbalagemPreco] = useState('');
-    const [totais, setTotais] = useState([]);
+    const [totais, setTotais] = useState([0, 0]);
     const [open, setOpen] = useState(false);
-    const [loading, setLoading] = useState(true);
     const [manipuladoId, setManipuladoID] = useState('');
     const [validacoes, setValidacoes] = useState([]);
+    const [completed, setCompleted] = useState(false);
+
+    useEffect(() => {
+        const checkCompletedForm = () => {
+            if (
+                nomeManipulado &&
+                loteManipulado &&
+                utenteNome &&
+                prescritorNome &&
+                farmaceutico &&
+                supervisor &&
+                conservacao &&
+                validade &&
+                preparacao &&
+                validacoes.length > 0 &&
+                quantidade &&
+                formaFarmaceutica &&
+                materiasPrimas.length > 0 &&
+                materiaisEmbalagem.length > 0
+            ) {
+                setCompleted(true);
+            }
+        };
+
+        checkCompletedForm();
+    }, [
+        nomeManipulado,
+        loteManipulado,
+        utenteNome,
+        prescritorNome,
+        farmaceutico,
+        supervisor,
+        conservacao,
+        validade,
+        preparacao,
+        validacoes,
+        quantidade,
+        formaFarmaceutica,
+        materiasPrimas,
+        materiaisEmbalagem
+    ]);
 
     useEffect(() => {
         const populateManipuladoEdit = () => {
@@ -84,7 +124,6 @@ const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
         };
 
         populateManipuladoEdit();
-        setLoading(false);
     }, []);
 
     let history = useHistory();
@@ -369,8 +408,6 @@ const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
             </Grid>
             <Grid item className={classes.gridContainer}>
                 <Calculos
-                    loading={loading}
-                    setLoading={setLoading}
                     formaFarmaceutica={formaFarmaceutica}
                     formaFarmaceuticaPreco={formaFarmaceuticaPreco}
                     setFormaFarmaceuticaPreco={setFormaFarmaceuticaPreco}
@@ -387,6 +424,7 @@ const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
                     totais={totais}
                     setTotais={setTotais}
                     editing={editing}
+                    completed={completed}
                 />
             </Grid>
         </Grid>

@@ -29,9 +29,8 @@ const Orcamento = ({ editing, setEditing, loadedOrcamento }) => {
     const [materiasPrimasPreco, setMateriasPrimasPreco] = useState('');
     const [materiaisEmbalagem, setMateriaisEmbalagem] = useState([]);
     const [materiaisEmbalagemPreco, setMateriaisEmbalagemPreco] = useState('');
-    const [totais, setTotais] = useState([]);
+    const [totais, setTotais] = useState([0, 0]);
     const [open, setOpen] = useState(false);
-    const [loading, setLoading] = useState(true);
     const [orcamentoId, setOrcamentoID] = useState('');
     const [completed, setCompleted] = useState(false);
 
@@ -52,7 +51,6 @@ const Orcamento = ({ editing, setEditing, loadedOrcamento }) => {
         };
 
         populateOrcamentoEdit();
-        setLoading(false);
     }, []);
 
     useEffect(() => {
@@ -64,7 +62,6 @@ const Orcamento = ({ editing, setEditing, loadedOrcamento }) => {
                 materiasPrimas.length > 0 &&
                 materiaisEmbalagem.length > 0
             ) {
-                console.log('updated State!!!');
                 setCompleted(true);
             }
         };
@@ -75,9 +72,7 @@ const Orcamento = ({ editing, setEditing, loadedOrcamento }) => {
         quantidade,
         formaFarmaceutica,
         materiasPrimas,
-        setMateriasPrimas,
-        materiaisEmbalagem,
-        setMateriaisEmbalagem
+        materiaisEmbalagem
     ]);
 
     let history = useHistory();
@@ -209,8 +204,6 @@ const Orcamento = ({ editing, setEditing, loadedOrcamento }) => {
             </Grid>
             <Grid item className={classes.gridContainer}>
                 <Calculos
-                    loading={loading}
-                    setLoading={setLoading}
                     formaFarmaceutica={formaFarmaceutica}
                     formaFarmaceuticaPreco={formaFarmaceuticaPreco}
                     setFormaFarmaceuticaPreco={setFormaFarmaceuticaPreco}
@@ -227,7 +220,6 @@ const Orcamento = ({ editing, setEditing, loadedOrcamento }) => {
                     totais={totais}
                     setTotais={setTotais}
                     editing={editing}
-                    handleEditSaveButton={handleEditSaveButton}
                     completed={completed}
                     setCompleted={setCompleted}
                 />

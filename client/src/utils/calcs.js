@@ -17,10 +17,14 @@ export const calcMateriasPrimasTotal = (matPrimas) => {
 
 export const calcMateriaisEmbalagemTotal = (matEmb) => {
     let total = 0;
+    console.log(matEmb);
     matEmb.forEach((element) => {
-        total += roundTwoDecimals(element.preco) * parseFloat(element.qtd);
+        total += roundTwoDecimals(
+            parseFloat(element.preco) * parseInt(element.qtd)
+        );
     });
     total = roundTwoDecimals(total);
+    console.log(total);
     return total;
 };
 
@@ -52,6 +56,7 @@ export const calcOrcamentoTotal = (
     let IVA = roundTwoDecimals(0.23 * incidenciaIVA);
     let total = roundTwoDecimals(+incidenciaIVA + IVA);
     total = roundTwoDecimals(total);
+    console.log(total);
     return [total, IVA];
 };
 

@@ -166,7 +166,6 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
             </div>
             <div className={classes.cardsContainer}>
                 {materiaisEmbalagem.map((matEmb) => {
-                    console.log(materiaisEmbalagem);
                     return (
                         <Card className={classes.cards} key={matEmb.id}>
                             <CardContent>

@@ -50,7 +50,6 @@ const MateriasPrimas = ({ fatores, materiasPrimas, setMateriasPrimas }) => {
             ...materiaPrima,
             fator: event.target.value
         });
-        console.log(materiaPrima.fator);
     };
 
     const handleClose = () => {

@@ -77,7 +77,7 @@ const Validacoes = ({ validacoes, setValidacoes }) => {
     const handleSelectChange = (event) => {
         setValidacao({
             ...validacao,
-            aprovacao: event.target.value
+            resultado: event.target.value
         });
     };
 
@@ -168,7 +168,6 @@ const Validacoes = ({ validacoes, setValidacoes }) => {
             </div>
             <div className={classes.cardsContainer}>
                 {validacoes.map((valid) => {
-                    console.log(validacoes);
                     return (
                         <Card className={classes.cards} key={valid.id}>
                             <CardContent>
