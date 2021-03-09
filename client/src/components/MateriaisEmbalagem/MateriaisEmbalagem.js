@@ -12,6 +12,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
 import { styles } from './styles.js';
+import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 
 const useStyles = makeStyles((theme) => styles);
 
@@ -27,6 +28,12 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
         qtd: '',
         valor: ''
     });
+    const [removeConfirmDialogOpen, setRemoveConfirmDialogOpen] = useState(
+        false
+    );
+    const [editConfirmDialogOpen, setEditConfirmDialogOpen] = useState(false);
+
+    let materiaisEmbalagemAfterRemove = [];
 
     const resetMateriaisEmbalagemValues = () => {
         setMaterialEmbalagem({
@@ -56,10 +63,10 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
     };
 
     const handleRemoveItem = (i) => {
-        const matEmbs = materiaisEmbalagem.filter(
+        materiaisEmbalagemAfterRemove = materiaisEmbalagem.filter(
             (element) => element.id !== i
         );
-        setMateriaisEmbalagem(matEmbs);
+        setRemoveConfirmDialogOpen(true);
     };
 
     const handleEditItem = (i) => {
@@ -78,6 +85,18 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
     };
 
     const handleEditSave = () => {
+        setEditConfirmDialogOpen(true);
+    };
+
+    const handleEditCancel = () => {
+        setEditForm(false);
+    };
+
+    const removeMaterialEmbalagem = () => {
+        setMateriaisEmbalagem(materiaisEmbalagemAfterRemove);
+    };
+
+    const updateMaterialEmbalagem = () => {
         const newMateriaisEmbalagem = materiaisEmbalagem.filter(
             (element) => element.id !== materialEmbalagem.id
         );
@@ -144,13 +163,24 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
                     </Grid>
                     <Grid item className={classes.button}>
                         {editForm ? (
-                            <Button
-                                variant="contained"
-                                size="small"
-                                onClick={handleEditSave}
-                            >
-                                Guardar
-                            </Button>
+                            <>
+                                <Button
+                                    variant="contained"
+                                    size="small"
+                                    color="primary"
+                                    onClick={handleEditSave}
+                                >
+                                    Guardar
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    size="small"
+                                    color="secondary"
+                                    onClick={handleEditCancel}
+                                >
+                                    Cancelar
+                                </Button>
+                            </>
                         ) : (
                             <Button
                                 variant="contained"
@@ -206,6 +236,25 @@ const MateriaisEmbalagem = ({ materiaisEmbalagem, setMateriaisEmbalagem }) => {
                         </Card>
                     );
                 })}
+                <>
+                    <ConfirmDialog
+                        title="Editar Material de Embalagem"
+                        open={editConfirmDialogOpen}
+                        setOpen={setEditConfirmDialogOpen}
+                        onConfirm={updateMaterialEmbalagem}
+                    >
+                        Tem a certeza que deseja editar o material de embalagem?
+                    </ConfirmDialog>
+                    <ConfirmDialog
+                        title="Remover Material de Embalagem"
+                        open={removeConfirmDialogOpen}
+                        setOpen={setRemoveConfirmDialogOpen}
+                        onConfirm={removeMaterialEmbalagem}
+                    >
+                        Tem a certeza que deseja remover o material de
+                        embalagem?
+                    </ConfirmDialog>
+                </>
             </div>
         </>
     );

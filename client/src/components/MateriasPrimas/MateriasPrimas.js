@@ -17,6 +17,7 @@ import nextId from 'react-id-generator';
 
 import FATORES from '../../data/fatores.json';
 import { styles } from './styles.js';
+import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 
 const useStyles = makeStyles((theme) => styles);
 
@@ -33,6 +34,12 @@ const MateriasPrimas = ({ fatores, materiasPrimas, setMateriasPrimas }) => {
         fator: '',
         valor: ''
     });
+    const [removeConfirmDialogOpen, setRemoveConfirmDialogOpen] = useState(
+        false
+    );
+    const [editConfirmDialogOpen, setEditConfirmDialogOpen] = useState(false);
+
+    let materiasPrimasAfterRemove = [];
 
     const resetMateriaPrimaValues = () => {
         setMateriaPrima({
@@ -77,8 +84,10 @@ const MateriasPrimas = ({ fatores, materiasPrimas, setMateriasPrimas }) => {
     };
 
     const handleRemoveItem = (i) => {
-        const matPrims = materiasPrimas.filter((element) => element.id !== i);
-        setMateriasPrimas(matPrims);
+        materiasPrimasAfterRemove = materiasPrimas.filter(
+            (element) => element.id !== i
+        );
+        setRemoveConfirmDialogOpen(true);
     };
 
     const handleEditItem = (i) => {
@@ -88,12 +97,27 @@ const MateriasPrimas = ({ fatores, materiasPrimas, setMateriasPrimas }) => {
     };
 
     const handleEditSave = () => {
+        setEditConfirmDialogOpen(true);
+    };
+
+    const handleEditCancel = () => {
+        setEditForm(false);
+    };
+
+    const removeMateriaPrima = (i) => {
+        setMateriasPrimas(materiasPrimasAfterRemove);
+        setRemoveConfirmDialogOpen(false);
+        materiasPrimasAfterRemove = [];
+    };
+
+    const updateMateriaPrima = (i) => {
         const newMateriasPrimas = materiasPrimas.filter(
             (element) => element.id !== materiaPrima.id
         );
         setMateriasPrimas([...newMateriasPrimas, materiaPrima]);
         setEditForm(false);
         resetMateriaPrimaValues();
+        setEditConfirmDialogOpen(false);
     };
 
     const calculateValor = () => {
@@ -176,13 +200,24 @@ const MateriasPrimas = ({ fatores, materiasPrimas, setMateriasPrimas }) => {
                     </Grid>
                     <Grid item className={classes.button}>
                         {editForm ? (
-                            <Button
-                                variant="contained"
-                                size="small"
-                                onClick={handleEditSave}
-                            >
-                                Guardar
-                            </Button>
+                            <>
+                                <Button
+                                    variant="contained"
+                                    size="small"
+                                    color="primary"
+                                    onClick={handleEditSave}
+                                >
+                                    Guardar
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    size="small"
+                                    color="secondary"
+                                    onClick={handleEditCancel}
+                                >
+                                    Cancelar
+                                </Button>
+                            </>
                         ) : (
                             <Button
                                 variant="contained"
@@ -239,6 +274,24 @@ const MateriasPrimas = ({ fatores, materiasPrimas, setMateriasPrimas }) => {
                         </Card>
                     );
                 })}
+                <>
+                    <ConfirmDialog
+                        title="Editar Matéria Prima"
+                        open={editConfirmDialogOpen}
+                        setOpen={setEditConfirmDialogOpen}
+                        onConfirm={updateMateriaPrima}
+                    >
+                        Tem a certeza que deseja editar a matéria prima?
+                    </ConfirmDialog>
+                    <ConfirmDialog
+                        title="Remover Matéria Prima"
+                        open={removeConfirmDialogOpen}
+                        setOpen={setRemoveConfirmDialogOpen}
+                        onConfirm={removeMateriaPrima}
+                    >
+                        Tem a certeza que deseja remover a matéria prima?
+                    </ConfirmDialog>
+                </>
             </div>
         </>
     );

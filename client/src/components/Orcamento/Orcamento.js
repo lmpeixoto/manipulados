@@ -13,6 +13,7 @@ import FORMAS_FARMACEUTICAS from '../../data/formas-farmaceuticas.json';
 import MateriasPrimas from '../MateriasPrimas/MateriasPrimas';
 import MateriaisEmbalagem from '../MateriaisEmbalagem/MateriaisEmbalagem';
 import Calculos from '../Calculos/Calculos';
+import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 import { styles } from './styles';
 import { FATOR_F, patchOrcamento, postOrcamento } from '../../utils/api';
 import { matEmbReader, matPrimReader } from '../../utils/readers';
@@ -33,6 +34,8 @@ const Orcamento = ({ editing, setEditing, loadedOrcamento }) => {
     const [open, setOpen] = useState(false);
     const [orcamentoId, setOrcamentoID] = useState('');
     const [completed, setCompleted] = useState(false);
+    const [saveConfirmDialogOpen, setSaveConfirmDialogOpen] = useState(false);
+    const [editConfirmDialogOpen, setEditConfirmDialogOpen] = useState(false);
 
     useEffect(() => {
         const populateOrcamentoEdit = () => {
@@ -90,6 +93,14 @@ const Orcamento = ({ editing, setEditing, loadedOrcamento }) => {
     };
 
     const handleEditSaveButton = () => {
+        setEditConfirmDialogOpen(true);
+    };
+
+    const handleSaveButton = () => {
+        setSaveConfirmDialogOpen(true);
+    };
+
+    const updateOrcamento = () => {
         let dataBody = {
             fatorF: FATOR_F,
             fFarmPrice: formaFarmaceuticaPreco,
@@ -108,7 +119,7 @@ const Orcamento = ({ editing, setEditing, loadedOrcamento }) => {
         history.push('/arquivo');
     };
 
-    const handleSaveButton = () => {
+    const saveOrcamento = () => {
         let dataBody = {
             fatorF: FATOR_F,
             fFarmPrice: formaFarmaceuticaPreco,
@@ -122,8 +133,9 @@ const Orcamento = ({ editing, setEditing, loadedOrcamento }) => {
             IVA: totais[1],
             totalPrice: totais[0]
         };
-
         postOrcamento(dataBody);
+        setSaveConfirmDialogOpen(false);
+        history.push('/orcamento');
     };
 
     return (
@@ -224,6 +236,22 @@ const Orcamento = ({ editing, setEditing, loadedOrcamento }) => {
                     setCompleted={setCompleted}
                 />
             </Grid>
+            <ConfirmDialog
+                title="Editar Orçamento"
+                open={editConfirmDialogOpen}
+                setOpen={setEditConfirmDialogOpen}
+                onConfirm={updateOrcamento}
+            >
+                Tem a certeza que deseja editar o orçamento?
+            </ConfirmDialog>
+            <ConfirmDialog
+                title="Gravar Orçamento"
+                open={saveConfirmDialogOpen}
+                setOpen={setSaveConfirmDialogOpen}
+                onConfirm={saveOrcamento}
+            >
+                Tem a certeza que deseja gravar o orçamento?
+            </ConfirmDialog>
         </Grid>
     );
 };

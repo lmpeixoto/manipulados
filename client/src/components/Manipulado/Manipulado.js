@@ -20,6 +20,7 @@ import MateriasPrimas from '../MateriasPrimas/MateriasPrimas';
 import MateriaisEmbalagem from '../MateriaisEmbalagem/MateriaisEmbalagem';
 import Validacoes from '../Validacoes/Validacoes';
 import Calculos from '../Calculos/Calculos';
+import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 import { styles } from './styles';
 import { FATOR_F, patchManipulado, postManipulado } from '../../utils/api';
 import {
@@ -27,6 +28,7 @@ import {
     matPrimReader,
     validacoesReader
 } from '../../utils/readers';
+import { set } from 'date-fns';
 
 const useStyles = makeStyles((theme) => styles);
 
@@ -55,6 +57,8 @@ const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
     const [manipuladoId, setManipuladoID] = useState('');
     const [validacoes, setValidacoes] = useState([]);
     const [completed, setCompleted] = useState(false);
+    const [saveConfirmDialogOpen, setSaveConfirmDialogOpen] = useState(false);
+    const [editConfirmDialogOpen, setEditConfirmDialogOpen] = useState(false);
 
     useEffect(() => {
         const checkCompletedForm = () => {
@@ -141,6 +145,14 @@ const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
     };
 
     const handleEditSaveButton = () => {
+        setEditConfirmDialogOpen(true);
+    };
+
+    const handleSaveButton = () => {
+        setSaveConfirmDialogOpen(true);
+    };
+
+    const updateManipulado = () => {
         let dataBody = {
             lote: loteManipulado,
             utenteNome,
@@ -167,10 +179,11 @@ const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
         };
         patchManipulado(manipuladoId, dataBody);
         setEditing(false);
+        setEditConfirmDialogOpen(false);
         history.push('/arquivo');
     };
 
-    const handleSaveButton = () => {
+    const saveManipulado = () => {
         let dataBody = {
             lote: loteManipulado,
             utenteNome,
@@ -195,8 +208,9 @@ const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
             IVA: totais[1],
             totalPrice: totais[0]
         };
-
         postManipulado(dataBody);
+        setSaveConfirmDialogOpen(false);
+        history.push('/manipulado');
     };
 
     return (
@@ -427,6 +441,22 @@ const Manipulado = ({ editing, setEditing, loadedManipulado }) => {
                     completed={completed}
                 />
             </Grid>
+            <ConfirmDialog
+                title="Editar Manipulado"
+                open={editConfirmDialogOpen}
+                setOpen={setEditConfirmDialogOpen}
+                onConfirm={updateManipulado}
+            >
+                Tem a certeza que deseja editar o manipulado?
+            </ConfirmDialog>
+            <ConfirmDialog
+                title="Gravar Manipulado"
+                open={saveConfirmDialogOpen}
+                setOpen={setSaveConfirmDialogOpen}
+                onConfirm={saveManipulado}
+            >
+                Tem a certeza que deseja gravar o manipulado?
+            </ConfirmDialog>
         </Grid>
     );
 };
