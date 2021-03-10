@@ -3,12 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Switch from '@material-ui/core/Switch';
 
-import {
-    getOrcamentoAll,
-    deleteOrcamento,
-    getManipuladoAll,
-    deleteManipulado
-} from '../../utils/api';
+import { getOrcamentoAll, getManipuladoAll } from '../../utils/api';
 import ItemArquivo from './ItemArquivo/ItemArquivo';
 import Orcamento from '../Orcamento/Orcamento';
 import Manipulado from '../Manipulado/Manipulado';
@@ -37,38 +32,6 @@ const Arquivo = () => {
         };
         toggleManip ? getManipulados() : getOrcamentos();
     }, [editing, toggleManip, setManipulados, setOrcamentos]);
-
-    const handleEditOrcamento = (id) => {
-        const [orcamentoToEdit] = orcamentos.filter(
-            (orcamento) => orcamento._id === id
-        );
-        setLoadedOrcamento(orcamentoToEdit);
-        setEditing(true);
-    };
-
-    const handleRemoveOrcamento = (id) => {
-        deleteOrcamento(id);
-        const newOrcamentosToSave = orcamentos.filter(
-            (orcamento) => orcamento._id !== id
-        );
-        setOrcamentos(newOrcamentosToSave);
-    };
-
-    const handleEditManipulado = (id) => {
-        const [manipuladoToEdit] = manipulados.filter(
-            (manipulado) => manipulado._id === id
-        );
-        setLoadedManipulado(manipuladoToEdit);
-        setEditing(true);
-    };
-
-    const handleRemoveManipulado = (id) => {
-        deleteManipulado(id);
-        const newManipuladosToSave = manipulados.filter(
-            (manipulado) => manipulado._id !== id
-        );
-        setManipulados(newManipuladosToSave);
-    };
 
     const handleChangeToggle = () => {
         setToggleManip(!toggleManip);
@@ -99,13 +62,11 @@ const Arquivo = () => {
                         <Manipulado
                             loadedManipulado={loadedManipulado}
                             editing={editing}
-                            setEditing={setEditing}
                         />
                     ) : (
                         <Orcamento
                             loadedOrcamento={loadedOrcamento}
                             editing={editing}
-                            setEditing={setEditing}
                         />
                     )}
                 </>
@@ -114,10 +75,11 @@ const Arquivo = () => {
                     toggleManip={toggleManip}
                     manipulados={manipulados}
                     orcamentos={orcamentos}
-                    handleEditOrcamento={handleEditOrcamento}
-                    handleEditManipulado={handleEditManipulado}
-                    handleRemoveOrcamento={handleRemoveOrcamento}
-                    handleRemoveManipulado={handleRemoveManipulado}
+                    setManipulados={setManipulados}
+                    setOrcamentos={setOrcamentos}
+                    setLoadedManipulado={setLoadedManipulado}
+                    setLoadedOrcamento={setLoadedOrcamento}
+                    setEditing={setEditing}
                 />
             )}
         </Grid>

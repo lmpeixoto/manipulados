@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -9,15 +9,52 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
 import { styles } from './styles';
+import ConfirmDialog from '../../ConfirmDialog/ConfirmDialog';
+import { deleteManipulado } from '../../../utils/api';
 
 const useStyles = makeStyles((theme) => styles);
 
 const ManipuladoItem = ({
     manipulados,
-    handleEditManipulado,
-    handleRemoveManipulado
+    setLoadedManipulado,
+    setEditing,
+    setManipulados
 }) => {
     const classes = useStyles();
+
+    const [removeConfirmDialogOpen, setRemoveConfirmDialogOpen] = useState(
+        false
+    );
+    const [editConfirmDialogOpen, setEditConfirmDialogOpen] = useState(false);
+    const [manipuladoIdToEdit, setManipuladoIdToEdit] = useState('');
+    const [manipuladoIdToRemove, setManipuladoIdToRemove] = useState('');
+
+    const handleEditManipulado = (id) => {
+        setManipuladoIdToEdit(id);
+        setEditConfirmDialogOpen(true);
+    };
+
+    const handleRemoveManipulado = (id) => {
+        setManipuladoIdToRemove(id);
+        setRemoveConfirmDialogOpen(true);
+    };
+
+    const updateManipulado = () => {
+        const [manipuladoToEdit] = manipulados.filter(
+            (manipulado) => manipulado._id === manipuladoIdToEdit
+        );
+        setLoadedManipulado(manipuladoToEdit);
+        setEditing(true);
+    };
+
+    const removeManipulado = () => {
+        console.log(manipuladoIdToRemove);
+        deleteManipulado(manipuladoIdToRemove);
+        const newManipuladosToSave = manipulados.filter(
+            (manipulado) => manipulado._id !== manipuladoIdToRemove
+        );
+        setManipulados(newManipuladosToSave);
+    };
 
     return (
         <div>
@@ -56,6 +93,25 @@ const ManipuladoItem = ({
                             </Grid>
                         </Card>
                     ))}
+                    <>
+                        <ConfirmDialog
+                            title="Remover Manipulado"
+                            open={removeConfirmDialogOpen}
+                            setOpen={setRemoveConfirmDialogOpen}
+                            onConfirm={removeManipulado}
+                        >
+                            Tem a certeza que deseja remover o manipulado?
+                        </ConfirmDialog>
+                        <ConfirmDialog
+                            title="Editar Manipulado"
+                            open={editConfirmDialogOpen}
+                            setOpen={setEditConfirmDialogOpen}
+                            onConfirm={updateManipulado}
+                        >
+                            Tem a certeza que deseja editar o manipulado? (Será
+                            redirecionado para a edição de manipulado)
+                        </ConfirmDialog>
+                    </>
                 </>
             ) : (
                 <h3>Não existem manipulados!</h3>

@@ -28,7 +28,6 @@ import {
     matPrimReader,
     validacoesReader
 } from '../../utils/readers';
-import { set } from 'date-fns';
 
 const useStyles = makeStyles((theme) => styles);
 

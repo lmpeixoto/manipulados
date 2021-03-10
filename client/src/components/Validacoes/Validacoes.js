@@ -16,6 +16,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import { styles } from './styles';
+import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 
 const useStyles = makeStyles((theme) => styles);
 
@@ -31,6 +32,12 @@ const Validacoes = ({ validacoes, setValidacoes }) => {
     });
 
     const [open, setOpen] = useState(false);
+    const [removeConfirmDialogOpen, setRemoveConfirmDialogOpen] = useState(
+        false
+    );
+    const [editConfirmDialogOpen, setEditConfirmDialogOpen] = useState(false);
+
+    let validacoesAfterRemove = [];
 
     const resetValidacaoValues = () => {
         setValidacao({
@@ -55,8 +62,10 @@ const Validacoes = ({ validacoes, setValidacoes }) => {
     };
 
     const handleRemoveItem = (i) => {
-        const valids = validacoes.filter((element) => element.id !== i);
-        setValidacoes(valids);
+        validacoesAfterRemove = validacoes.filter(
+            (element) => element.id !== i
+        );
+        setRemoveConfirmDialogOpen(true);
     };
 
     const handleEditItem = (i) => {
@@ -65,13 +74,12 @@ const Validacoes = ({ validacoes, setValidacoes }) => {
         setEditForm(true);
     };
 
-    const handleEditSave = () => {
-        const newValidacoes = validacoes.filter(
-            (element) => element.id !== validacao.id
-        );
-        setValidacoes([...newValidacoes, validacao]);
+    const handleEditCancel = () => {
         setEditForm(false);
-        resetValidacaoValues();
+    };
+
+    const handleEditSave = () => {
+        setEditConfirmDialogOpen(true);
     };
 
     const handleSelectChange = (event) => {
@@ -87,6 +95,19 @@ const Validacoes = ({ validacoes, setValidacoes }) => {
 
     const handleOpen = () => {
         setOpen(true);
+    };
+
+    const updateValidacao = () => {
+        const newValidacoes = validacoes.filter(
+            (element) => element.id !== validacao.id
+        );
+        setValidacoes([...newValidacoes, validacao]);
+        setEditForm(false);
+        resetValidacaoValues();
+    };
+
+    const removeValidacao = () => {
+        setValidacoes(validacoesAfterRemove);
     };
 
     return (
@@ -146,13 +167,24 @@ const Validacoes = ({ validacoes, setValidacoes }) => {
                     </Grid>
                     <Grid item className={classes.button}>
                         {editForm ? (
-                            <Button
-                                variant="contained"
-                                size="small"
-                                onClick={handleEditSave}
-                            >
-                                Guardar
-                            </Button>
+                            <>
+                                <Button
+                                    variant="contained"
+                                    size="small"
+                                    color="primary"
+                                    onClick={handleEditSave}
+                                >
+                                    Guardar
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    size="small"
+                                    color="secondary"
+                                    onClick={handleEditCancel}
+                                >
+                                    Cancelar
+                                </Button>
+                            </>
                         ) : (
                             <Button
                                 variant="contained"
@@ -203,6 +235,24 @@ const Validacoes = ({ validacoes, setValidacoes }) => {
                         </Card>
                     );
                 })}
+                <>
+                    <ConfirmDialog
+                        title="Editar Validação"
+                        open={editConfirmDialogOpen}
+                        setOpen={setEditConfirmDialogOpen}
+                        onConfirm={updateValidacao}
+                    >
+                        Tem a certeza que deseja editar o ensaio de validação?
+                    </ConfirmDialog>
+                    <ConfirmDialog
+                        title="Remover Material de Embalagem"
+                        open={removeConfirmDialogOpen}
+                        setOpen={setRemoveConfirmDialogOpen}
+                        onConfirm={removeValidacao}
+                    >
+                        Tem a certeza que deseja remover o ensaio de validação?
+                    </ConfirmDialog>
+                </>
             </div>
         </>
     );

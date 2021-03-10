@@ -5,26 +5,33 @@ import OrcamentoItem from '../OrcamentoItem/OrcamentoItem';
 
 const ItemArquivo = ({
     orcamentos,
-    handleEditOrcamento,
-    handleRemoveOrcamento,
-    handleEditManipulado,
-    handleRemoveManipulado,
+    setOrcamentos,
     manipulados,
-    toggleManip
+    setManipulados,
+    toggleManip,
+    loadedManipulado,
+    setLoadedManipulado,
+    loadedOrcamento,
+    setLoadedOrcamento,
+    setEditing
 }) => {
     return (
         <div>
             {toggleManip ? (
                 <ManipuladoItem
                     manipulados={manipulados}
-                    handleEditManipulado={handleEditManipulado}
-                    handleRemoveManipulado={handleRemoveManipulado}
+                    loadedManipulado={loadedManipulado}
+                    setLoadedManipulado={setLoadedManipulado}
+                    setManipulados={setManipulados}
+                    setEditing={setEditing}
                 />
             ) : (
                 <OrcamentoItem
                     orcamentos={orcamentos}
-                    handleEditOrcamento={handleEditOrcamento}
-                    handleRemoveOrcamento={handleRemoveOrcamento}
+                    loadedOrcamento={loadedOrcamento}
+                    setLoadedOrcamento={setLoadedOrcamento}
+                    setOrcamentos={setOrcamentos}
+                    setEditing={setEditing}
                 />
             )}
         </div>
